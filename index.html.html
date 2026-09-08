@@ -30,7 +30,7 @@
         .modal { display: none; background: rgba(0,0,0,0.85); backdrop-filter: blur(5px); }
         .modal.active { display: flex; }
 
-        /* Estilos Panel Admin CORREGIDOS (sin flex-direction: column) */
+        /* Estilos Panel Admin */
         .admin-dashboard { display: none; min-height: 100vh; overflow: hidden;}
         .tab-btn.active { background-color: #222; border-left: 4px solid #cc0000; color: #cc0000; font-weight: bold; }
         #calendar-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 5px; }
@@ -52,8 +52,9 @@
         <!-- Navbar -->
         <nav class="flex justify-between items-center p-6 bg-[#1a1a1a] border-b-2 border-scorpionRed">
             <div class="text-2xl font-bold italic text-white tracking-widest flex items-center gap-3">
-                <!-- Logo Scorpion de Alta Calidad -->
-                <img src="https://i.ibb.co/VvzLg3H/image-16.png" class="data-logo w-16 h-16 object-contain mix-blend-mode-lighten flex-shrink-0">
+                <!-- LOGO LOCAL -->
+                <img src="logo.png" alt="Scorpion Logo" class="w-12 h-12 object-contain flex-shrink-0">
+                <div>SCORPION <span class="text-scorpionRed">PERFORMANCE</span></div>
             </div>
             <button onclick="document.getElementById('login-modal').classList.add('active')" class="text-gray-400 hover:text-scorpionRed font-bold transition">
                 <i class="fa-solid fa-user-lock mr-2"></i>Admin
@@ -82,8 +83,9 @@
     <div id="admin-dashboard-section" class="admin-dashboard flex-row w-full">
         <aside class="w-64 bg-[#1a1a1a] border-r border-gray-800 flex flex-col h-screen flex-shrink-0">
             <div class="p-6 border-b border-gray-800 text-center">
-                <!-- Logo Scorpion de Alta Calidad -->
-                <img src="https://i.ibb.co/VvzLg3H/image-16.png" class="data-logo w-12 h-12 object-contain mb-2 flex-shrink-0 mx-auto">
+                <!-- LOGO LOCAL EN EL PANEL -->
+                <img src="logo.png" alt="Scorpion Logo" class="w-16 h-16 object-contain mb-2 flex-shrink-0 mx-auto">
+                <h2 class="text-xl font-bold italic">SCORPION <span class="text-scorpionRed">PERFORMANCE</span></h2>
                 <p class="text-xs text-gray-400 mt-1">Bienvenido, Ricardo</p>
             </div>
             <nav class="flex-1 py-4 flex flex-col overflow-y-auto">
