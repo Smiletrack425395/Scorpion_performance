@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Scorpion Contractors</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: { extend: { colors: { scorpionDark: '#0a0a0a', scorpionRed: '#cc0000', scorpionRedHover: '#ff0000' } } }
+        }
+    </script>
+    <!-- FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        body { background-color: #0a0a0a; color: #f1f1f1; min-height: 100vh; position: relative; font-family: 'Arial', sans-serif; overflow-x: hidden; }
+        /* Marca de agua */
+        body::before {
+            content: ""; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
+            background-image: url('data:image/svg+xml;charset=utf-8,%3Csvg xmlns="http://www.w3.org/2000/svg" width="600" height="600" viewBox="0 0 600 600"%3E%3Cpath fill="%232a0000" d="M300 0C134.3 0 0 134.3 0 300s134.3 300 300 300 300-134.3 300-300S465.7 0 300 0zm0 540C168.1 540 60 431.9 60 300S168.1 60 300 60s240 108.1 240 240-108.1 240-240 240zm0-440C188.1 100 100 188.1 100 300s88.1 200 200 200 200-88.1 200-200-88.1-200-200-200zm100 280h-200v-40h200v40z"/%3E%3C/svg%3E');
+            background-size: 50%; background-repeat: no-repeat; background-position: center; opacity: 0.1; z-index: -1; pointer-events: none;
+        }
+        /* Cursor Scorpion */
+        .mini-scorpion { position: absolute; pointer-events: none; width: 40px; height: 40px; filter: drop-shadow(0 0 5px red); animation: fadeOut 1s forwards; z-index: 9999; }
+        .mini-scorpion svg { width: 100%; height: 100%; fill: #ff0000; }
+        @keyframes fadeOut { 0% { opacity: 1; transform: scale(1) translateY(0); } 100% { opacity: 0; transform: scale(0.3) translateY(30px); } }
+        
+        .modal { display: none; background: rgba(0,0,0,0.85); backdrop-filter: blur(5px); }
+        .modal.active { display: flex; }
+    </style>
+</head>
+<body class="antialiased">
+
+    <!-- Navbar -->
+    <nav class="flex justify-between items-center p-6 bg-[#1a1a1a] border-b-2 border-scorpionRed">
+        <div class="text-2xl font-bold italic text-white tracking-widest">
+            SCORPION <span class="text-scorpionRed">CONTRACTORS</span>
+        </div>
+        <button onclick="document.getElementById('login-modal').classList.add('active')" class="text-white hover:text-scorpionRed font-bold transition">
+            <i class="fa-solid fa-user-lock mr-2"></i>Log in
+        </button>
+    </nav>
+
+    <!-- Hero Section -->
+    <header class="text-center py-20 px-4 bg-gradient-to-b from-black/80 to-transparent border-b border-gray-800">
+        <h1 class="text-4xl md:text-5xl font-extrabold text-scorpionRed uppercase tracking-widest mb-4">Encuentra al Contratista Ideal</h1>
+        <p class="text-xl text-gray-300 max-w-2xl mx-auto">Expertos en remodelación, construcción y mantenimiento. Selecciona a tu especialista y solicita una cotización hoy mismo.</p>
+    </header>
+
+    <!-- Catálogo de Contratistas -->
+    <main class="max-w-6xl mx-auto py-12 px-4">
+        <h2 class="text-3xl font-bold text-center mb-10 border-l-4 border-scorpionRed pl-4 w-fit mx-auto">Nuestros Especialistas</h2>
+        <div id="contractors-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <div class="text-center text-gray-500 col-span-full"><i class="fa-solid fa-spinner fa-spin text-3xl"></i> Cargando especialistas...</div>
+        </div>
+    </main>
+
+    <!-- Modal: Perfil y Agendamiento -->
+    <div id="profile-modal" class="modal fixed inset-0 z-50 justify-center items-center p-4">
+        <div class="bg-[#1a1a1a] w-full max-w-3xl rounded-xl border-t-4 border-scorpionRed shadow-[0_0_30px_rgba(204,0,0,0.3)] overflow-hidden flex flex-col md:flex-row max-h-[90vh]">
+            <div class="md:w-1/2 p-6 bg-[#111] flex flex-col items-center border-r border-gray-800 overflow-y-auto">
+                <button onclick="document.getElementById('profile-modal').classList.remove('active')" class="md:hidden absolute top-4 right-4 text-gray-400 hover:text-white"><i class="fa-solid fa-times text-2xl"></i></button>
+                <div id="modal-photo" class="w-32 h-32 rounded-full bg-gray-800 border-2 border-scorpionRed flex items-center justify-center text-4xl font-bold mb-4 overflow-hidden object-cover"></div>
+                <h3 id="modal-name" class="text-2xl font-bold text-white text-center"></h3>
+                <p id="modal-specialty" class="text-scorpionRed font-semibold mb-6"></p>
+                <div class="w-full">
+                    <h4 class="font-bold text-gray-300 mb-2 border-b border-gray-700 pb-1">Servicios y Costos Base</h4>
+                    <ul id="modal-services" class="space-y-2 text-sm text-gray-400"></ul>
+                </div>
+            </div>
+            <div class="md:w-1/2 p-6 flex flex-col relative overflow-y-auto">
+                <button onclick="document.getElementById('profile-modal').classList.remove('active')" class="hidden md:block absolute top-4 right-4 text-gray-400 hover:text-white"><i class="fa-solid fa-times text-2xl"></i></button>
+                <h3 class="text-xl font-bold mb-4">Solicitar Cotización</h3>
+                <form id="booking-form" class="space-y-4 flex-1">
+                    <input type="hidden" id="form-contractor-id">
+                    <div><label class="block text-sm text-gray-400">Nombre Completo</label><input type="text" id="form-name" required class="w-full mt-1 p-2 bg-[#222] border border-gray-700 rounded focus:border-scorpionRed outline-none text-white"></div>
+                    <div><label class="block text-sm text-gray-400">WhatsApp</label><input type="tel" id="form-phone" required class="w-full mt-1 p-2 bg-[#222] border border-gray-700 rounded focus:border-scorpionRed outline-none text-white"></div>
+                    <div><label class="block text-sm text-gray-400">Correo (Opcional)</label><input type="email" id="form-email" class="w-full mt-1 p-2 bg-[#222] border border-gray-700 rounded focus:border-scorpionRed outline-none text-white"></div>
+                    <div><label class="block text-sm text-gray-400">Servicio de Interés</label><select id="form-service" required class="w-full mt-1 p-2 bg-[#222] border border-gray-700 rounded focus:border-scorpionRed outline-none text-white"></select></div>
+                    <button type="submit" class="w-full py-3 bg-scorpionRed hover:bg-scorpionRedHover font-bold rounded uppercase transition mt-4">Enviar Solicitud</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal: Login -->
+    <div id="login-modal" class="modal fixed inset-0 z-[100] justify-center items-center p-4">
+        <div class="bg-[#1a1a1a] p-8 rounded-xl border-t-4 border-scorpionRed max-w-sm w-full shadow-2xl relative text-center">
+            <button onclick="document.getElementById('login-modal').classList.remove('active')" class="absolute top-4 right-4 text-gray-400 hover:text-white"><i class="fa-solid fa-times text-2xl"></i></button>
+            <h2 class="text-2xl font-bold mb-6 italic">SCORPION <span class="text-scorpionRed">ADMIN</span></h2>
+            <form id="login-form" class="space-y-4">
+                <input type="text" id="login-user" placeholder="Usuario" required class="w-full p-3 bg-[#222] border border-gray-700 rounded focus:border-scorpionRed outline-none text-white text-center">
+                <input type="password" id="login-pass" placeholder="Contraseña" required class="w-full p-3 bg-[#222] border border-gray-700 rounded focus:border-scorpionRed outline-none text-white text-center">
+                <button type="submit" class="w-full py-3 bg-scorpionRed hover:bg-scorpionRedHover font-bold rounded uppercase transition">Acceder al Panel</button>
+                <p id="login-error" class="text-red-500 text-sm hidden font-bold mt-2">Credenciales inválidas.</p>
+            </form>
+        </div>
+    </div>
+
+    <!-- FIREBASE & LOGIC -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-app.js";
+        import { getFirestore, collection, getDocs, query, where, addDoc, setDoc, doc } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-firestore.js";
+
+        // ==========================================
+        // 1. CONFIGURACIÓN DE FIREBASE 
+        // ==========================================
+        const firebaseConfig = {
+          apiKey: "AIzaSyByA7okEymQbHvY9DnPtEiPeDYHtcfH22s",
+          authDomain: "scorpion-contractors.firebaseapp.com",
+          projectId: "scorpion-contractors",
+          storageBucket: "scorpion-contractors.firebasestorage.app",
+          messagingSenderId: "666738840405",
+          appId: "1:666738840405:web:1970cd36faeae5fccd95dc"
+        };
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+
+        // ==========================================
+        // 2. EFECTO CURSOR ESCORPIÓN
+        // ==========================================
+        let lastTime = 0;
+        const scorpionSvg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 250 250"><path d="M125,12.5C62.8,12.5,12.5,62.8,12.5,125s50.3,112.5,112.5,112.5S237.5,187.2,237.5,125S187.2,12.5,125,12.5zm0,200 C69.7,212.5,25,167.8,25,112.5S69.7,12.5,125,12.5s100,44.7,100,100S180.3,212.5,125,212.5z"/><path d="M125,37.5C80.3,37.5,43.8,74.1,43.8,118.8c0,44.7,36.5,81.3,81.2,81.3c44.7,0,81.3-36.5,81.3-81.3 C206.2,74.1,169.7,37.5,125,37.5z M125,168.8c-27.6,0-50-22.4-50-50c0-27.6,22.4-50,50-50c27.6,0,50,22.4,50,50 C175,146.4,152.6,168.8,125,168.8z"/><path d="M150,112.5c0-13.8-11.2-25-25-25s-25,11.2-25,25s11.2,25,25,25S150,126.3,150,112.5z"/><path d="M175,87.5c0-13.8-11.2-25-25-25s-25,11.2-25,25s11.2,25,25,25S175,101.3,175,87.5z"/><path d="M100,87.5c0-13.8-11.2-25-25-25s-25,11.2-25,25s11.2,25,25,25S100,101.3,100,87.5z"/></svg>`;
+        document.addEventListener('mousemove', e => {
+            if (Date.now() - lastTime > 60) {
+                const scorp = document.createElement('div'); scorp.className = 'mini-scorpion'; scorp.innerHTML = scorpionSvg;
+                scorp.style.left = (e.pageX - 20) + 'px'; scorp.style.top = (e.pageY - 20) + 'px';
+                document.body.appendChild(scorp); setTimeout(() => scorp.remove(), 1000);
+                lastTime = Date.now();
+            }
+        });
+
+        // ==========================================
+        // 3. LOGICA PRINCIPAL FIREBASE
+        // ==========================================
+        async function loadContractors() {
+            try {
+                const querySnapshot = await getDocs(collection(db, "contratistas"));
+                const grid = document.getElementById('contractors-grid');
+                grid.innerHTML = '';
+                
+                // --- TRUCO: Crear a Ricardo automáticamente si la DB está vacía ---
+                if(querySnapshot.empty) {
+                    await setDoc(doc(db, "contratistas", "admin1"), {
+                        user: "Ricardo", pass: "Fernanda", name: "Ricardo", specialty: "Contratista General",
+                        photo: "", services: [{name: "Remodelación General", price: "$5,500 Base"}, {name: "Instalación de Pisos", price: "Cotizar por m2"}]
+                    });
+                    loadContractors(); return;
+                }
+
+                window.allContractors = [];
+                querySnapshot.forEach(doc => {
+                    const data = doc.data();
+                    data.id = doc.id;
+                    window.allContractors.push(data);
+                    
+                    const avatar = data.photo ? `<img src="${data.photo}" class="w-full h-full object-cover">` : data.name.charAt(0);
+                    grid.innerHTML += `
+                        <div class="bg-[#1a1a1a] rounded-xl p-6 border border-gray-800 hover:border-scorpionRed transition cursor-pointer flex flex-col items-center group shadow-lg" onclick="openProfile('${data.id}')">
+                            <div class="w-24 h-24 rounded-full bg-gray-800 border-2 border-transparent group-hover:border-scorpionRed flex items-center justify-center text-3xl font-bold overflow-hidden mb-4 transition">${avatar}</div>
+                            <h3 class="text-xl font-bold text-white">${data.name}</h3>
+                            <p class="text-sm text-scorpionRed mb-4">${data.specialty}</p>
+                            <button class="px-4 py-2 bg-[#222] group-hover:bg-scorpionRed text-white text-sm rounded font-bold transition w-full">Ver Perfil y Agendar</button>
+                        </div>
+                    `;
+                });
+            } catch(e) { console.log("Revisa tu conexión a Firebase", e); }
+        }
+
+        window.openProfile = function(id) {
+            const c = window.allContractors.find(x => x.id === id);
+            document.getElementById('modal-photo').innerHTML = c.photo ? `<img src="${c.photo}" class="w-full h-full object-cover">` : c.name.charAt(0);
+            document.getElementById('modal-name').innerText = c.name;
+            document.getElementById('modal-specialty').innerText = c.specialty;
+            document.getElementById('form-contractor-id').value = id;
+            
+            const list = document.getElementById('modal-services');
+            const select = document.getElementById('form-service');
+            list.innerHTML = ''; select.innerHTML = '<option value="">Selecciona un servicio</option>';
+            
+            if(c.services) {
+                c.services.forEach(s => {
+                    list.innerHTML += `<li class="flex justify-between border-b border-gray-800 pb-1"><span>${s.name}</span> <span class="text-white">${s.price}</span></li>`;
+                    select.innerHTML += `<option value="${s.name}">${s.name}</option>`;
+                });
+            }
+            document.getElementById('profile-modal').classList.add('active');
+        }
+
+        document.getElementById('booking-form').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const btn = e.target.querySelector('button'); btn.innerText = "Enviando..."; btn.disabled = true;
+            try {
+                await addDoc(collection(db, "solicitudes"), {
+                    contractorId: document.getElementById('form-contractor-id').value,
+                    clientName: document.getElementById('form-name').value,
+                    phone: document.getElementById('form-phone').value,
+                    email: document.getElementById('form-email').value,
+                    service: document.getElementById('form-service').value,
+                    status: 'pending',
+                    createdAt: new Date().toISOString()
+                });
+                alert("¡Solicitud enviada con éxito! El contratista se comunicará pronto.");
+                document.getElementById('profile-modal').classList.remove('active');
+                e.target.reset();
+            } catch(err) { alert("Error al enviar."); }
+            btn.innerText = "Enviar Solicitud"; btn.disabled = false;
+        });
+
+        document.getElementById('login-form').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const u = document.getElementById('login-user').value;
+            const p = document.getElementById('login-pass').value;
+            
+            const q = query(collection(db, "contratistas"), where("user", "==", u), where("pass", "==", p));
+            const querySnapshot = await getDocs(q);
+            
+            if(!querySnapshot.empty) {
+                const adminDoc = querySnapshot.docs[0];
+                localStorage.setItem('scorpionAdminId', adminDoc.id);
+                window.location.href = 'admin.html';
+            } else {
+                document.getElementById('login-error').classList.remove('hidden');
+            }
+        });
+
+        loadContractors();
+    </script>
+</body>
+</html>
