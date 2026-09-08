@@ -52,8 +52,8 @@
         <!-- Navbar -->
         <nav class="flex justify-between items-center p-6 bg-[#1a1a1a] border-b-2 border-scorpionRed">
             <div class="text-2xl font-bold italic text-white tracking-widest flex items-center gap-3">
-                <!-- LOGO LOCAL -->
-                <img src="logo.png" alt="Scorpion Logo" class="w-12 h-12 object-contain flex-shrink-0">
+                <!-- LOGO DINÁMICO PÚBLICO -->
+                <img id="public-site-logo" src="" alt="Logo" class="w-16 h-16 object-contain flex-shrink-0">
                 <div>SCORPION <span class="text-scorpionRed">PERFORMANCE</span></div>
             </div>
             <button onclick="document.getElementById('login-modal').classList.add('active')" class="text-gray-400 hover:text-scorpionRed font-bold transition">
@@ -83,8 +83,8 @@
     <div id="admin-dashboard-section" class="admin-dashboard flex-row w-full">
         <aside class="w-64 bg-[#1a1a1a] border-r border-gray-800 flex flex-col h-screen flex-shrink-0">
             <div class="p-6 border-b border-gray-800 text-center">
-                <!-- LOGO LOCAL EN EL PANEL -->
-                <img src="logo.png" alt="Scorpion Logo" class="w-16 h-16 object-contain mb-2 flex-shrink-0 mx-auto">
+                <!-- LOGO DINÁMICO ADMIN -->
+                <img id="admin-site-logo" src="" alt="Logo" class="w-12 h-12 object-contain mb-2 flex-shrink-0 mx-auto">
                 <h2 class="text-xl font-bold italic">SCORPION <span class="text-scorpionRed">PERFORMANCE</span></h2>
                 <p class="text-xs text-gray-400 mt-1">Bienvenido, Ricardo</p>
             </div>
@@ -135,7 +135,6 @@
                     <button id="btn-add-service" class="mt-4 w-full py-3 bg-scorpionRed hover:bg-scorpionRedHover text-white font-bold rounded uppercase transition">Guardar y Publicar Trabajo</button>
                 </div>
 
-                <!-- Lista de Trabajos Guardados -->
                 <h3 class="text-xl font-bold mb-4 text-white">Trabajos Publicados</h3>
                 <div id="admin-services-list" class="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <!-- Se llena con JS -->
@@ -178,13 +177,25 @@
                 <div id="calendar-grid"></div>
             </section>
 
-            <!-- Pestaña: AJUSTES -->
+            <!-- Pestaña: AJUSTES (Logo y Contraseña) -->
             <section id="tab-settings" class="tab-content max-w-xl mx-auto hidden">
-                <h2 class="text-3xl font-bold mb-6 border-b border-gray-800 pb-4">Ajustes de Seguridad</h2>
+                <h2 class="text-3xl font-bold mb-6 border-b border-gray-800 pb-4">Ajustes Generales</h2>
+                
+                <div class="bg-[#1a1a1a] p-6 rounded-xl border border-gray-800 shadow-lg mb-6">
+                    <h3 class="text-xl font-bold mb-4 text-scorpionRed">Cambiar Logo de la Empresa</h3>
+                    <p class="text-sm text-gray-400 mb-4">Sube tu logo para actualizarlo en toda la página. Recomendado: formato PNG sin fondo.</p>
+                    <div class="flex items-center gap-4 mb-4">
+                        <img id="preview-site-logo" src="" class="w-20 h-20 bg-black rounded border border-gray-700 object-contain p-1 flex-shrink-0">
+                        <input type="file" id="input-site-logo" accept="image/*" class="w-full text-sm text-gray-400 file:mr-4 file:py-2 file:px-4 file:rounded file:border-0 file:text-sm file:font-semibold file:bg-gray-700 file:text-white hover:file:bg-gray-600">
+                    </div>
+                    <button id="btn-save-logo" class="w-full py-2 bg-scorpionRed hover:bg-scorpionRedHover font-bold rounded transition">Guardar y Actualizar Logo</button>
+                </div>
+
                 <div class="bg-[#1a1a1a] p-6 rounded-xl border border-gray-800 shadow-lg">
-                    <label class="block text-sm text-gray-400 mb-1">Nueva Contraseña (Dejar en blanco si no quieres cambiarla)</label>
-                    <input type="password" id="prof-pass" class="w-full mt-1 mb-6 p-3 bg-[#222] border border-gray-700 rounded text-white outline-none focus:border-scorpionRed">
-                    <button id="btn-save-settings" class="w-full py-3 bg-scorpionRed hover:bg-scorpionRedHover font-bold rounded transition">Actualizar Seguridad</button>
+                    <h3 class="text-xl font-bold mb-4 text-scorpionRed">Seguridad</h3>
+                    <label class="block text-sm text-gray-400 mb-1">Nueva Contraseña de Administrador</label>
+                    <input type="password" id="prof-pass" placeholder="Dejar en blanco si no quieres cambiarla" class="w-full mt-1 mb-4 p-3 bg-[#222] border border-gray-700 rounded text-white outline-none focus:border-scorpionRed">
+                    <button id="btn-save-settings" class="w-full py-2 bg-gray-700 hover:bg-gray-600 font-bold rounded transition">Actualizar Contraseña</button>
                 </div>
             </section>
 
@@ -211,9 +222,9 @@
         </div>
     </div>
 
-    <!-- Modal: Solicitar Cita (Público) -->
+    <!-- Modal: Solicitar Cita -->
     <div id="booking-modal" class="modal fixed inset-0 z-50 justify-center items-center p-4">
-        <div class="bg-[#1a1a1a] p-8 rounded-xl border-t-4 border-scorpionRed max-md w-full shadow-2xl relative">
+        <div class="bg-[#1a1a1a] p-8 rounded-xl border-t-4 border-scorpionRed max-w-md w-full shadow-2xl relative">
             <button onclick="document.getElementById('booking-modal').classList.remove('active')" class="absolute top-4 right-4 text-gray-400 hover:text-white"><i class="fa-solid fa-times text-2xl"></i></button>
             <h3 class="text-2xl font-bold mb-2 text-white">Agendar Cita</h3>
             <p id="booking-service-title" class="text-scorpionRed font-bold mb-6"></p>
@@ -271,7 +282,7 @@
         const ADMIN_DOC_ID = "admin_ricardo";
 
         // ==========================================
-        // 2. FUNCIONES DE CAMBIO DE PESTAÑAS
+        // 2. FUNCIONES BÁSICAS
         // ==========================================
         window.changeView = function(view) {
             if (view === 'public') {
@@ -292,20 +303,21 @@
             btn.classList.add('active');
         };
 
+        const defaultLogoSVG = "data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 250 250'%3E%3Cpath fill='%23cc0000' d='M125,12.5C62.8,12.5,12.5,62.8,12.5,125s50.3,112.5,112.5,112.5S237.5,187.2,237.5,125S187.2,12.5,125,12.5zm0,200 C69.7,212.5,25,167.8,25,112.5S69.7,12.5,125,12.5s100,44.7,100,100S180.3,212.5,125,212.5z'/%3E%3Cpath fill='%23cc0000' d='M125,37.5C80.3,37.5,43.8,74.1,43.8,118.8c0,44.7,36.5,81.3,81.2,81.3c44.7,0,81.3-36.5,81.3-81.3 C206.2,74.1,169.7,37.5,125,37.5z M125,168.8c-27.6,0-50-22.4-50-50c0-27.6,22.4-50,50-50c27.6,0,50,22.4,50,50 C175,146.4,152.6,168.8,125,168.8z'/%3E%3Cpath fill='%23cc0000' d='M150,112.5c0-13.8-11.2-25-25-25s-25,11.2-25,25s11.2,25,25,25S150,126.3,150,112.5z'/%3E%3Cpath fill='%23cc0000' d='M175,87.5c0-13.8-11.2-25-25-25s-25,11.2-25,25s11.2,25,25,25S175,101.3,175,87.5z'/%3E%3Cpath fill='%23cc0000' d='M100,87.5c0-13.8-11.2-25-25-25s-25,11.2-25,25s11.2,25,25,25S100,101.3,100,87.5z'/%3E%3C/svg%3E";
+
         let lastTime = 0;
-        const scorpionSvg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 250 250"><path d="M125,12.5C62.8,12.5,12.5,62.8,12.5,125s50.3,112.5,112.5,112.5S237.5,187.2,237.5,125S187.2,12.5,125,12.5zm0,200 C69.7,212.5,25,167.8,25,112.5S69.7,12.5,125,12.5s100,44.7,100,100S180.3,212.5,125,212.5z"/><path d="M125,37.5C80.3,37.5,43.8,74.1,43.8,118.8c0,44.7,36.5,81.3,81.2,81.3c44.7,0,81.3-36.5,81.3-81.3 C206.2,74.1,169.7,37.5,125,37.5z M125,168.8c-27.6,0-50-22.4-50-50c0-27.6,22.4-50,50-50c27.6,0,50,22.4,50,50 C175,146.4,152.6,168.8,125,168.8z"/><path d="M150,112.5c0-13.8-11.2-25-25-25s-25,11.2-25,25s11.2,25,25,25S150,126.3,150,112.5z"/><path d="M175,87.5c0-13.8-11.2-25-25-25s-25,11.2-25,25s11.2,25,25,25S175,101.3,175,87.5z"/><path d="M100,87.5c0-13.8-11.2-25-25-25s-25,11.2-25,25s11.2,25,25,25S100,101.3,100,87.5z"/></svg>`;
         document.addEventListener('mousemove', e => {
             if (document.getElementById('public-web-section').style.display !== 'none' && Date.now() - lastTime > 60) {
-                const scorp = document.createElement('div'); scorp.className = 'mini-scorpion'; scorp.innerHTML = scorpionSvg;
+                const scorp = document.createElement('div'); scorp.className = 'mini-scorpion'; scorp.innerHTML = defaultLogoSVG;
                 scorp.style.left = (e.pageX - 20) + 'px'; scorp.style.top = (e.pageY - 20) + 'px';
                 document.body.appendChild(scorp); setTimeout(() => scorp.remove(), 1000); lastTime = Date.now();
             }
         });
 
         // ==========================================
-        // 3. INICIALIZAR Y CARGAR DATOS
+        // 3. INICIALIZAR APP
         // ==========================================
-        let globalAdminData = { services: [] };
+        let globalAdminData = { services: [], siteLogo: "" };
 
         async function initApp() {
             try {
@@ -314,8 +326,8 @@
 
                 if (!docSnap.exists()) {
                     await setDoc(docRef, {
-                        user: "Ricardo", pass: "Fernanda",
-                        services: [{ id: "1", name: "Remodelación de Baño de Ejemplo", price: "$3,500", time: "5 Días", description: "Remodelación completa incluyendo plomería y pisos.", photo: "https://via.placeholder.com/600x400/222222/cc0000?text=Ejemplo+Remodelacion" }]
+                        user: "Ricardo", pass: "Fernanda", siteLogo: defaultLogoSVG,
+                        services: [{ id: "1", name: "Remodelación Ejemplo", price: "$3,500", time: "5 Días", description: "Descripción del servicio.", photo: "https://via.placeholder.com/600x400/222222/cc0000" }]
                     });
                     globalAdminData = (await getDoc(docRef)).data();
                 } else {
@@ -323,34 +335,31 @@
                     if(!globalAdminData.services) globalAdminData.services = [];
                 }
 
+                // Cargar logo en toda la página
+                const currentLogo = globalAdminData.siteLogo || defaultLogoSVG;
+                document.getElementById('public-site-logo').src = currentLogo;
+                document.getElementById('admin-site-logo').src = currentLogo;
+                document.getElementById('preview-site-logo').src = currentLogo;
+
                 renderPublicPortfolio();
 
                 if (localStorage.getItem('scorpionAdminSession') === 'true') {
-                    window.changeView('admin');
-                    bootAdminPanel();
-                } else {
-                    window.changeView('public');
-                }
+                    window.changeView('admin'); bootAdminPanel();
+                } else { window.changeView('public'); }
             } catch (error) {
-                console.error("Error al iniciar App:", error);
-                document.getElementById('services-grid').innerHTML = '<div class="col-span-full text-center text-red-500 font-bold">Error de conexión a Firebase. Verifica la configuración.</div>';
+                document.getElementById('services-grid').innerHTML = '<div class="col-span-full text-center text-red-500 font-bold">Error de conexión a Firebase. Verifica tu configuración.</div>';
             }
         }
 
         // ==========================================
-        // 4. LÓGICA DEL PORTAFOLIO PÚBLICO
+        // 4. PORTAFOLIO PÚBLICO Y CITAS
         // ==========================================
         function renderPublicPortfolio() {
-            const grid = document.getElementById('services-grid');
-            grid.innerHTML = '';
-            
-            if(globalAdminData.services.length === 0) {
-                grid.innerHTML = '<div class="col-span-full text-center text-gray-500">Aún no hay trabajos publicados en el portafolio.</div>';
-                return;
-            }
+            const grid = document.getElementById('services-grid'); grid.innerHTML = '';
+            if(globalAdminData.services.length === 0) { grid.innerHTML = '<div class="col-span-full text-center text-gray-500">Aún no hay trabajos publicados.</div>'; return; }
 
             globalAdminData.services.forEach(s => {
-                const img = s.photo || 'https://via.placeholder.com/600x400/222222/666666?text=Sin+Foto';
+                const img = s.photo || 'https://via.placeholder.com/600x400/222222/666666';
                 grid.innerHTML += `
                     <div class="bg-[#1a1a1a] rounded-xl overflow-hidden shadow-lg border border-gray-800 hover:border-scorpionRed hover:scale-105 transition-all duration-300 cursor-pointer group flex flex-col" onclick="window.openBookingModal('${s.id}')">
                         <div class="h-56 w-full bg-[#111] overflow-hidden relative">
@@ -380,20 +389,16 @@
 
         document.getElementById('booking-form').addEventListener('submit', async (e) => {
             e.preventDefault();
-            const btn = document.getElementById('btn-booking-submit');
-            btn.innerText = "Enviando..."; btn.disabled = true;
+            const btn = document.getElementById('btn-booking-submit'); btn.innerText = "Enviando..."; btn.disabled = true;
             try {
                 await addDoc(collection(db, "solicitudes_citas"), {
-                    clientName: document.getElementById('form-name').value,
-                    phone: document.getElementById('form-phone').value,
-                    notes: document.getElementById('form-notes').value,
-                    service: document.getElementById('form-service-name').value,
+                    clientName: document.getElementById('form-name').value, phone: document.getElementById('form-phone').value,
+                    notes: document.getElementById('form-notes').value, service: document.getElementById('form-service-name').value,
                     status: 'pending', createdAt: new Date().toISOString()
                 });
-                alert("¡Solicitud enviada! Ricardo se comunicará contigo muy pronto.");
-                document.getElementById('booking-modal').classList.remove('active');
-                e.target.reset(); 
-            } catch(err) { alert("Error al enviar."); }
+                alert("¡Solicitud enviada! Nos comunicaremos pronto.");
+                document.getElementById('booking-modal').classList.remove('active'); e.target.reset(); 
+            } catch(err) {}
             btn.innerText = "Confirmar Solicitud"; btn.disabled = false;
         });
 
@@ -408,21 +413,16 @@
             try {
                 const docSnap = await getDoc(doc(db, "configuracion", ADMIN_DOC_ID));
                 const data = docSnap.data();
-                
                 if(data && data.user === u && data.pass === p) {
                     localStorage.setItem('scorpionAdminSession', 'true');
                     document.getElementById('login-modal').classList.remove('active'); e.target.reset();
-                    window.changeView('admin');
-                    bootAdminPanel();
+                    window.changeView('admin'); bootAdminPanel();
                 } else { document.getElementById('login-error').classList.remove('hidden'); }
             } catch(e) {}
             btn.innerText = "Acceder al Panel"; btn.disabled = false;
         });
 
-        document.getElementById('btn-logout').addEventListener('click', () => {
-            localStorage.removeItem('scorpionAdminSession');
-            window.location.reload(); 
-        });
+        document.getElementById('btn-logout').addEventListener('click', () => { localStorage.removeItem('scorpionAdminSession'); window.location.reload(); });
 
         // ==========================================
         // 6. LÓGICA DEL PANEL DE ADMINISTRACIÓN
@@ -432,19 +432,14 @@
         function bootAdminPanel() {
             if(adminBooted) return;
             
+            // Renderizar Portafolio
             const renderAdminServices = () => {
                 const list = document.getElementById('admin-services-list'); list.innerHTML = '';
                 globalAdminData.services.forEach((s, idx) => {
                     list.innerHTML += `
                         <div class="bg-[#222] p-4 rounded border border-gray-700 flex gap-4 items-center shadow-md">
-                            <div class="w-20 h-20 bg-black rounded overflow-hidden flex-shrink-0">
-                                <img src="${s.photo || 'https://via.placeholder.com/150'}" class="w-full h-full object-cover">
-                            </div>
-                            <div class="flex-1">
-                                <h4 class="font-bold text-white text-lg">${s.name}</h4>
-                                <p class="text-xs text-scorpionRed font-bold">${s.price} • ${s.time}</p>
-                                <p class="text-xs text-gray-400 mt-1 line-clamp-1">${s.description}</p>
-                            </div>
+                            <div class="w-20 h-20 bg-black rounded overflow-hidden flex-shrink-0"><img src="${s.photo || 'https://via.placeholder.com/150'}" class="w-full h-full object-cover"></div>
+                            <div class="flex-1"><h4 class="font-bold text-white text-lg">${s.name}</h4><p class="text-xs text-scorpionRed font-bold">${s.price} • ${s.time}</p><p class="text-xs text-gray-400 mt-1 line-clamp-1">${s.description}</p></div>
                             <button onclick="window.removeService(${idx})" class="w-10 h-10 bg-gray-800 hover:bg-scorpionRed text-white rounded transition shadow"><i class="fa-solid fa-trash"></i></button>
                         </div>
                     `;
@@ -452,124 +447,111 @@
             };
             renderAdminServices();
 
-            // Guardar un nuevo Trabajo
+            // Guardar Servicio
             document.getElementById('btn-add-service').addEventListener('click', async () => {
-                const name = document.getElementById('new-srv-name').value.trim();
-                const price = document.getElementById('new-srv-price').value.trim();
-                const time = document.getElementById('new-srv-time').value.trim();
-                const desc = document.getElementById('new-srv-desc').value.trim();
-                const fileInput = document.getElementById('new-srv-photo');
-                const btn = document.getElementById('btn-add-service');
+                const name = document.getElementById('new-srv-name').value.trim(); const price = document.getElementById('new-srv-price').value.trim();
+                const time = document.getElementById('new-srv-time').value.trim(); const desc = document.getElementById('new-srv-desc').value.trim();
+                const fileInput = document.getElementById('new-srv-photo'); const btn = document.getElementById('btn-add-service');
 
                 if(!name || !price || !desc) return alert("Por favor llena Nombre, Costo y Descripción.");
-
-                btn.innerText = "Guardando Trabajo..."; btn.disabled = true;
+                btn.innerText = "Guardando..."; btn.disabled = true;
 
                 const saveToFirebase = async (base64Img) => {
-                    globalAdminData.services.push({
-                        id: Date.now().toString(), name: name, price: price, time: time || "Variable",
-                        description: desc, photo: base64Img
-                    });
-
+                    globalAdminData.services.push({ id: Date.now().toString(), name: name, price: price, time: time || "Variable", description: desc, photo: base64Img });
                     try {
                         await updateDoc(doc(db, "configuracion", ADMIN_DOC_ID), { services: globalAdminData.services });
-                        document.getElementById('new-srv-name').value = ''; document.getElementById('new-srv-price').value = '';
-                        document.getElementById('new-srv-time').value = ''; document.getElementById('new-srv-desc').value = ''; fileInput.value = '';
-                        renderAdminServices();
-                        renderPublicPortfolio(); // Actualizar de inmediato la vista pública
-                        alert("Trabajo publicado con éxito.");
-                    } catch(e) { alert("Error al guardar."); }
+                        document.getElementById('new-srv-name').value = ''; document.getElementById('new-srv-price').value = ''; document.getElementById('new-srv-time').value = ''; document.getElementById('new-srv-desc').value = ''; fileInput.value = '';
+                        renderAdminServices(); renderPublicPortfolio(); alert("Trabajo publicado.");
+                    } catch(e) {}
                     btn.innerText = "Guardar y Publicar Trabajo"; btn.disabled = false;
                 };
 
                 if(fileInput.files.length > 0) {
-                    const reader = new FileReader();
-                    reader.onload = (e) => saveToFirebase(e.target.result);
-                    reader.readAsDataURL(fileInput.files[0]);
+                    const reader = new FileReader(); reader.onload = (e) => saveToFirebase(e.target.result); reader.readAsDataURL(fileInput.files[0]);
                 } else { saveToFirebase(""); }
             });
 
-            // Eliminar Servicio
             window.removeService = async function(idx) {
-                if(confirm("¿Eliminar este trabajo de tu portafolio público?")) {
+                if(confirm("¿Eliminar este trabajo?")) {
                     globalAdminData.services.splice(idx, 1);
                     await updateDoc(doc(db, "configuracion", ADMIN_DOC_ID), { services: globalAdminData.services });
-                    renderAdminServices();
-                    renderPublicPortfolio();
+                    renderAdminServices(); renderPublicPortfolio();
                 }
             }
 
-            // Cambiar Contraseña
-            document.getElementById('btn-save-settings').addEventListener('click', async () => {
-                const pass = document.getElementById('prof-pass').value.trim();
-                if(pass !== '') {
-                    await updateDoc(doc(db, "configuracion", ADMIN_DOC_ID), { pass: pass });
-                    alert("Contraseña actualizada con éxito."); document.getElementById('prof-pass').value = '';
-                }
+            // AJUSTES: Cargar y Guardar Nuevo Logo
+            let newLogoBase64 = null;
+            document.getElementById('input-site-logo').addEventListener('change', function(e) {
+                const file = e.target.files[0]; if(!file) return;
+                const reader = new FileReader();
+                reader.onload = function(event) {
+                    newLogoBase64 = event.target.result;
+                    document.getElementById('preview-site-logo').src = newLogoBase64;
+                };
+                reader.readAsDataURL(file);
             });
 
-            // Solicitudes en vivo
+            document.getElementById('btn-save-logo').addEventListener('click', async () => {
+                if(!newLogoBase64) return alert("Por favor, selecciona una imagen primero.");
+                const btn = document.getElementById('btn-save-logo'); btn.innerText = "Actualizando Logo..."; btn.disabled = true;
+                try {
+                    await updateDoc(doc(db, "configuracion", ADMIN_DOC_ID), { siteLogo: newLogoBase64 });
+                    globalAdminData.siteLogo = newLogoBase64;
+                    document.getElementById('public-site-logo').src = newLogoBase64;
+                    document.getElementById('admin-site-logo').src = newLogoBase64;
+                    alert("Logo de la empresa actualizado con éxito.");
+                } catch(e) { alert("Error al subir el logo."); }
+                btn.innerText = "Guardar y Actualizar Logo"; btn.disabled = false;
+            });
+
+            // Ajustes: Contraseña
+            document.getElementById('btn-save-settings').addEventListener('click', async () => {
+                const pass = document.getElementById('prof-pass').value.trim();
+                if(pass !== '') { await updateDoc(doc(db, "configuracion", ADMIN_DOC_ID), { pass: pass }); alert("Contraseña actualizada."); document.getElementById('prof-pass').value = ''; }
+            });
+
+            // Calendario y Solicitudes
             let currentRequests = []; let allAppointments = []; let selectedRequestId = null;
             onSnapshot(collection(db, "solicitudes_citas"), (snapshot) => {
                 currentRequests = []; allAppointments = [];
-                snapshot.forEach(doc => {
-                    const data = doc.data(); data.id = doc.id;
-                    if(data.status === 'pending') currentRequests.push(data);
-                    if(data.status === 'scheduled') allAppointments.push(data);
-                });
+                snapshot.forEach(doc => { const data = doc.data(); data.id = doc.id; if(data.status === 'pending') currentRequests.push(data); if(data.status === 'scheduled') allAppointments.push(data); });
                 renderRequests(); renderCalendar();
             });
 
             function renderRequests() {
                 const tbody = document.getElementById('requests-tbody'); tbody.innerHTML = '';
                 if(currentRequests.length === 0) { tbody.innerHTML = '<tr><td colspan="4" class="p-4 text-center text-gray-500">No tienes solicitudes nuevas pendientes.</td></tr>'; return; }
-                currentRequests.forEach(req => {
-                    tbody.innerHTML += `<tr class="hover:bg-[#222]"><td class="p-4 font-bold text-white">${req.clientName}</td><td class="p-4 text-sm text-scorpionRed">${req.service}</td><td class="p-4 text-sm"><i class="fa-brands fa-whatsapp text-green-500 mr-2"></i>${req.phone}</td><td class="p-4 text-center"><button onclick="window.openAssignModal('${req.id}')" class="px-3 py-2 bg-green-600 hover:bg-green-500 rounded text-sm font-bold shadow-lg transition">Agendar</button></td></tr>`;
-                });
+                currentRequests.forEach(req => { tbody.innerHTML += `<tr class="hover:bg-[#222]"><td class="p-4 font-bold text-white">${req.clientName}</td><td class="p-4 text-sm text-scorpionRed">${req.service}</td><td class="p-4 text-sm"><i class="fa-brands fa-whatsapp text-green-500 mr-2"></i>${req.phone}</td><td class="p-4 text-center"><button onclick="window.openAssignModal('${req.id}')" class="px-3 py-2 bg-green-600 hover:bg-green-500 rounded text-sm font-bold shadow-lg transition">Agendar</button></td></tr>`; });
             }
 
             window.openAssignModal = function(id) { selectedRequestId = id; document.getElementById('date-modal').classList.add('active'); }
             document.getElementById('btn-confirm-date').addEventListener('click', async () => {
-                const d = document.getElementById('assign-date').value; const t = document.getElementById('assign-time').value;
-                if(!d || !t) return;
-                try {
-                    await updateDoc(doc(db, "solicitudes_citas", selectedRequestId), { status: 'scheduled', scheduledDate: d, scheduledTime: t });
-                    document.getElementById('date-modal').classList.remove('active'); alert("Cita agendada en tu calendario.");
-                } catch(e) {}
+                const d = document.getElementById('assign-date').value; const t = document.getElementById('assign-time').value; if(!d || !t) return;
+                try { await updateDoc(doc(db, "solicitudes_citas", selectedRequestId), { status: 'scheduled', scheduledDate: d, scheduledTime: t }); document.getElementById('date-modal').classList.remove('active'); alert("Cita agendada."); } catch(e) {}
             });
 
-            // Calendario
             let currentDate = new Date();
             function renderCalendar() {
-                const grid = document.getElementById('calendar-grid'); const monthLabel = document.getElementById('cal-month-year');
-                grid.innerHTML = '';
-                const year = currentDate.getFullYear(); const month = currentDate.getMonth();
-                const firstDayIndex = new Date(year, month, 1).getDay(); const lastDay = new Date(year, month + 1, 0).getDate();
+                const grid = document.getElementById('calendar-grid'); const monthLabel = document.getElementById('cal-month-year'); grid.innerHTML = '';
+                const year = currentDate.getFullYear(); const month = currentDate.getMonth(); const firstDayIndex = new Date(year, month, 1).getDay(); const lastDay = new Date(year, month + 1, 0).getDate();
                 const monthsStr = ["Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre"];
-                monthLabel.innerText = `${monthsStr[month]} ${year}`;
-                const today = new Date();
+                monthLabel.innerText = `${monthsStr[month]} ${year}`; const today = new Date();
                 
                 for(let i = 0; i < firstDayIndex; i++) grid.innerHTML += `<div></div>`;
-                
                 for(let i = 1; i <= lastDay; i++) {
                     const dateStr = `${year}-${String(month+1).padStart(2,'0')}-${String(i).padStart(2,'0')}`;
                     const isToday = (i === today.getDate() && month === today.getMonth() && year === today.getFullYear());
                     const dayAppts = allAppointments.filter(a => a.scheduledDate === dateStr);
                     let eventsHtml = ''; let tooltipHtml = '';
-                    
                     if(dayAppts.length > 0) {
                         tooltipHtml = `<div class="tooltip"><h4 class="text-scorpionRed font-bold mb-2 border-b border-red-900 pb-1 text-base">Agenda del Día</h4><div class="space-y-3">`;
-                        dayAppts.forEach(a => {
-                            eventsHtml += `<div class="event-badge">${a.scheduledTime} - ${a.clientName.split(' ')[0]}</div>`;
-                            tooltipHtml += `<div class="text-sm"><p class="font-bold text-white"><i class="fa-regular fa-clock text-scorpionRed mr-1"></i>${a.scheduledTime}</p><p class="text-gray-300"><i class="fa-solid fa-user mr-1"></i>${a.clientName}</p><p class="text-gray-400 text-xs mt-1 border-l-2 border-scorpionRed pl-2">${a.service}</p><p class="text-green-400 text-xs mt-1"><i class="fa-brands fa-whatsapp mr-1"></i>${a.phone}</p><div class="mt-2 flex gap-2"><button onclick="window.openAssignModal('${a.id}')" class="px-2 py-1 bg-gray-700 hover:bg-gray-600 rounded text-xs flex-1 transition">Mover</button><button onclick="window.cancelAppt('${a.id}')" class="px-2 py-1 bg-red-900 hover:bg-red-800 rounded text-xs flex-1 transition">Cancelar</button></div></div>`;
-                        });
+                        dayAppts.forEach(a => { eventsHtml += `<div class="event-badge">${a.scheduledTime} - ${a.clientName.split(' ')[0]}</div>`; tooltipHtml += `<div class="text-sm"><p class="font-bold text-white"><i class="fa-regular fa-clock text-scorpionRed mr-1"></i>${a.scheduledTime}</p><p class="text-gray-300"><i class="fa-solid fa-user mr-1"></i>${a.clientName}</p><p class="text-gray-400 text-xs mt-1 border-l-2 border-scorpionRed pl-2">${a.service}</p><p class="text-green-400 text-xs mt-1"><i class="fa-brands fa-whatsapp mr-1"></i>${a.phone}</p><div class="mt-2 flex gap-2"><button onclick="window.openAssignModal('${a.id}')" class="px-2 py-1 bg-gray-700 hover:bg-gray-600 rounded text-xs flex-1 transition">Mover</button><button onclick="window.cancelAppt('${a.id}')" class="px-2 py-1 bg-red-900 hover:bg-red-800 rounded text-xs flex-1 transition">Cancelar</button></div></div>`; });
                         tooltipHtml += `</div></div>`;
                     }
                     grid.innerHTML += `<div class="day-cell ${isToday ? 'today' : ''} h-full relative"><div class="font-bold text-gray-500 absolute top-1 left-1">${i}</div><div class="pt-6 space-y-1">${eventsHtml}</div>${tooltipHtml}</div>`;
                 }
             }
-            
-            window.cancelAppt = async function(id) { if(confirm("¿Seguro que deseas cancelar y borrar esta cita?")) { await updateDoc(doc(db, "solicitudes_citas", id), { status: 'cancelled' }); } }
+            window.cancelAppt = async function(id) { if(confirm("¿Seguro que deseas cancelar esta cita?")) { await updateDoc(doc(db, "solicitudes_citas", id), { status: 'cancelled' }); } }
             document.getElementById('cal-prev').addEventListener('click', () => { currentDate.setMonth(currentDate.getMonth() - 1); renderCalendar(); });
             document.getElementById('cal-next').addEventListener('click', () => { currentDate.setMonth(currentDate.getMonth() + 1); renderCalendar(); });
 
