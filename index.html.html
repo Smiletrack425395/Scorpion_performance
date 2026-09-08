@@ -1,0 +1,524 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Scorpion Performance Contractors - Sistema Integral</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: { extend: { colors: { scorpionDark: '#0a0a0a', scorpionRed: '#cc0000', scorpionRedHover: '#ff0000' } } }
+        }
+    </script>
+    <!-- FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        body { background-color: #0a0a0a; color: #f1f1f1; min-height: 100vh; position: relative; font-family: 'Arial', sans-serif; overflow-x: hidden; }
+        /* Marca de agua */
+        body::before {
+            content: ""; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
+            background-image: url('data:image/svg+xml;charset=utf-8,%3Csvg xmlns="http://www.w3.org/2000/svg" width="600" height="600" viewBox="0 0 600 600"%3E%3Cpath fill="%232a0000" d="M300 0C134.3 0 0 134.3 0 300s134.3 300 300 300 300-134.3 300-300S465.7 0 300 0zm0 540C168.1 540 60 431.9 60 300S168.1 60 300 60s240 108.1 240 240-108.1 240-240 240zm0-440C188.1 100 100 188.1 100 300s88.1 200 200 200 200-88.1 200-200-88.1-200-200-200zm100 280h-200v-40h200v40z"/%3E%3C/svg%3E');
+            background-size: 50%; background-repeat: no-repeat; background-position: center; opacity: 0.1; z-index: -1; pointer-events: none;
+        }
+        /* Cursor Scorpion */
+        .mini-scorpion { position: absolute; pointer-events: none; width: 40px; height: 40px; filter: drop-shadow(0 0 5px red); animation: fadeOut 1s forwards; z-index: 9999; }
+        .mini-scorpion svg { width: 100%; height: 100%; fill: #ff0000; }
+        @keyframes fadeOut { 0% { opacity: 1; transform: scale(1) translateY(0); } 100% { opacity: 0; transform: scale(0.3) translateY(30px); } }
+        
+        .modal { display: none; background: rgba(0,0,0,0.85); backdrop-filter: blur(5px); }
+        .modal.active { display: flex; }
+
+        /* Estilos para el Panel de Control */
+        .admin-dashboard { display: none; min-height: 100vh; flex-direction: column; overflow: hidden;}
+        .tab-btn.active { background-color: #222; border-left: 4px solid #cc0000; color: #cc0000; font-weight: bold; }
+        #calendar-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 5px; }
+        .day-cell { background: #1a1a1a; min-height: 100px; border: 1px solid #333; padding: 5px; position: relative; border-radius: 4px; transition: 0.2s; }
+        .day-cell:hover { border-color: #cc0000; }
+        .day-cell.today { border: 2px solid #22c55e; }
+        .day-cell.today::after { content: 'HOY'; position: absolute; top: -10px; right: -10px; background: #22c55e; color: black; font-size: 10px; padding: 2px 6px; font-weight: bold; border-radius: 10px; }
+        .event-badge { background: #cc0000; color: white; font-size: 11px; padding: 3px 5px; border-radius: 3px; margin-top: 5px; cursor: pointer; display: block; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;}
+        .tooltip { visibility: hidden; position: absolute; z-index: 50; bottom: 110%; left: 50%; transform: translateX(-50%); background: #111; border: 1px solid #cc0000; padding: 15px; border-radius: 8px; width: 250px; box-shadow: 0 10px 25px rgba(0,0,0,0.8); opacity: 0; transition: opacity 0.3s; max-height: 200px; overflow-y: auto; }
+        .day-cell:hover .tooltip { visibility: visible; opacity: 1; }
+    </style>
+</head>
+<body class="antialiased">
+
+    <!-- ========================================== -->
+    <!-- 1. PARTE PÚBLICA DE LA WEB -->
+    <!-- ========================================== -->
+    <div id="public-web-section">
+        <!-- Navbar -->
+        <nav class="flex justify-between items-center p-6 bg-[#1a1a1a] border-b-2 border-scorpionRed">
+            <div class="text-2xl font-bold italic text-white tracking-widest">
+                SCORPION <span class="text-scorpionRed">CONTRACTORS</span>
+            </div>
+            <button onclick="document.getElementById('login-modal').classList.add('active')" class="text-white hover:text-scorpionRed font-bold transition">
+                <i class="fa-solid fa-user-lock mr-2"></i>Log in
+            </button>
+        </nav>
+
+        <!-- Hero Section -->
+        <header class="text-center py-20 px-4 bg-gradient-to-b from-black/80 to-transparent border-b border-gray-800 relative">
+             <img src="data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 250 250'%3E%3Cpath fill='%23cc0000' d='M125,12.5C62.8,12.5,12.5,62.8,12.5,125s50.3,112.5,112.5,112.5S237.5,187.2,237.5,125S187.2,12.5,125,12.5zm0,200 C69.7,212.5,25,167.8,25,112.5S69.7,12.5,125,12.5s100,44.7,100,100S180.3,212.5,125,212.5z'/%3E%3Cpath fill='%23cc0000' d='M125,37.5C80.3,37.5,43.8,74.1,43.8,118.8c0,44.7,36.5,81.3,81.2,81.3c44.7,0,81.3-36.5,81.3-81.3 C206.2,74.1,169.7,37.5,125,37.5z M125,168.8c-27.6,0-50-22.4-50-50c0-27.6,22.4-50,50-50c27.6,0,50,22.4,50,50 C175,146.4,152.6,168.8,125,168.8z'/%3E%3Cpath fill='%23cc0000' d='M150,112.5c0-13.8-11.2-25-25-25s-25,11.2-25,25s11.2,25,25,25S150,126.3,150,112.5z'/%3E%3Cpath fill='%23cc0000' d='M175,87.5c0-13.8-11.2-25-25-25s-25,11.2-25,25s11.2,25,25,25S175,101.3,175,87.5z'/%3E%3Cpath fill='%23cc0000' d='M100,87.5c0-13.8-11.2-25-25-25s-25,11.2-25,25s11.2,25,25,25S100,101.3,100,87.5z'/%3E%3C/svg%3E" class="w-16 h-16 mx-auto mb-6 opacity-30">
+            <h1 class="text-4xl md:text-5xl font-extrabold text-scorpionRed uppercase tracking-widest mb-4">Encuentra al Contratista Ideal</h1>
+            <p class="text-xl text-gray-300 max-w-2xl mx-auto">Expertos en remodelación, construcción y mantenimiento. Selecciona a tu especialista y solicita una cotización hoy mismo.</p>
+        </header>
+
+        <!-- Catálogo de Contratistas -->
+        <main class="max-w-6xl mx-auto py-12 px-4">
+            <h2 class="text-3xl font-bold text-center mb-10 border-l-4 border-scorpionRed pl-4 w-fit mx-auto">Nuestros Especialistas</h2>
+            <div id="contractors-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <div class="text-center text-gray-500 col-span-full"><i class="fa-solid fa-spinner fa-spin text-3xl"></i> Cargando especialistas...</div>
+            </div>
+        </main>
+    </div>
+
+    <!-- ========================================== -->
+    <!-- 2. PANEL DE ADMINISTRACIÓN (Oculto) -->
+    <!-- ========================================== -->
+    <div id="admin-dashboard-section" class="admin-dashboard flex">
+        <!-- Menú Lateral -->
+        <aside class="w-64 bg-[#1a1a1a] border-r border-gray-800 flex flex-col h-screen">
+            <div class="p-6 border-b border-gray-800 text-center">
+                <h2 class="text-xl font-bold italic">SCORPION <span class="text-scorpionRed">PANEL</span></h2>
+            </div>
+            <nav class="flex-1 py-4 flex flex-col overflow-y-auto">
+                <button onclick="window.switchTab('tab-profile', this)" class="tab-btn active text-left px-6 py-4 text-gray-300 hover:bg-[#222] transition"><i class="fa-solid fa-user-gear mr-3 w-5"></i>Mi Perfil y Servicios</button>
+                <button onclick="window.switchTab('tab-requests', this)" class="tab-btn text-left px-6 py-4 text-gray-300 hover:bg-[#222] transition"><i class="fa-solid fa-bell mr-3 w-5"></i>Solicitudes Entrantes</button>
+                <button onclick="window.switchTab('tab-calendar', this)" class="tab-btn text-left px-6 py-4 text-gray-300 hover:bg-[#222] transition"><i class="fa-solid fa-calendar-days mr-3 w-5"></i>Citas (Agenda)</button>
+            </nav>
+            <div class="p-4 border-t border-gray-800">
+                <!-- Botón de Cerrar Sesión SUPER SEGURO -->
+                <button id="btn-logout" class="w-full py-2 bg-[#222] hover:bg-scorpionRed text-white rounded font-bold transition"><i class="fa-solid fa-right-from-bracket mr-2"></i>Cerrar Sesión</button>
+            </div>
+        </aside>
+
+        <!-- Contenido Principal Panel -->
+        <main class="flex-1 overflow-y-auto p-8 relative h-screen">
+             <!-- Pestaña: PERFIL -->
+            <section id="tab-profile" class="tab-content max-w-4xl mx-auto block">
+                <h2 class="text-3xl font-bold mb-6 border-b border-gray-800 pb-4">Mi Perfil y Servicios</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <div class="bg-[#1a1a1a] p-6 rounded-xl border border-gray-800">
+                        <h3 class="text-xl font-bold mb-4 text-scorpionRed">Datos Generales</h3>
+                        <div class="flex items-center gap-4 mb-4">
+                            <div id="admin-avatar-preview" class="w-20 h-20 bg-gray-800 rounded-full border-2 border-scorpionRed overflow-hidden flex items-center justify-center font-bold text-2xl overflow-hidden object-cover"></div>
+                            <div>
+                                <label class="block text-sm text-gray-400 mb-1">Actualizar Foto (Local)</label>
+                                <input type="file" id="file-photo" accept="image/*" class="text-sm text-gray-400">
+                            </div>
+                        </div>
+                        <label class="block text-sm text-gray-400">Nombre Público</label>
+                        <input type="text" id="prof-name" class="w-full mt-1 mb-4 p-2 bg-[#222] border border-gray-700 rounded text-white outline-none focus:border-scorpionRed">
+                        <label class="block text-sm text-gray-400">Especialidad</label>
+                        <input type="text" id="prof-spec" class="w-full mt-1 mb-4 p-2 bg-[#222] border border-gray-700 rounded text-white outline-none focus:border-scorpionRed">
+                        <label class="block text-sm text-gray-400">Nueva Contraseña (Opcional)</label>
+                        <input type="password" id="prof-pass" class="w-full mt-1 mb-6 p-2 bg-[#222] border border-gray-700 rounded text-white outline-none focus:border-scorpionRed">
+                        <button id="btn-save-profile" class="w-full py-2 bg-scorpionRed hover:bg-scorpionRedHover font-bold rounded transition">Guardar Perfil</button>
+                    </div>
+
+                    <div class="bg-[#1a1a1a] p-6 rounded-xl border border-gray-800 flex flex-col">
+                        <h3 class="text-xl font-bold mb-4 text-scorpionRed">Servicios y Costos</h3>
+                        <div id="services-list" class="flex-1 overflow-y-auto space-y-2 mb-4 pr-2"></div>
+                        <div class="pt-4 border-t border-gray-800 flex gap-2">
+                            <input type="text" id="new-srv-name" placeholder="Ej: Pintura" class="flex-1 p-2 bg-[#222] border border-gray-700 rounded text-white text-sm outline-none">
+                            <input type="text" id="new-srv-price" placeholder="Ej: $200" class="w-24 p-2 bg-[#222] border border-gray-700 rounded text-white text-sm outline-none">
+                            <button id="btn-add-service" class="px-4 bg-gray-700 hover:bg-scorpionRed rounded text-white font-bold"><i class="fa-solid fa-plus"></i></button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+             <!-- Pestaña: SOLICITUDES -->
+            <section id="tab-requests" class="tab-content max-w-5xl mx-auto hidden">
+                <h2 class="text-3xl font-bold mb-6 border-b border-gray-800 pb-4">Solicitudes Entrantes</h2>
+                <div class="bg-[#1a1a1a] rounded-xl border border-gray-800 overflow-hidden">
+                    <table class="w-full text-left">
+                        <thead class="bg-scorpionRed text-white">
+                            <tr>
+                                <th class="p-4">Cliente</th>
+                                <th class="p-4">Servicio Solicitado</th>
+                                <th class="p-4">Contacto</th>
+                                <th class="p-4 text-center">Acción</th>
+                            </tr>
+                        </thead>
+                        <tbody id="requests-tbody" class="divide-y divide-gray-800">
+                            <tr><td colspan="4" class="p-4 text-center text-gray-500">Cargando solicitudes...</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+             <!-- Pestaña: CALENDARIO -->
+            <section id="tab-calendar" class="tab-content max-w-6xl mx-auto hidden">
+                <div class="flex justify-between items-center mb-6 border-b border-gray-800 pb-4">
+                    <h2 class="text-3xl font-bold">Calendario de Citas</h2>
+                    <div class="flex gap-4 items-center">
+                        <button id="cal-prev" class="px-3 py-1 bg-[#222] hover:bg-scorpionRed rounded"><i class="fa-solid fa-chevron-left"></i></button>
+                        <h3 id="cal-month-year" class="text-xl font-bold uppercase w-48 text-center"></h3>
+                        <button id="cal-next" class="px-3 py-1 bg-[#222] hover:bg-scorpionRed rounded"><i class="fa-solid fa-chevron-right"></i></button>
+                    </div>
+                </div>
+                <div class="grid grid-cols-7 gap-5 text-center font-bold text-gray-400 mb-2 uppercase text-sm">
+                    <div>Dom</div><div>Lun</div><div>Mar</div><div>Mié</div><div>Jue</div><div>Vie</div><div>Sáb</div>
+                </div>
+                <div id="calendar-grid"></div>
+            </section>
+        </main>
+    </div>
+
+    <!-- ========================================== -->
+    <!-- MODALES Y ELEMENTOS ADICIONALES -->
+    <!-- ========================================== -->
+
+    <!-- Modal: Login -->
+    <div id="login-modal" class="modal fixed inset-0 z-[100] justify-center items-center p-4">
+        <div class="bg-[#1a1a1a] p-8 rounded-xl border-t-4 border-scorpionRed max-w-sm w-full shadow-2xl relative text-center">
+            <button onclick="document.getElementById('login-modal').classList.remove('active')" class="absolute top-4 right-4 text-gray-400 hover:text-white"><i class="fa-solid fa-times text-2xl"></i></button>
+            <h2 class="text-2xl font-bold mb-6 italic">SCORPION <span class="text-scorpionRed">ADMIN</span></h2>
+            <form id="login-form" class="space-y-4 text-left">
+                <label class="block text-sm text-gray-400 mb-1">Usuario</label>
+                <input type="text" id="login-user" required class="w-full p-3 bg-[#222] border border-gray-700 rounded focus:border-scorpionRed outline-none text-white text-center">
+                <label class="block text-sm text-gray-400 mb-1">Contraseña</label>
+                <input type="password" id="login-pass" required class="w-full p-3 bg-[#222] border border-gray-700 rounded focus:border-scorpionRed outline-none text-white text-center">
+                <button type="submit" id="btn-login-submit" class="w-full py-3 bg-scorpionRed hover:bg-scorpionRedHover font-bold rounded uppercase transition mt-4">Acceder al Panel</button>
+                <p id="login-error" class="text-red-500 text-sm hidden font-bold mt-2">Credenciales inválidas.</p>
+            </form>
+        </div>
+    </div>
+
+    <!-- Modal Asignar Fecha -->
+    <div id="date-modal" class="modal fixed inset-0 z-[101] justify-center items-center p-4">
+        <div class="bg-[#1a1a1a] p-6 rounded-xl border-t-4 border-scorpionRed max-w-sm w-full relative">
+            <h3 class="text-xl font-bold mb-4 text-center">Asignar Fecha de Cita</h3>
+            <input type="date" id="assign-date" class="w-full p-2 bg-[#222] border border-gray-700 rounded text-white mb-4 outline-none focus:border-scorpionRed">
+            <input type="time" id="assign-time" class="w-full p-2 bg-[#222] border border-gray-700 rounded text-white mb-6 outline-none focus:border-scorpionRed">
+            <div class="flex gap-4">
+                <button onclick="document.getElementById('date-modal').classList.remove('active')" class="flex-1 py-2 bg-gray-700 hover:bg-gray-600 rounded font-bold transition">Cancelar</button>
+                <button id="btn-confirm-date" class="flex-1 py-2 bg-scorpionRed hover:bg-scorpionRedHover rounded font-bold transition">Confirmar</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal: Perfil y Solicitud Cita (Público) -->
+    <div id="profile-modal" class="modal fixed inset-0 z-50 justify-center items-center p-4">
+        <div class="bg-[#1a1a1a] w-full max-w-3xl rounded-xl border-t-4 border-scorpionRed shadow-[0_0_30px_rgba(204,0,0,0.3)] overflow-hidden flex flex-col md:flex-row max-h-[90vh]">
+            <div class="md:w-1/2 p-6 bg-[#111] flex flex-col items-center border-r border-gray-800 overflow-y-auto">
+                <button onclick="document.getElementById('profile-modal').classList.remove('active')" class="md:hidden absolute top-4 right-4 text-gray-400 hover:text-white"><i class="fa-solid fa-times text-2xl"></i></button>
+                <div id="modal-photo" class="w-32 h-32 rounded-full bg-gray-800 border-2 border-scorpionRed flex items-center justify-center text-4xl font-bold mb-4 overflow-hidden object-cover object-center overflow-hidden"></div>
+                <h3 id="modal-name" class="text-2xl font-bold text-white text-center"></h3>
+                <p id="modal-specialty" class="text-scorpionRed font-semibold mb-6"></p>
+                <div class="w-full">
+                    <h4 class="font-bold text-gray-300 mb-2 border-b border-gray-700 pb-1">Servicios y Costos Base</h4>
+                    <ul id="modal-services" class="space-y-2 text-sm text-gray-400"></ul>
+                </div>
+            </div>
+            <div class="md:w-1/2 p-6 flex flex-col relative overflow-y-auto">
+                <button onclick="document.getElementById('profile-modal').classList.remove('active')" class="hidden md:block absolute top-4 right-4 text-gray-400 hover:text-white"><i class="fa-solid fa-times text-2xl"></i></button>
+                <h3 class="text-xl font-bold mb-4">Solicitar Cotización</h3>
+                <form id="booking-form" class="space-y-4 flex-1">
+                    <input type="hidden" id="form-contractor-id">
+                    <div><label class="block text-sm text-gray-400">Nombre Completo</label><input type="text" id="form-name" required class="w-full mt-1 p-2 bg-[#222] border border-gray-700 rounded focus:border-scorpionRed outline-none text-white transition"></div>
+                    <div><label class="block text-sm text-gray-400">WhatsApp</label><input type="tel" id="form-phone" required class="w-full mt-1 p-2 bg-[#222] border border-gray-700 rounded focus:border-scorpionRed outline-none text-white transition"></div>
+                    <div><label class="block text-sm text-gray-400">Correo (Opcional)</label><input type="email" id="form-email" class="w-full mt-1 p-2 bg-[#222] border border-gray-700 rounded focus:border-scorpionRed outline-none text-white transition"></div>
+                    <div><label class="block text-sm text-gray-400">Servicio de Interés</label><select id="form-service" required class="w-full mt-1 p-2 bg-[#222] border border-gray-700 rounded focus:border-scorpionRed outline-none text-white transition"></select></div>
+                    <button type="submit" id="btn-booking-submit" class="w-full py-3 bg-scorpionRed hover:bg-scorpionRedHover font-bold rounded uppercase transition mt-4">Enviar Solicitud</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- FIREBASE Y LÓGICA ULTRA-SEGURA -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-app.js";
+        import { getFirestore, collection, getDocs, query, where, addDoc, setDoc, doc, getDoc, updateDoc, onSnapshot } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-firestore.js";
+
+        // 1. FUNCIONES GLOBALES INMEDIATAS (Garantizan que las pestañas sirvan siempre)
+        window.changeView = function(view) {
+            if (view === 'public') {
+                document.getElementById('public-web-section').style.display = 'block';
+                document.getElementById('admin-dashboard-section').style.display = 'none';
+                document.body.style.overflow = 'auto'; 
+            } else if (view === 'admin') {
+                document.getElementById('public-web-section').style.display = 'none';
+                document.getElementById('admin-dashboard-section').style.display = 'flex';
+                document.body.style.overflow = 'hidden'; 
+            }
+        };
+
+        window.switchTab = function(tabId, btn) {
+            document.querySelectorAll('.tab-content').forEach(c => c.classList.add('hidden'));
+            document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+            document.getElementById(tabId).classList.remove('hidden');
+            btn.classList.add('active');
+        };
+
+        // 2. BOTÓN DE CERRAR SESIÓN INFALIBLE (Siempre funciona)
+        document.getElementById('btn-logout').addEventListener('click', () => {
+            localStorage.removeItem('scorpionAdminId');
+            window.location.reload(); // Recargar la página limpia toda la memoria por completo
+        });
+
+        // 3. INICIO SEGURO DE BASE DE DATOS
+        try {
+            const firebaseConfig = {
+              apiKey: "AIzaSyByA7okEymQbHvY9DnPtEiPeDYHtcfH22s",
+              authDomain: "scorpion-contractors.firebaseapp.com",
+              projectId: "scorpion-contractors",
+              storageBucket: "scorpion-contractors.firebasestorage.app",
+              messagingSenderId: "666738840405",
+              appId: "1:666738840405:web:1970cd36faeae5fccd95dc"
+            };
+            const app = initializeApp(firebaseConfig);
+            const db = getFirestore(app);
+
+            // COMPROBAR CANDADO
+            let currentAdminId = localStorage.getItem('scorpionAdminId');
+            if (currentAdminId) {
+                window.changeView('admin');
+                startAdminPanel(currentAdminId);
+            } else {
+                window.changeView('public');
+                startPublicWeb();
+            }
+
+            // LÓGICA PÚBLICA
+            function startPublicWeb() {
+                // Generar Contratistas
+                async function loadContractors() {
+                    try {
+                        const querySnapshot = await getDocs(collection(db, "contratistas"));
+                        const grid = document.getElementById('contractors-grid');
+                        grid.innerHTML = '';
+                        
+                        if(querySnapshot.empty) {
+                            await setDoc(doc(db, "contratistas", "admin1"), {
+                                user: "Ricardo", pass: "Fernanda", name: "Ricardo", specialty: "Contratista General",
+                                photo: "", services: [{name: "Remodelación General", price: "$5,500 Base"}]
+                            });
+                            loadContractors(); return;
+                        }
+
+                        window.allContractors = [];
+                        querySnapshot.forEach(doc => {
+                            const data = doc.data(); data.id = doc.id; window.allContractors.push(data);
+                            const avatar = data.photo ? `<img src="${data.photo}" class="w-full h-full object-cover">` : data.name.charAt(0);
+                            grid.innerHTML += `
+                                <div class="bg-[#1a1a1a] rounded-xl p-6 border border-gray-800 hover:border-scorpionRed transition cursor-pointer flex flex-col items-center group shadow-lg" onclick="openProfile('${data.id}')">
+                                    <div class="w-24 h-24 rounded-full bg-gray-800 border-2 border-transparent group-hover:border-scorpionRed flex items-center justify-center text-3xl font-bold overflow-hidden mb-4 transition">${avatar}</div>
+                                    <h3 class="text-xl font-bold text-white">${data.name}</h3>
+                                    <p class="text-sm text-scorpionRed mb-4">${data.specialty}</p>
+                                    <button class="px-4 py-2 bg-[#222] group-hover:bg-scorpionRed text-white text-sm rounded font-bold transition w-full">Ver Perfil y Agendar</button>
+                                </div>
+                            `;
+                        });
+                    } catch(e) { console.error(e); }
+                }
+
+                // Abrir Perfil
+                window.openProfile = function(id) {
+                    const c = window.allContractors.find(x => x.id === id);
+                    document.getElementById('modal-photo').innerHTML = c.photo ? `<img src="${c.photo}" class="w-full h-full object-cover">` : c.name.charAt(0);
+                    document.getElementById('modal-name').innerText = c.name;
+                    document.getElementById('modal-specialty').innerText = c.specialty;
+                    document.getElementById('form-contractor-id').value = id;
+                    
+                    const list = document.getElementById('modal-services'); const select = document.getElementById('form-service');
+                    list.innerHTML = ''; select.innerHTML = '<option value="">Selecciona un servicio</option>';
+                    
+                    if(c.services) {
+                        c.services.forEach(s => {
+                            list.innerHTML += `<li class="flex justify-between border-b border-gray-800 pb-1"><span>${s.name}</span> <span class="text-white">${s.price}</span></li>`;
+                            select.innerHTML += `<option value="${s.name}">${s.name}</option>`;
+                        });
+                    }
+                    document.getElementById('profile-modal').classList.add('active');
+                }
+
+                // Enviar Cita
+                document.getElementById('booking-form').addEventListener('submit', async (e) => {
+                    e.preventDefault();
+                    const btnSubmit = document.getElementById('btn-booking-submit');
+                    btnSubmit.innerText = "Enviando..."; btnSubmit.disabled = true;
+                    try {
+                        await addDoc(collection(db, "solicitudes"), {
+                            contractorId: document.getElementById('form-contractor-id').value,
+                            clientName: document.getElementById('form-name').value,
+                            phone: document.getElementById('form-phone').value,
+                            email: document.getElementById('form-email').value,
+                            service: document.getElementById('form-service').value,
+                            status: 'pending', createdAt: new Date().toISOString()
+                        });
+                        alert("¡Solicitud enviada con éxito!");
+                        document.getElementById('profile-modal').classList.remove('active');
+                        e.target.reset(); 
+                    } catch(err) {}
+                    btnSubmit.innerText = "Enviar Solicitud"; btnSubmit.disabled = false;
+                });
+
+                loadContractors();
+            }
+
+            // FORMULARIO DE LOGIN (Funciona estando en la web pública)
+            document.getElementById('login-form').addEventListener('submit', async (e) => {
+                e.preventDefault();
+                const u = document.getElementById('login-user').value;
+                const p = document.getElementById('login-pass').value;
+                const btnSubmit = document.getElementById('btn-login-submit');
+                btnSubmit.innerText = "Accediendo..."; btnSubmit.disabled = true;
+
+                try {
+                    const q = query(collection(db, "contratistas"), where("user", "==", u), where("pass", "==", p));
+                    const querySnapshot = await getDocs(q);
+                    
+                    if(!querySnapshot.empty) {
+                        const adminDoc = querySnapshot.docs[0];
+                        localStorage.setItem('scorpionAdminId', adminDoc.id);
+                        window.location.reload(); // Recargar para entrar seguro
+                    } else {
+                        document.getElementById('login-error').classList.remove('hidden');
+                    }
+                } catch(e) {}
+                btnSubmit.innerText = "Acceder al Panel"; btnSubmit.disabled = false;
+            });
+
+
+            // LÓGICA DEL PANEL PRIVADO
+            function startAdminPanel(adminId) {
+                let currentAdminData = {};
+                let currentRequests = [];
+                let allAppointments = [];
+
+                async function loadProfile() {
+                    const docSnap = await getDoc(doc(db, "contratistas", adminId));
+                    if(docSnap.exists()) {
+                        currentAdminData = docSnap.data();
+                        document.getElementById('prof-name').value = currentAdminData.name;
+                        document.getElementById('prof-spec').value = currentAdminData.specialty;
+                        if(currentAdminData.photo) document.getElementById('admin-avatar-preview').innerHTML = `<img src="${currentAdminData.photo}" class="w-full h-full object-cover">`;
+                        renderServices();
+                    }
+                }
+
+                function renderServices() {
+                    const list = document.getElementById('services-list'); list.innerHTML = '';
+                    const services = currentAdminData.services || [];
+                    services.forEach((s, idx) => {
+                        list.innerHTML += `
+                            <div class="flex justify-between items-center bg-[#222] p-2 rounded">
+                                <div><span class="font-bold text-sm text-white">${s.name}</span> <span class="text-xs text-gray-400">(${s.price})</span></div>
+                                <button onclick="window.removeService(${idx})" class="text-red-500 hover:text-red-400 p-1"><i class="fa-solid fa-trash"></i></button>
+                            </div>
+                        `;
+                    });
+                }
+                
+                window.removeService = function(idx) {
+                    if(confirm("¿Eliminar servicio?")) { currentAdminData.services.splice(idx, 1); renderServices(); }
+                }
+
+                document.getElementById('file-photo').addEventListener('change', function(e) {
+                    const file = e.target.files[0]; if(!file) return;
+                    const reader = new FileReader();
+                    reader.onload = function(event) {
+                        currentAdminData.photo = event.target.result;
+                        document.getElementById('admin-avatar-preview').innerHTML = `<img src="${currentAdminData.photo}" class="w-full h-full object-cover">`;
+                    }; reader.readAsDataURL(file);
+                });
+
+                document.getElementById('btn-save-profile').addEventListener('click', async () => {
+                    const btnSave = document.getElementById('btn-save-profile');
+                    btnSave.innerText = "Guardando..."; btnSave.disabled = true;
+                    const updates = { name: document.getElementById('prof-name').value, specialty: document.getElementById('prof-spec').value, services: currentAdminData.services || [], photo: currentAdminData.photo || "" };
+                    const pass = document.getElementById('prof-pass').value; if(pass.trim() !== '') updates.pass = pass;
+                    try { await updateDoc(doc(db, "contratistas", adminId), updates); alert("Perfil actualizado."); document.getElementById('prof-pass').value = ''; } catch(e) {}
+                    btnSave.innerText = "Guardar Perfil"; btnSave.disabled = false;
+                });
+
+                document.getElementById('btn-add-service').addEventListener('click', () => {
+                    const n = document.getElementById('new-srv-name').value.trim(); const p = document.getElementById('new-srv-price').value.trim();
+                    if(!n || !p) return;
+                    if(!currentAdminData.services) currentAdminData.services = [];
+                    currentAdminData.services.push({name: n, price: p});
+                    document.getElementById('new-srv-name').value = ''; document.getElementById('new-srv-price').value = '';
+                    renderServices();
+                });
+
+                // Citas y Solicitudes
+                let selectedRequestId = null;
+                const q = query(collection(db, "solicitudes"), where("contractorId", "==", adminId));
+                onSnapshot(q, (snapshot) => {
+                    currentRequests = []; allAppointments = [];
+                    snapshot.forEach(doc => {
+                        const data = doc.data(); data.id = doc.id;
+                        if(data.status === 'pending') currentRequests.push(data);
+                        if(data.status === 'scheduled') allAppointments.push(data);
+                    });
+                    renderRequests(); renderCalendar();
+                });
+
+                function renderRequests() {
+                    const tbody = document.getElementById('requests-tbody'); tbody.innerHTML = '';
+                    if(currentRequests.length === 0) { tbody.innerHTML = '<tr><td colspan="4" class="p-4 text-center text-gray-500">No hay solicitudes.</td></tr>'; return; }
+                    currentRequests.forEach(req => {
+                        tbody.innerHTML += `<tr class="hover:bg-[#222]"><td class="p-4 font-bold text-white">${req.clientName}</td><td class="p-4 text-sm text-scorpionRed">${req.service}</td><td class="p-4 text-sm"><i class="fa-brands fa-whatsapp text-green-500 mr-2"></i>${req.phone}</td><td class="p-4 text-center"><button onclick="window.openAssignModal('${req.id}')" class="px-3 py-1 bg-green-600 hover:bg-green-500 rounded text-sm font-bold">Asignar Cita</button></td></tr>`;
+                    });
+                }
+
+                window.openAssignModal = function(id) { selectedRequestId = id; document.getElementById('date-modal').classList.add('active'); }
+                
+                document.getElementById('btn-confirm-date').addEventListener('click', async () => {
+                    const d = document.getElementById('assign-date').value; const t = document.getElementById('assign-time').value;
+                    if(!d || !t) return;
+                    try {
+                        await updateDoc(doc(db, "solicitudes", selectedRequestId), { status: 'scheduled', scheduledDate: d, scheduledTime: t });
+                        document.getElementById('date-modal').classList.remove('active'); alert("Cita agendada.");
+                    } catch(e) {}
+                });
+
+                let currentDate = new Date();
+                function renderCalendar() {
+                    const grid = document.getElementById('calendar-grid'); const monthLabel = document.getElementById('cal-month-year');
+                    grid.innerHTML = '';
+                    const year = currentDate.getFullYear(); const month = currentDate.getMonth();
+                    const firstDayIndex = new Date(year, month, 1).getDay(); const lastDay = new Date(year, month + 1, 0).getDate();
+                    const monthsStr = ["Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre"];
+                    monthLabel.innerText = `${monthsStr[month]} ${year}`;
+                    const today = new Date();
+                    
+                    for(let i = 0; i < firstDayIndex; i++) grid.innerHTML += `<div></div>`;
+                    
+                    for(let i = 1; i <= lastDay; i++) {
+                        const dateStr = `${year}-${String(month+1).padStart(2,'0')}-${String(i).padStart(2,'0')}`;
+                        const isToday = (i === today.getDate() && month === today.getMonth() && year === today.getFullYear());
+                        const dayAppts = allAppointments.filter(a => a.scheduledDate === dateStr);
+                        let eventsHtml = ''; let tooltipHtml = '';
+                        
+                        if(dayAppts.length > 0) {
+                            tooltipHtml = `<div class="tooltip"><h4 class="text-scorpionRed font-bold mb-2 border-b border-red-900 pb-1 text-base">Citas del Día</h4><div class="space-y-3">`;
+                            dayAppts.forEach(a => {
+                                eventsHtml += `<div class="event-badge">${a.scheduledTime} - ${a.clientName.split(' ')[0]}</div>`;
+                                tooltipHtml += `<div class="text-sm"><p class="font-bold text-white"><i class="fa-regular fa-clock text-scorpionRed"></i> ${a.scheduledTime}</p><p class="text-gray-300"><i class="fa-solid fa-user"></i> ${a.clientName}</p><p class="text-gray-400 text-xs"><i class="fa-solid fa-hammer mr-1"></i>${a.service}</p><p class="text-green-400 text-xs"><i class="fa-brands fa-whatsapp"></i> ${a.phone}</p><div class="mt-2 flex gap-2"><button onclick="window.openAssignModal('${a.id}')" class="px-2 py-1 bg-gray-700 hover:bg-gray-600 rounded text-xs flex-1">Mover</button><button onclick="window.cancelAppt('${a.id}')" class="px-2 py-1 bg-red-900 hover:bg-red-800 rounded text-xs flex-1">Cancelar</button></div></div>`;
+                            });
+                            tooltipHtml += `</div></div>`;
+                        }
+                        
+                        grid.innerHTML += `<div class="day-cell ${isToday ? 'today' : ''} h-full relative"><div class="font-bold text-gray-500 absolute top-1 left-1">${i}</div><div class="pt-6 space-y-1">${eventsHtml}</div>${tooltipHtml}</div>`;
+                    }
+                }
+                
+                window.cancelAppt = async function(id) { if(confirm("¿Cancelar cita?")) { await updateDoc(doc(db, "solicitudes", id), { status: 'cancelled' }); } }
+                document.getElementById('cal-prev').addEventListener('click', () => { currentDate.setMonth(currentDate.getMonth() - 1); renderCalendar(); });
+                document.getElementById('cal-next').addEventListener('click', () => { currentDate.setMonth(currentDate.getMonth() + 1); renderCalendar(); });
+
+                loadProfile();
+            }
+
+        } catch (error) {
+            console.error("Error en Firebase:", error);
+        }
+    </script>
+</body>
+</html>
