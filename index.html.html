@@ -48,7 +48,6 @@
     <!-- 1. PARTE PÚBLICA DE LA WEB -->
     <!-- ========================================== -->
     <div id="public-web-section">
-        <!-- Navbar -->
         <nav class="flex justify-between items-center p-6 bg-[#1a1a1a] border-b-2 border-scorpionRed">
             <div class="text-2xl font-bold italic text-white tracking-widest flex items-center gap-3">
                 <img id="public-site-logo" src="" alt="Logo" class="w-16 h-16 object-contain flex-shrink-0">
@@ -59,13 +58,11 @@
             </button>
         </nav>
 
-        <!-- Hero Section -->
         <header class="text-center py-20 px-4 bg-gradient-to-b from-black/80 to-transparent border-b border-gray-800">
             <h1 class="text-4xl md:text-5xl font-extrabold text-scorpionRed uppercase tracking-widest mb-4">Expertos en Construcción</h1>
             <p class="text-xl text-gray-300 max-w-2xl mx-auto">Remodelación, pisos, pintura y mantenimiento. Explora nuestros trabajos y solicita una cita hoy mismo.</p>
         </header>
 
-        <!-- Portafolio de Trabajos -->
         <main class="max-w-7xl mx-auto py-12 px-4">
             <h2 class="text-3xl font-bold text-center mb-10 border-l-4 border-scorpionRed pl-4 w-fit mx-auto">Nuestros Trabajos y Servicios</h2>
             <div id="services-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -124,7 +121,7 @@
                             <label class="block text-sm text-gray-400 mb-1">Descripción Completa</label>
                             <textarea id="new-srv-desc" rows="3" placeholder="Detalles de lo que incluye el trabajo..." class="w-full p-3 bg-[#222] border border-gray-700 rounded text-white outline-none focus:border-scorpionRed mb-4 resize-none"></textarea>
                             
-                            <label class="block text-sm text-gray-400 mb-1">Foto del Trabajo</label>
+                            <label class="block text-sm text-gray-400 mb-1">Foto del Trabajo (Opcional)</label>
                             <input type="file" id="new-srv-photo" accept="image/*" class="w-full text-sm text-gray-400 file:mr-4 file:py-2 file:px-4 file:rounded file:border-0 file:text-sm file:font-semibold file:bg-scorpionRed file:text-white hover:file:bg-scorpionRedHover">
                         </div>
                     </div>
@@ -140,8 +137,12 @@
                 <h2 class="text-3xl font-bold mb-6 border-b border-gray-800 pb-4">Solicitudes de Citas</h2>
                 <div class="bg-[#1a1a1a] rounded-xl border border-gray-800 overflow-hidden shadow-lg">
                     <table class="w-full text-left">
-                        <thead class="bg-scorpionRed text-white"><tr><th class="p-4">Cliente</th><th class="p-4">Trabajo Solicitado</th><th class="p-4">Contacto</th><th class="p-4 text-center">Acción</th></tr></thead>
-                        <tbody id="requests-tbody" class="divide-y divide-gray-800"><tr><td colspan="4" class="p-4 text-center text-gray-500">Cargando...</td></tr></tbody>
+                        <thead class="bg-scorpionRed text-white">
+                            <tr><th class="p-4">Cliente</th><th class="p-4">Trabajo Solicitado</th><th class="p-4">Contacto</th><th class="p-4 text-center">Acción</th></tr>
+                        </thead>
+                        <tbody id="requests-tbody" class="divide-y divide-gray-800">
+                            <tr><td colspan="4" class="p-4 text-center text-gray-500">Cargando solicitudes...</td></tr>
+                        </tbody>
                     </table>
                 </div>
             </section>
@@ -162,7 +163,7 @@
                 <div id="calendar-grid"></div>
             </section>
 
-            <!-- Pestaña: AJUSTES (Logo, Cursor y Contraseña) -->
+            <!-- Pestaña: AJUSTES -->
             <section id="tab-settings" class="tab-content max-w-2xl mx-auto hidden">
                 <h2 class="text-3xl font-bold mb-6 border-b border-gray-800 pb-4">Ajustes Generales</h2>
                 
@@ -181,7 +182,7 @@
                     <!-- Config Logo del Cursor -->
                     <div class="bg-[#1a1a1a] p-6 rounded-xl border border-gray-800 shadow-lg">
                         <h3 class="text-lg font-bold mb-2 text-scorpionRed">Imagen del Cursor</h3>
-                        <p class="text-xs text-gray-400 mb-4">Imagen que seguirá al ratón en la vista pública (Recomendado: PNG sin fondo).</p>
+                        <p class="text-xs text-gray-400 mb-4">Imagen que seguirá al ratón en la vista pública.</p>
                         <div class="flex items-center gap-4 mb-4">
                             <img id="preview-cursor-logo" src="" class="w-16 h-16 bg-black rounded border border-gray-700 object-contain p-1 flex-shrink-0">
                             <input type="file" id="input-cursor-logo" accept="image/*" class="w-full text-xs text-gray-400 file:mr-2 file:py-1 file:px-2 file:rounded file:border-0 file:bg-gray-700 file:text-white">
@@ -230,23 +231,23 @@
             <p id="booking-service-title" class="text-scorpionRed font-bold mb-6"></p>
             <form id="booking-form" class="space-y-4">
                 <input type="hidden" id="form-service-name">
-                <div><label class="block text-sm text-gray-400">Nombre</label><input type="text" id="form-name" required class="w-full mt-1 p-3 bg-[#222] border border-gray-700 rounded focus:border-scorpionRed outline-none text-white"></div>
-                <div><label class="block text-sm text-gray-400">WhatsApp</label><input type="tel" id="form-phone" required class="w-full mt-1 p-3 bg-[#222] border border-gray-700 rounded focus:border-scorpionRed outline-none text-white"></div>
-                <div><label class="block text-sm text-gray-400">Detalles de tu proyecto</label><textarea id="form-notes" rows="3" class="w-full mt-1 p-3 bg-[#222] border border-gray-700 rounded focus:border-scorpionRed outline-none text-white resize-none"></textarea></div>
-                <button type="submit" id="btn-booking-submit" class="w-full py-3 bg-scorpionRed hover:bg-scorpionRedHover text-white font-bold rounded uppercase mt-2">Confirmar Solicitud</button>
+                <div><label class="block text-sm text-gray-400">Nombre Completo</label><input type="text" id="form-name" required class="w-full mt-1 p-3 bg-[#222] border border-gray-700 rounded focus:border-scorpionRed outline-none text-white transition"></div>
+                <div><label class="block text-sm text-gray-400">WhatsApp / Teléfono</label><input type="tel" id="form-phone" required class="w-full mt-1 p-3 bg-[#222] border border-gray-700 rounded focus:border-scorpionRed outline-none text-white transition"></div>
+                <div><label class="block text-sm text-gray-400">Detalles de tu proyecto</label><textarea id="form-notes" rows="3" class="w-full mt-1 p-3 bg-[#222] border border-gray-700 rounded focus:border-scorpionRed outline-none text-white transition resize-none"></textarea></div>
+                <button type="submit" id="btn-booking-submit" class="w-full py-3 bg-scorpionRed hover:bg-scorpionRedHover text-white font-bold rounded uppercase transition mt-2">Confirmar Solicitud</button>
             </form>
         </div>
     </div>
 
-    <!-- Modal: Asignar Fecha -->
+    <!-- Modal: Asignar Fecha (Admin) -->
     <div id="date-modal" class="modal fixed inset-0 z-[101] justify-center items-center p-4">
         <div class="bg-[#1a1a1a] p-6 rounded-xl border-t-4 border-scorpionRed max-w-sm w-full relative">
-            <h3 class="text-xl font-bold mb-4 text-center">Asignar Fecha</h3>
+            <h3 class="text-xl font-bold mb-4 text-center">Asignar Fecha de Cita</h3>
             <input type="date" id="assign-date" class="w-full p-3 bg-[#222] border border-gray-700 rounded text-white mb-4 outline-none focus:border-scorpionRed">
             <input type="time" id="assign-time" class="w-full p-3 bg-[#222] border border-gray-700 rounded text-white mb-6 outline-none focus:border-scorpionRed">
             <div class="flex gap-4">
-                <button onclick="document.getElementById('date-modal').classList.remove('active')" class="flex-1 py-2 bg-gray-700 hover:bg-gray-600 rounded font-bold">Cancelar</button>
-                <button id="btn-confirm-date" class="flex-1 py-2 bg-scorpionRed hover:bg-scorpionRedHover rounded font-bold">Confirmar</button>
+                <button onclick="document.getElementById('date-modal').classList.remove('active')" class="flex-1 py-2 bg-gray-700 hover:bg-gray-600 rounded font-bold transition">Cancelar</button>
+                <button id="btn-confirm-date" class="flex-1 py-2 bg-scorpionRed hover:bg-scorpionRedHover rounded font-bold transition">Confirmar</button>
             </div>
         </div>
     </div>
@@ -272,7 +273,7 @@
         const ADMIN_DOC_ID = "admin_ricardo";
 
         // ==========================================
-        // 2. FUNCIONES BÁSICAS Y CURSOR
+        // 2. FUNCIONES BÁSICAS Y COMPRESOR DE IMÁGENES
         // ==========================================
         window.changeView = function(view) {
             if (view === 'public') {
@@ -287,11 +288,30 @@
             document.getElementById(tabId).classList.remove('hidden'); btn.classList.add('active');
         };
 
-        const defaultLogoUrl = "data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 250 250'%3E%3Cpath fill='%23cc0000' d='M125,12.5C62.8,12.5,12.5,62.8,12.5,125s50.3,112.5,112.5,112.5S237.5,187.2,237.5,125S187.2,12.5,125,12.5zm0,200 C69.7,212.5,25,167.8,25,112.5S69.7,12.5,125,12.5s100,44.7,100,100S180.3,212.5,125,212.5z'/%3E%3Cpath fill='%23cc0000' d='M125,37.5C80.3,37.5,43.8,74.1,43.8,118.8c0,44.7,36.5,81.3,81.2,81.3c44.7,0,81.3-36.5,81.3-81.3 C206.2,74.1,169.7,37.5,125,37.5z M125,168.8c-27.6,0-50-22.4-50-50c0-27.6,22.4-50,50-50c27.6,0,50,22.4,50,50 C175,146.4,152.6,168.8,125,168.8z'/%3E%3Cpath fill='%23cc0000' d='M150,112.5c0-13.8-11.2-25-25-25s-25,11.2-25,25s11.2,25,25,25S150,126.3,150,112.5z'/%3E%3Cpath fill='%23cc0000' d='M175,87.5c0-13.8-11.2-25-25-25s-25,11.2-25,25s11.2,25,25,25S175,101.3,175,87.5z'/%3E%3Cpath fill='%23cc0000' d='M100,87.5c0-13.8-11.2-25-25-25s-25,11.2-25,25s11.2,25,25,25S100,101.3,100,87.5z'/%3E%3C/svg%3E";
+        // FUNCIÓN MÁGICA: Comprime las imágenes pesadas antes de guardarlas en Firebase
+        function compressImage(file, maxSize, callback) {
+            const reader = new FileReader();
+            reader.onload = function(event) {
+                const img = new Image();
+                img.onload = function() {
+                    const canvas = document.createElement('canvas');
+                    let width = img.width; let height = img.height;
+                    if (width > height) { if (width > maxSize) { height *= maxSize / width; width = maxSize; } } 
+                    else { if (height > maxSize) { width *= maxSize / height; height = maxSize; } }
+                    canvas.width = width; canvas.height = height;
+                    const ctx = canvas.getContext('2d');
+                    ctx.drawImage(img, 0, 0, width, height);
+                    callback(canvas.toDataURL('image/png', 0.9)); // PNG ligero
+                };
+                img.src = event.target.result;
+            };
+            reader.readAsDataURL(file);
+        }
 
+        const defaultLogoUrl = "data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 250 250'%3E%3Cpath fill='%23cc0000' d='M125,12.5C62.8,12.5,12.5,62.8,12.5,125s50.3,112.5,112.5,112.5S237.5,187.2,237.5,125S187.2,12.5,125,12.5zm0,200 C69.7,212.5,25,167.8,25,112.5S69.7,12.5,125,12.5s100,44.7,100,100S180.3,212.5,125,212.5z'/%3E%3Cpath fill='%23cc0000' d='M125,37.5C80.3,37.5,43.8,74.1,43.8,118.8c0,44.7,36.5,81.3,81.2,81.3c44.7,0,81.3-36.5,81.3-81.3 C206.2,74.1,169.7,37.5,125,37.5z M125,168.8c-27.6,0-50-22.4-50-50c0-27.6,22.4-50,50-50c27.6,0,50,22.4,50,50 C175,146.4,152.6,168.8,125,168.8z'/%3E%3Cpath fill='%23cc0000' d='M150,112.5c0-13.8-11.2-25-25-25s-25,11.2-25,25s11.2,25,25,25S150,126.3,150,112.5z'/%3E%3Cpath fill='%23cc0000' d='M175,87.5c0-13.8-11.2-25-25-25s-25,11.2-25,25s11.2,25,25,25S175,101.3,175,87.5z'/%3E%3Cpath fill='%23cc0000' d='M100,87.5c0-13.8-11.2-25-25-25s-25,11.2-25,25s11.2,25,25,25S100,101.3,100,87.5z'/%3E%3C/svg%3E";
         let globalAdminData = { services: [], siteLogo: "", cursorLogo: "" };
 
-        // Aquí inyectamos la IMAGEN del cursor (no el código)
+        // ANIMACIÓN DEL CURSOR
         let lastTime = 0;
         document.addEventListener('mousemove', e => {
             if (document.getElementById('public-web-section').style.display !== 'none' && Date.now() - lastTime > 60) {
@@ -322,9 +342,11 @@
                     if(!globalAdminData.services) globalAdminData.services = [];
                 }
 
-                // Cargar logos
+                // Cargar logos visuales
                 const currentLogo = globalAdminData.siteLogo || defaultLogoUrl;
-                document.getElementById('public-site-logo').src = currentLogo; document.getElementById('admin-site-logo').src = currentLogo; document.getElementById('preview-site-logo').src = currentLogo;
+                document.getElementById('public-site-logo').src = currentLogo; 
+                document.getElementById('admin-site-logo').src = currentLogo; 
+                document.getElementById('preview-site-logo').src = currentLogo;
                 document.getElementById('preview-cursor-logo').src = globalAdminData.cursorLogo || defaultLogoUrl;
 
                 renderPublicPortfolio();
@@ -383,6 +405,7 @@
         function bootAdminPanel() {
             if(adminBooted) return;
             
+            // PORTAFOLIO 
             const renderAdminServices = () => {
                 const list = document.getElementById('admin-services-list'); list.innerHTML = '';
                 globalAdminData.services.forEach((s, idx) => {
@@ -394,31 +417,43 @@
             document.getElementById('btn-add-service').addEventListener('click', async () => {
                 const name = document.getElementById('new-srv-name').value.trim(); const price = document.getElementById('new-srv-price').value.trim(); const time = document.getElementById('new-srv-time').value.trim(); const desc = document.getElementById('new-srv-desc').value.trim(); const fileInput = document.getElementById('new-srv-photo'); const btn = document.getElementById('btn-add-service');
                 if(!name || !price || !desc) return alert("Llena Nombre, Costo y Descripción."); btn.innerText = "Guardando..."; btn.disabled = true;
+
                 const saveToFirebase = async (base64Img) => {
                     globalAdminData.services.push({ id: Date.now().toString(), name: name, price: price, time: time || "Variable", description: desc, photo: base64Img });
-                    try { await updateDoc(doc(db, "configuracion", ADMIN_DOC_ID), { services: globalAdminData.services }); document.getElementById('new-srv-name').value = ''; document.getElementById('new-srv-price').value = ''; document.getElementById('new-srv-time').value = ''; document.getElementById('new-srv-desc').value = ''; fileInput.value = ''; renderAdminServices(); renderPublicPortfolio(); alert("Trabajo publicado."); } catch(e) {}
+                    try { await updateDoc(doc(db, "configuracion", ADMIN_DOC_ID), { services: globalAdminData.services }); document.getElementById('new-srv-name').value = ''; document.getElementById('new-srv-price').value = ''; document.getElementById('new-srv-time').value = ''; document.getElementById('new-srv-desc').value = ''; fileInput.value = ''; renderAdminServices(); renderPublicPortfolio(); alert("Trabajo publicado."); } catch(e) { alert("Error al guardar: " + e.message); }
                     btn.innerText = "Guardar y Publicar Trabajo"; btn.disabled = false;
                 };
-                if(fileInput.files.length > 0) { const reader = new FileReader(); reader.onload = (e) => saveToFirebase(e.target.result); reader.readAsDataURL(fileInput.files[0]); } else { saveToFirebase(""); }
+
+                if(fileInput.files.length > 0) {
+                    compressImage(fileInput.files[0], 800, saveToFirebase); // Comprime la foto del trabajo a max 800px
+                } else { saveToFirebase(""); }
             });
 
             window.removeService = async function(idx) {
                 if(confirm("¿Eliminar este trabajo?")) { globalAdminData.services.splice(idx, 1); await updateDoc(doc(db, "configuracion", ADMIN_DOC_ID), { services: globalAdminData.services }); renderAdminServices(); renderPublicPortfolio(); }
             }
 
-            // AJUSTES: Cargar Logos
+            // AJUSTES: Cargar y Comprimir Logos
             let newLogoBase64 = null; let newCursorBase64 = null;
-            document.getElementById('input-site-logo').addEventListener('change', function(e) { const f = e.target.files[0]; if(!f) return; const r = new FileReader(); r.onload = function(evt) { newLogoBase64 = evt.target.result; document.getElementById('preview-site-logo').src = newLogoBase64; }; r.readAsDataURL(f); });
-            document.getElementById('input-cursor-logo').addEventListener('change', function(e) { const f = e.target.files[0]; if(!f) return; const r = new FileReader(); r.onload = function(evt) { newCursorBase64 = evt.target.result; document.getElementById('preview-cursor-logo').src = newCursorBase64; }; r.readAsDataURL(f); });
+            
+            document.getElementById('input-site-logo').addEventListener('change', function(e) { 
+                const f = e.target.files[0]; if(!f) return; 
+                compressImage(f, 300, function(res) { newLogoBase64 = res; document.getElementById('preview-site-logo').src = newLogoBase64; }); // Logo max 300px
+            });
+            
+            document.getElementById('input-cursor-logo').addEventListener('change', function(e) { 
+                const f = e.target.files[0]; if(!f) return; 
+                compressImage(f, 100, function(res) { newCursorBase64 = res; document.getElementById('preview-cursor-logo').src = newCursorBase64; }); // Cursor max 100px (muy ligero)
+            });
 
             document.getElementById('btn-save-logo').addEventListener('click', async () => {
                 if(!newLogoBase64) return alert("Selecciona un logo primero."); const btn = document.getElementById('btn-save-logo'); btn.innerText = "Guardando..."; btn.disabled = true;
-                try { await updateDoc(doc(db, "configuracion", ADMIN_DOC_ID), { siteLogo: newLogoBase64 }); globalAdminData.siteLogo = newLogoBase64; document.getElementById('public-site-logo').src = newLogoBase64; document.getElementById('admin-site-logo').src = newLogoBase64; alert("Logo actualizado."); } catch(e) {} btn.innerText = "Actualizar Logo"; btn.disabled = false;
+                try { await updateDoc(doc(db, "configuracion", ADMIN_DOC_ID), { siteLogo: newLogoBase64 }); globalAdminData.siteLogo = newLogoBase64; document.getElementById('public-site-logo').src = newLogoBase64; document.getElementById('admin-site-logo').src = newLogoBase64; alert("Logo actualizado."); } catch(e) { alert("Error: " + e.message); } btn.innerText = "Actualizar Logo"; btn.disabled = false;
             });
 
             document.getElementById('btn-save-cursor').addEventListener('click', async () => {
                 if(!newCursorBase64) return alert("Selecciona un cursor primero."); const btn = document.getElementById('btn-save-cursor'); btn.innerText = "Guardando..."; btn.disabled = true;
-                try { await updateDoc(doc(db, "configuracion", ADMIN_DOC_ID), { cursorLogo: newCursorBase64 }); globalAdminData.cursorLogo = newCursorBase64; alert("Cursor actualizado."); } catch(e) {} btn.innerText = "Actualizar Cursor"; btn.disabled = false;
+                try { await updateDoc(doc(db, "configuracion", ADMIN_DOC_ID), { cursorLogo: newCursorBase64 }); globalAdminData.cursorLogo = newCursorBase64; alert("Cursor actualizado."); } catch(e) { alert("Error: " + e.message); } btn.innerText = "Actualizar Cursor"; btn.disabled = false;
             });
 
             document.getElementById('btn-save-settings').addEventListener('click', async () => { const pass = document.getElementById('prof-pass').value.trim(); if(pass !== '') { await updateDoc(doc(db, "configuracion", ADMIN_DOC_ID), { pass: pass }); alert("Contraseña actualizada."); document.getElementById('prof-pass').value = ''; } });
