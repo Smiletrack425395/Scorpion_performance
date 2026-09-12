@@ -104,7 +104,6 @@
         <!-- Galería Estilo Apple (Solo Imágenes) -->
         <section class="max-w-7xl mx-auto py-16 px-4 border-t border-gray-800">
             <h2 class="text-4xl font-extrabold text-center mb-12 tracking-wide text-white" data-i18n="gallery_title">Galería de Proyectos</h2>
-            <!-- CSS Grid estilo Masonry -->
             <div id="gallery-grid" class="columns-1 sm:columns-2 lg:columns-3 gap-6 space-y-6">
                 <!-- Se llena con Javascript -->
             </div>
@@ -136,7 +135,7 @@
         <!-- Contenido Panel -->
         <main class="flex-1 overflow-y-auto p-8 relative h-screen bg-[#0a0a0a]">
              
-            <!-- Pestaña: PORTAFOLIO DE SERVICIOS (Con texto y precio) -->
+            <!-- Pestaña: PORTAFOLIO DE SERVICIOS -->
             <section id="tab-portfolio" class="tab-content max-w-6xl mx-auto block">
                 <h2 class="text-3xl font-bold mb-6 border-b border-gray-800 pb-4">Administrar Servicios</h2>
                 <div class="bg-[#1a1a1a] p-6 rounded-xl border border-gray-800 mb-8 shadow-lg">
@@ -322,7 +321,8 @@
             document.getElementById(tabId).classList.remove('hidden'); btn.classList.add('active');
         };
 
-        function compressImage(file, maxSize, callback) {
+        // COMPRESOR INTELIGENTE: Diferencia entre Fotos (JPEG) y Logos (PNG)
+        function compressImage(file, maxSize, isPhoto, callback) {
             const reader = new FileReader();
             reader.onload = function(event) {
                 const img = new Image();
@@ -331,10 +331,21 @@
                     let width = img.width; let height = img.height;
                     if (width > height) { if (width > maxSize) { height *= maxSize / width; width = maxSize; } } 
                     else { if (height > maxSize) { width *= maxSize / height; height = maxSize; } }
-                    canvas.width = width; canvas.height = height; const ctx = canvas.getContext('2d'); ctx.drawImage(img, 0, 0, width, height);
-                    callback(canvas.toDataURL('image/png', 0.9)); 
-                }; img.src = event.target.result;
-            }; reader.readAsDataURL(file);
+                    canvas.width = width; canvas.height = height;
+                    const ctx = canvas.getContext('2d');
+                    ctx.drawImage(img, 0, 0, width, height);
+                    
+                    if (isPhoto) {
+                        // Convierte a JPEG (Reduce drásticamente el peso para fotos)
+                        callback(canvas.toDataURL('image/jpeg', 0.7)); 
+                    } else {
+                        // Mantiene PNG para preservar la transparencia en logos y cursores
+                        callback(canvas.toDataURL('image/png')); 
+                    }
+                };
+                img.src = event.target.result;
+            };
+            reader.readAsDataURL(file);
         }
 
         const defaultLogoUrl = "data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 250 250'%3E%3Cpath fill='%23cc0000' d='M125,12.5C62.8,12.5,12.5,62.8,12.5,125s50.3,112.5,112.5,112.5S237.5,187.2,237.5,125S187.2,12.5,125,12.5zm0,200 C69.7,212.5,25,167.8,25,112.5S69.7,12.5,125,12.5s100,44.7,100,100S180.3,212.5,125,212.5z'/%3E%3Cpath fill='%23cc0000' d='M125,37.5C80.3,37.5,43.8,74.1,43.8,118.8c0,44.7,36.5,81.3,81.2,81.3c44.7,0,81.3-36.5,81.3-81.3 C206.2,74.1,169.7,37.5,125,37.5z M125,168.8c-27.6,0-50-22.4-50-50c0-27.6,22.4-50,50-50c27.6,0,50,22.4,50,50 C175,146.4,152.6,168.8,125,168.8z'/%3E%3Cpath fill='%23cc0000' d='M150,112.5c0-13.8-11.2-25-25-25s-25,11.2-25,25s11.2,25,25,25S150,126.3,150,112.5z'/%3E%3Cpath fill='%23cc0000' d='M175,87.5c0-13.8-11.2-25-25-25s-25,11.2-25,25s11.2,25,25,25S175,101.3,175,87.5z'/%3E%3Cpath fill='%23cc0000' d='M100,87.5c0-13.8-11.2-25-25-25s-25,11.2-25,25s11.2,25,25,25S100,101.3,100,87.5z'/%3E%3C/svg%3E";
@@ -366,11 +377,10 @@
                 
                 updateLanguageUI(currentLang);
 
-                // Escuchar Galería de Imágenes independientemente
                 onSnapshot(collection(db, "galeria_scorpion"), (snapshot) => {
                     globalGallery = [];
                     snapshot.forEach(doc => globalGallery.push({ id: doc.id, ...doc.data() }));
-                    globalGallery.sort((a, b) => b.timestamp - a.timestamp); // Más recientes primero
+                    globalGallery.sort((a, b) => b.timestamp - a.timestamp); 
                     renderPublicGallery();
                     if(adminBooted) renderAdminGallery();
                 });
@@ -392,7 +402,6 @@
             });
         }
 
-        // GALERÍA PÚBLICA (Estilo Apple Masonry)
         function renderPublicGallery() {
             const grid = document.getElementById('gallery-grid'); grid.innerHTML = '';
             if(globalGallery.length === 0) { grid.innerHTML = `<div class="col-span-full text-center text-gray-500">${translations[currentLang].gallery_empty}</div>`; return; }
@@ -442,12 +451,11 @@
                     try { await updateDoc(doc(db, "configuracion", ADMIN_DOC_ID), { services: globalAdminData.services }); document.getElementById('new-srv-name').value = ''; document.getElementById('new-srv-price').value = ''; document.getElementById('new-srv-time').value = ''; document.getElementById('new-srv-desc').value = ''; fileInput.value = ''; renderAdminServices(); renderPublicPortfolio(); alert("Trabajo publicado."); } catch(e) { alert("Error al guardar."); }
                     btn.innerText = "Guardar y Publicar Servicio"; btn.disabled = false;
                 };
-                if(fileInput.files.length > 0) { compressImage(fileInput.files[0], 800, saveToFirebase); } else { saveToFirebase(""); }
+                if(fileInput.files.length > 0) { compressImage(fileInput.files[0], 800, true, saveToFirebase); } else { saveToFirebase(""); } // TRUE para JPEG
             });
 
             window.removeService = async function(idx) { if(confirm("¿Eliminar este trabajo?")) { globalAdminData.services.splice(idx, 1); await updateDoc(doc(db, "configuracion", ADMIN_DOC_ID), { services: globalAdminData.services }); renderAdminServices(); renderPublicPortfolio(); } }
 
-            // LÓGICA DE LA GALERÍA VISUAL (Admin)
             window.renderAdminGallery = function() {
                 const list = document.getElementById('admin-gallery-list'); list.innerHTML = '';
                 globalGallery.forEach(img => {
@@ -465,7 +473,8 @@
                 if(fileInput.files.length === 0) return alert("Selecciona una imagen primero.");
                 const btn = document.getElementById('btn-add-gal'); btn.innerText = "Subiendo y Optimizando..."; btn.disabled = true;
                 
-                compressImage(fileInput.files[0], 1200, async (base64Img) => { // 1200px para que se vean increíbles en la galería Apple
+                // Usamos TRUE para JPEG al 70%, bajará muchísimo el peso
+                compressImage(fileInput.files[0], 1000, true, async (base64Img) => { 
                     try {
                         await addDoc(collection(db, "galeria_scorpion"), { photo: base64Img, timestamp: Date.now() });
                         fileInput.value = ''; alert("Imagen agregada a la galería pública.");
@@ -480,8 +489,8 @@
 
             // AJUSTES
             let newLogoBase64 = null; let newCursorBase64 = null;
-            document.getElementById('input-site-logo').addEventListener('change', function(e) { const f = e.target.files[0]; if(!f) return; compressImage(f, 300, function(res) { newLogoBase64 = res; document.getElementById('preview-site-logo').src = newLogoBase64; }); });
-            document.getElementById('input-cursor-logo').addEventListener('change', function(e) { const f = e.target.files[0]; if(!f) return; compressImage(f, 100, function(res) { newCursorBase64 = res; document.getElementById('preview-cursor-logo').src = newCursorBase64; }); });
+            document.getElementById('input-site-logo').addEventListener('change', function(e) { const f = e.target.files[0]; if(!f) return; compressImage(f, 300, false, function(res) { newLogoBase64 = res; document.getElementById('preview-site-logo').src = newLogoBase64; }); }); // FALSE para mantener PNG transparente
+            document.getElementById('input-cursor-logo').addEventListener('change', function(e) { const f = e.target.files[0]; if(!f) return; compressImage(f, 100, false, function(res) { newCursorBase64 = res; document.getElementById('preview-cursor-logo').src = newCursorBase64; }); }); // FALSE para mantener PNG transparente
             document.getElementById('btn-save-logo').addEventListener('click', async () => { if(!newLogoBase64) return alert("Selecciona un logo primero."); const btn = document.getElementById('btn-save-logo'); btn.innerText = "Guardando..."; btn.disabled = true; try { await updateDoc(doc(db, "configuracion", ADMIN_DOC_ID), { siteLogo: newLogoBase64 }); globalAdminData.siteLogo = newLogoBase64; document.getElementById('public-site-logo').src = newLogoBase64; document.getElementById('admin-site-logo').src = newLogoBase64; alert("Logo actualizado."); } catch(e) {} btn.innerText = "Actualizar Logo"; btn.disabled = false; });
             document.getElementById('btn-save-cursor').addEventListener('click', async () => { if(!newCursorBase64) return alert("Selecciona un cursor primero."); const btn = document.getElementById('btn-save-cursor'); btn.innerText = "Guardando..."; btn.disabled = true; try { await updateDoc(doc(db, "configuracion", ADMIN_DOC_ID), { cursorLogo: newCursorBase64 }); globalAdminData.cursorLogo = newCursorBase64; alert("Cursor actualizado."); } catch(e) {} btn.innerText = "Actualizar Cursor"; btn.disabled = false; });
             document.getElementById('btn-save-settings').addEventListener('click', async () => { const pass = document.getElementById('prof-pass').value.trim(); if(pass !== '') { await updateDoc(doc(db, "configuracion", ADMIN_DOC_ID), { pass: pass }); alert("Contraseña actualizada."); document.getElementById('prof-pass').value = ''; } });
