@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Scorpion Performance - Servicios</title>
     
-    <!-- Miniatura de la pestaña (Favicon) -->
     <link rel="icon" href="aaa.jpg" type="image/jpeg">
 
     <!-- Tailwind CSS -->
@@ -52,25 +51,54 @@
     <!-- 1. PARTE PÚBLICA DE LA WEB -->
     <!-- ========================================== -->
     <div id="public-web-section">
+        <!-- Navbar -->
         <nav class="flex justify-between items-center p-6 bg-[#1a1a1a] border-b-2 border-scorpionRed">
             <div class="text-2xl font-bold italic text-white tracking-widest flex items-center gap-3">
                 <img id="public-site-logo" src="" alt="Logo" class="w-16 h-16 object-contain flex-shrink-0">
                 <div>SCORPION <span class="text-scorpionRed">PERFORMANCE</span></div>
             </div>
-            <button onclick="document.getElementById('login-modal').classList.add('active')" class="text-gray-400 hover:text-scorpionRed font-bold transition">
-                <i class="fa-solid fa-user-lock mr-2"></i>Admin
-            </button>
+            
+            <div class="flex items-center gap-5">
+                <!-- Selector de Idiomas -->
+                <div class="relative flex items-center gap-2">
+                    <i class="fa-solid fa-globe text-gray-400"></i>
+                    <select id="lang-selector" class="bg-[#222] text-gray-300 border border-gray-700 rounded p-1 text-sm outline-none focus:border-scorpionRed cursor-pointer hover:bg-[#333] transition">
+                        <option value="es">Español</option>
+                        <option value="en">English</option>
+                        <option value="hi">हिन्दी</option>
+                        <option value="zh">中文</option>
+                    </select>
+                </div>
+
+                <button onclick="document.getElementById('login-modal').classList.add('active')" class="text-gray-400 hover:text-scorpionRed font-bold transition flex items-center">
+                    <i class="fa-solid fa-user-lock mr-2"></i><span data-i18n="nav_admin">Admin</span>
+                </button>
+            </div>
         </nav>
 
+        <!-- Hero Section -->
         <header class="text-center py-20 px-4 bg-gradient-to-b from-black/80 to-transparent border-b border-gray-800">
-            <h1 class="text-4xl md:text-5xl font-extrabold text-scorpionRed uppercase tracking-widest mb-4">Expertos en Construcción</h1>
-            <p class="text-xl text-gray-300 max-w-2xl mx-auto">Remodelación, pisos, pintura y mantenimiento. Explora nuestros trabajos y solicita una cita hoy mismo.</p>
+            <h1 class="text-4xl md:text-5xl font-extrabold text-scorpionRed uppercase tracking-widest mb-4" data-i18n="hero_title">Expertos en Construcción</h1>
+            <p class="text-xl text-gray-300 max-w-2xl mx-auto" data-i18n="hero_desc">Remodelación, pisos, pintura y mantenimiento. Explora nuestros trabajos y solicita una cita hoy mismo.</p>
         </header>
 
-        <main class="max-w-7xl mx-auto py-12 px-4">
-            <h2 class="text-3xl font-bold text-center mb-10 border-l-4 border-scorpionRed pl-4 w-fit mx-auto">Nuestros Trabajos y Servicios</h2>
+        <!-- Sección: Quiénes Somos -->
+        <section class="max-w-5xl mx-auto py-16 px-6 text-center border-b border-gray-800">
+            <h2 class="text-3xl font-bold mb-8 border-l-4 border-scorpionRed pl-4 w-fit mx-auto" data-i18n="about_title">¿Quiénes Somos?</h2>
+            <div class="bg-[#1a1a1a] p-8 rounded-xl shadow-lg border border-gray-800 relative overflow-hidden">
+                <!-- Elemento visual decorativo -->
+                <div class="absolute top-0 right-0 w-32 h-32 bg-scorpionRed opacity-10 rounded-full blur-3xl transform translate-x-1/2 -translate-y-1/2"></div>
+                <p class="text-lg text-gray-300 leading-relaxed text-justify md:text-center relative z-10" data-i18n="about_desc">
+                    En <strong>Scorpion Performance Contractors LLC</strong> materializamos visiones a través de la remodelación, instalación de pisos, mantenimiento residencial y acabados profesionales. Guiados por nuestro lema <em>Quality, Honesty & Excellence</em>, combinamos la dedicación de un oficio perfeccionado con técnicas de vanguardia. Creemos firmemente en el trabajo duro, en la confianza que se construye proyecto a proyecto con cada cliente, y en innovar constantemente nuestros procesos para ofrecer resultados impecables y duraderos en cada hogar y negocio que intervenimos.
+                </p>
+            </div>
+        </section>
+
+        <!-- Portafolio de Trabajos -->
+        <main class="max-w-7xl mx-auto py-16 px-4">
+            <h2 class="text-3xl font-bold text-center mb-10 border-l-4 border-scorpionRed pl-4 w-fit mx-auto" data-i18n="services_title">Nuestros Trabajos y Servicios</h2>
             <div id="services-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                <div class="text-center text-gray-500 col-span-full"><i class="fa-solid fa-spinner fa-spin text-3xl"></i> Cargando portafolio...</div>
+                <div class="text-center text-gray-500 col-span-full" data-i18n="loading_portfolio"><i class="fa-solid fa-spinner fa-spin text-3xl"></i> Cargando portafolio...</div>
             </div>
         </main>
     </div>
@@ -99,7 +127,6 @@
         <!-- Contenido Panel -->
         <main class="flex-1 overflow-y-auto p-8 relative h-screen bg-[#0a0a0a]">
              
-            <!-- Pestaña: PORTAFOLIO Y SERVICIOS -->
             <section id="tab-portfolio" class="tab-content max-w-6xl mx-auto block">
                 <h2 class="text-3xl font-bold mb-6 border-b border-gray-800 pb-4">Administrar Trabajos</h2>
                 
@@ -125,7 +152,7 @@
                             <label class="block text-sm text-gray-400 mb-1">Descripción Completa</label>
                             <textarea id="new-srv-desc" rows="3" placeholder="Detalles de lo que incluye el trabajo..." class="w-full p-3 bg-[#222] border border-gray-700 rounded text-white outline-none focus:border-scorpionRed mb-4 resize-none"></textarea>
                             
-                            <label class="block text-sm text-gray-400 mb-1">Foto del Trabajo (Opcional)</label>
+                            <label class="block text-sm text-gray-400 mb-1">Foto del Trabajo</label>
                             <input type="file" id="new-srv-photo" accept="image/*" class="w-full text-sm text-gray-400 file:mr-4 file:py-2 file:px-4 file:rounded file:border-0 file:text-sm file:font-semibold file:bg-scorpionRed file:text-white hover:file:bg-scorpionRedHover">
                         </div>
                     </div>
@@ -136,7 +163,6 @@
                 <div id="admin-services-list" class="grid grid-cols-1 md:grid-cols-2 gap-4"></div>
             </section>
 
-            <!-- Pestaña: SOLICITUDES -->
             <section id="tab-requests" class="tab-content max-w-5xl mx-auto hidden">
                 <h2 class="text-3xl font-bold mb-6 border-b border-gray-800 pb-4">Solicitudes de Citas</h2>
                 <div class="bg-[#1a1a1a] rounded-xl border border-gray-800 overflow-hidden shadow-lg">
@@ -151,7 +177,6 @@
                 </div>
             </section>
 
-            <!-- Pestaña: CALENDARIO -->
             <section id="tab-calendar" class="tab-content max-w-6xl mx-auto hidden">
                 <div class="flex justify-between items-center mb-6 border-b border-gray-800 pb-4">
                     <h2 class="text-3xl font-bold">Calendario de Citas</h2>
@@ -167,12 +192,10 @@
                 <div id="calendar-grid"></div>
             </section>
 
-            <!-- Pestaña: AJUSTES -->
             <section id="tab-settings" class="tab-content max-w-2xl mx-auto hidden">
                 <h2 class="text-3xl font-bold mb-6 border-b border-gray-800 pb-4">Ajustes Generales</h2>
                 
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
-                    <!-- Config Logo Principal -->
                     <div class="bg-[#1a1a1a] p-6 rounded-xl border border-gray-800 shadow-lg">
                         <h3 class="text-lg font-bold mb-2 text-scorpionRed">Logo de la Empresa</h3>
                         <p class="text-xs text-gray-400 mb-4">Sube el logo que aparecerá en la barra superior de la página.</p>
@@ -183,7 +206,6 @@
                         <button id="btn-save-logo" class="w-full py-2 bg-gray-700 hover:bg-scorpionRed font-bold rounded text-sm transition">Actualizar Logo</button>
                     </div>
 
-                    <!-- Config Logo del Cursor -->
                     <div class="bg-[#1a1a1a] p-6 rounded-xl border border-gray-800 shadow-lg">
                         <h3 class="text-lg font-bold mb-2 text-scorpionRed">Imagen del Cursor</h3>
                         <p class="text-xs text-gray-400 mb-4">Imagen que seguirá al ratón en la vista pública.</p>
@@ -195,7 +217,6 @@
                     </div>
                 </div>
 
-                <!-- Seguridad -->
                 <div class="bg-[#1a1a1a] p-6 rounded-xl border border-gray-800 shadow-lg">
                     <h3 class="text-xl font-bold mb-4 text-scorpionRed">Seguridad</h3>
                     <label class="block text-sm text-gray-400 mb-1">Nueva Contraseña de Administrador</label>
@@ -231,14 +252,23 @@
     <div id="booking-modal" class="modal fixed inset-0 z-50 justify-center items-center p-4">
         <div class="bg-[#1a1a1a] p-8 rounded-xl border-t-4 border-scorpionRed max-w-md w-full shadow-2xl relative">
             <button onclick="document.getElementById('booking-modal').classList.remove('active')" class="absolute top-4 right-4 text-gray-400 hover:text-white"><i class="fa-solid fa-times text-2xl"></i></button>
-            <h3 class="text-2xl font-bold mb-2 text-white">Agendar Cita</h3>
+            <h3 class="text-2xl font-bold mb-2 text-white" data-i18n="modal_title">Agendar Cita</h3>
             <p id="booking-service-title" class="text-scorpionRed font-bold mb-6"></p>
             <form id="booking-form" class="space-y-4">
                 <input type="hidden" id="form-service-name">
-                <div><label class="block text-sm text-gray-400">Nombre Completo</label><input type="text" id="form-name" required class="w-full mt-1 p-3 bg-[#222] border border-gray-700 rounded focus:border-scorpionRed outline-none text-white transition"></div>
-                <div><label class="block text-sm text-gray-400">WhatsApp / Teléfono</label><input type="tel" id="form-phone" required class="w-full mt-1 p-3 bg-[#222] border border-gray-700 rounded focus:border-scorpionRed outline-none text-white transition"></div>
-                <div><label class="block text-sm text-gray-400">Detalles de tu proyecto</label><textarea id="form-notes" rows="3" class="w-full mt-1 p-3 bg-[#222] border border-gray-700 rounded focus:border-scorpionRed outline-none text-white transition resize-none"></textarea></div>
-                <button type="submit" id="btn-booking-submit" class="w-full py-3 bg-scorpionRed hover:bg-scorpionRedHover text-white font-bold rounded uppercase transition mt-2">Confirmar Solicitud</button>
+                <div>
+                    <label class="block text-sm text-gray-400" data-i18n="form_name">Nombre Completo</label>
+                    <input type="text" id="form-name" required class="w-full mt-1 p-3 bg-[#222] border border-gray-700 rounded focus:border-scorpionRed outline-none text-white transition">
+                </div>
+                <div>
+                    <label class="block text-sm text-gray-400" data-i18n="form_phone">WhatsApp / Teléfono</label>
+                    <input type="tel" id="form-phone" required class="w-full mt-1 p-3 bg-[#222] border border-gray-700 rounded focus:border-scorpionRed outline-none text-white transition">
+                </div>
+                <div>
+                    <label class="block text-sm text-gray-400" data-i18n="form_notes">Detalles de tu proyecto</label>
+                    <textarea id="form-notes" rows="3" class="w-full mt-1 p-3 bg-[#222] border border-gray-700 rounded focus:border-scorpionRed outline-none text-white transition resize-none"></textarea>
+                </div>
+                <button type="submit" id="btn-booking-submit" class="w-full py-3 bg-scorpionRed hover:bg-scorpionRedHover text-white font-bold rounded uppercase transition mt-2" data-i18n="btn_confirm">Confirmar Solicitud</button>
             </form>
         </div>
     </div>
@@ -261,9 +291,6 @@
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-app.js";
         import { getFirestore, collection, getDoc, doc, setDoc, updateDoc, addDoc, query, onSnapshot, getDocs } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-firestore.js";
 
-        // ==========================================
-        // 1. TUS DATOS DE FIREBASE 
-        // ==========================================
         const firebaseConfig = {
           apiKey: "AIzaSyByA7okEymQbHvY9DnPtEiPeDYHtcfH22s",
           authDomain: "scorpion-contractors.firebaseapp.com",
@@ -277,7 +304,106 @@
         const ADMIN_DOC_ID = "admin_ricardo";
 
         // ==========================================
-        // 2. FUNCIONES BÁSICAS Y COMPRESOR DE IMÁGENES
+        // DICCIONARIO MULTILINGÜE
+        // ==========================================
+        const translations = {
+            es: {
+                nav_admin: "Admin",
+                hero_title: "Expertos en Construcción",
+                hero_desc: "Remodelación, pisos, pintura y mantenimiento. Explora nuestros trabajos y solicita una cita hoy mismo.",
+                about_title: "¿Quiénes Somos?",
+                about_desc: "En <strong>Scorpion Performance Contractors LLC</strong> materializamos visiones a través de la remodelación, instalación de pisos, mantenimiento residencial y acabados profesionales. Guiados por nuestro lema <em>Quality, Honesty & Excellence</em>, combinamos la dedicación de un oficio perfeccionado con técnicas de vanguardia. Creemos firmemente en el trabajo duro, en la confianza que se construye proyecto a proyecto con cada cliente, y en innovar constantemente nuestros procesos para ofrecer resultados impecables y duraderos en cada hogar y negocio que intervenimos.",
+                services_title: "Nuestros Trabajos y Servicios",
+                loading_portfolio: '<i class="fa-solid fa-spinner fa-spin text-3xl"></i> Cargando portafolio...',
+                empty_portfolio: "Aún no hay trabajos publicados.",
+                btn_book: "Agendar Trabajo",
+                modal_title: "Agendar Cita",
+                form_name: "Nombre Completo",
+                form_phone: "WhatsApp / Teléfono",
+                form_notes: "Detalles de tu proyecto",
+                btn_confirm: "Confirmar Solicitud",
+                alert_success: "¡Solicitud enviada! Nos comunicaremos pronto."
+            },
+            en: {
+                nav_admin: "Admin",
+                hero_title: "Construction Experts",
+                hero_desc: "Remodeling, flooring, painting, and maintenance. Explore our work and request an appointment today.",
+                about_title: "About Us",
+                about_desc: "At <strong>Scorpion Performance Contractors LLC</strong>, we bring visions to life through remodeling, flooring installation, residential maintenance, and professional finishes. Guided by our motto <em>Quality, Honesty & Excellence</em>, we combine the dedication of perfected craftsmanship with cutting-edge techniques. We firmly believe in hard work, building trust project by project with every client, and constantly innovating our processes to deliver flawless and lasting results in every home and business we service.",
+                services_title: "Our Work and Services",
+                loading_portfolio: '<i class="fa-solid fa-spinner fa-spin text-3xl"></i> Loading portfolio...',
+                empty_portfolio: "No jobs published yet.",
+                btn_book: "Book Job",
+                modal_title: "Book Appointment",
+                form_name: "Full Name",
+                form_phone: "WhatsApp / Phone",
+                form_notes: "Project Details",
+                btn_confirm: "Confirm Request",
+                alert_success: "Request sent! We will contact you soon."
+            },
+            hi: {
+                nav_admin: "एडमिन",
+                hero_title: "निर्माण विशेषज्ञ",
+                hero_desc: "रीमॉडलिंग, फ़्लोरिंग, पेंटिंग और रखरखाव। हमारे काम का अन्वेषण करें और आज ही अपॉइंटमेंट का अनुरोध करें।",
+                about_title: "हमारे बारे में",
+                about_desc: "<strong>Scorpion Performance Contractors LLC</strong> में, हम रीमॉडलिंग, फ्लोरिंग इंस्टॉलेशन, आवासीय रखरखाव और पेशेवर फिनिश के माध्यम से दृष्टिकोणों को जीवन में लाते हैं। <em>गुणवत्ता, ईमानदारी और उत्कृष्टता</em> के हमारे आदर्श वाक्य द्वारा निर्देशित, हम अत्याधुनिक तकनीकों के साथ पूर्ण शिल्प कौशल के समर्पण को जोड़ते हैं। हम कड़ी मेहनत में दृढ़ता से विश्वास करते हैं, हर ग्राहक के साथ परियोजना दर परियोजना विश्वास का निर्माण करते हैं, और हर घर और व्यवसाय में निर्दोष और स्थायी परिणाम देने के लिए लगातार अपनी प्रक्रियाओं में नवाचार करते हैं।",
+                services_title: "हमारे काम और सेवाएं",
+                loading_portfolio: '<i class="fa-solid fa-spinner fa-spin text-3xl"></i> पोर्टफोलियो लोड हो रहा है...',
+                empty_portfolio: "अभी तक कोई काम प्रकाशित नहीं हुआ है।",
+                btn_book: "काम बुक करें",
+                modal_title: "अपॉइंटमेंट बुक करें",
+                form_name: "पूरा नाम",
+                form_phone: "व्हाट्सएप / फोन",
+                form_notes: "परियोजना विवरण",
+                btn_confirm: "अनुरोध की पुष्टि करें",
+                alert_success: "अनुरोध भेजा गया! हम जल्द ही संपर्क करेंगे।"
+            },
+            zh: {
+                nav_admin: "管理",
+                hero_title: "建筑专家",
+                hero_desc: "改造、地板、油漆和维护。探索我们的工作并立即预约。",
+                about_title: "关于我们",
+                about_desc: "在 <strong>Scorpion Performance Contractors LLC</strong>，我们通过改造、地板安装、住宅维护和专业装饰将愿景变为现实。在我们的座右铭 <em>质量、诚实和卓越</em> 的指导下，我们将完美的工艺精神与尖端技术相结合。我们坚信努力工作，在每个项目中与每位客户建立信任，并不断创新我们的流程，以便在我们服务的每个家庭和企业中提供完美无瑕且持久的成果。",
+                services_title: "我们的工作和服务",
+                loading_portfolio: '<i class="fa-solid fa-spinner fa-spin text-3xl"></i> 正在加载作品集...',
+                empty_portfolio: "尚未发布任何工作。",
+                btn_book: "预订工作",
+                modal_title: "预约",
+                form_name: "全名",
+                form_phone: "WhatsApp / 电话",
+                form_notes: "项目详情",
+                btn_confirm: "确认请求",
+                alert_success: "请求已发送！我们将尽快联系。"
+            }
+        };
+
+        // Variable global para idioma actual
+        let currentLang = localStorage.getItem('scorpionLang') || 'es';
+        document.getElementById('lang-selector').value = currentLang;
+
+        function updateLanguageUI(lang) {
+            currentLang = lang;
+            localStorage.setItem('scorpionLang', lang);
+            
+            // Actualizar textos estáticos
+            document.querySelectorAll('[data-i18n]').forEach(el => {
+                const key = el.getAttribute('data-i18n');
+                if (translations[lang] && translations[lang][key]) {
+                    el.innerHTML = translations[lang][key];
+                }
+            });
+
+            // Re-renderizar el portafolio para aplicar idioma en botones generados dinámicamente
+            if (globalAdminData.services) renderPublicPortfolio();
+        }
+
+        // Listener del selector
+        document.getElementById('lang-selector').addEventListener('change', (e) => {
+            updateLanguageUI(e.target.value);
+        });
+
+        // ==========================================
+        // FUNCIONES DE VISTA Y COMPRESIÓN
         // ==========================================
         window.changeView = function(view) {
             if (view === 'public') {
@@ -292,7 +418,6 @@
             document.getElementById(tabId).classList.remove('hidden'); btn.classList.add('active');
         };
 
-        // FUNCIÓN MÁGICA: Comprime las imágenes pesadas antes de guardarlas en Firebase
         function compressImage(file, maxSize, callback) {
             const reader = new FileReader();
             reader.onload = function(event) {
@@ -305,7 +430,7 @@
                     canvas.width = width; canvas.height = height;
                     const ctx = canvas.getContext('2d');
                     ctx.drawImage(img, 0, 0, width, height);
-                    callback(canvas.toDataURL('image/png', 0.9)); // PNG ligero
+                    callback(canvas.toDataURL('image/png', 0.9)); 
                 };
                 img.src = event.target.result;
             };
@@ -315,7 +440,6 @@
         const defaultLogoUrl = "data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 250 250'%3E%3Cpath fill='%23cc0000' d='M125,12.5C62.8,12.5,12.5,62.8,12.5,125s50.3,112.5,112.5,112.5S237.5,187.2,237.5,125S187.2,12.5,125,12.5zm0,200 C69.7,212.5,25,167.8,25,112.5S69.7,12.5,125,12.5s100,44.7,100,100S180.3,212.5,125,212.5z'/%3E%3Cpath fill='%23cc0000' d='M125,37.5C80.3,37.5,43.8,74.1,43.8,118.8c0,44.7,36.5,81.3,81.2,81.3c44.7,0,81.3-36.5,81.3-81.3 C206.2,74.1,169.7,37.5,125,37.5z M125,168.8c-27.6,0-50-22.4-50-50c0-27.6,22.4-50,50-50c27.6,0,50,22.4,50,50 C175,146.4,152.6,168.8,125,168.8z'/%3E%3Cpath fill='%23cc0000' d='M150,112.5c0-13.8-11.2-25-25-25s-25,11.2-25,25s11.2,25,25,25S150,126.3,150,112.5z'/%3E%3Cpath fill='%23cc0000' d='M175,87.5c0-13.8-11.2-25-25-25s-25,11.2-25,25s11.2,25,25,25S175,101.3,175,87.5z'/%3E%3Cpath fill='%23cc0000' d='M100,87.5c0-13.8-11.2-25-25-25s-25,11.2-25,25s11.2,25,25,25S100,101.3,100,87.5z'/%3E%3C/svg%3E";
         let globalAdminData = { services: [], siteLogo: "", cursorLogo: "" };
 
-        // ANIMACIÓN DEL CURSOR
         let lastTime = 0;
         document.addEventListener('mousemove', e => {
             if (document.getElementById('public-web-section').style.display !== 'none' && Date.now() - lastTime > 60) {
@@ -328,7 +452,7 @@
         });
 
         // ==========================================
-        // 3. INICIALIZAR APP
+        // INICIALIZAR APP
         // ==========================================
         async function initApp() {
             try {
@@ -346,14 +470,14 @@
                     if(!globalAdminData.services) globalAdminData.services = [];
                 }
 
-                // Cargar logos visuales
                 const currentLogo = globalAdminData.siteLogo || defaultLogoUrl;
                 document.getElementById('public-site-logo').src = currentLogo; 
                 document.getElementById('admin-site-logo').src = currentLogo; 
                 document.getElementById('preview-site-logo').src = currentLogo;
                 document.getElementById('preview-cursor-logo').src = globalAdminData.cursorLogo || defaultLogoUrl;
 
-                renderPublicPortfolio();
+                // Aplicar idioma cargado
+                updateLanguageUI(currentLang);
 
                 if (localStorage.getItem('scorpionAdminSession') === 'true') { window.changeView('admin'); bootAdminPanel(); } 
                 else { window.changeView('public'); }
@@ -361,16 +485,16 @@
         }
 
         // ==========================================
-        // 4. PORTAFOLIO PÚBLICO
+        // PORTAFOLIO PÚBLICO
         // ==========================================
         function renderPublicPortfolio() {
             const grid = document.getElementById('services-grid'); grid.innerHTML = '';
-            if(globalAdminData.services.length === 0) { grid.innerHTML = '<div class="col-span-full text-center text-gray-500">Aún no hay trabajos publicados.</div>'; return; }
+            if(globalAdminData.services.length === 0) { grid.innerHTML = `<div class="col-span-full text-center text-gray-500">${translations[currentLang].empty_portfolio}</div>`; return; }
             globalAdminData.services.forEach(s => {
                 grid.innerHTML += `
                     <div class="bg-[#1a1a1a] rounded-xl overflow-hidden shadow-lg border border-gray-800 hover:border-scorpionRed hover:scale-105 transition-all duration-300 cursor-pointer group flex flex-col" onclick="window.openBookingModal('${s.id}')">
                         <div class="h-56 w-full bg-[#111] overflow-hidden relative"><img src="${s.photo || 'https://via.placeholder.com/600x400/222222/666666'}" class="w-full h-full object-cover group-hover:scale-110 transition duration-500"><div class="absolute inset-0 bg-black/40 group-hover:bg-transparent transition duration-300"></div></div>
-                        <div class="p-6 flex-1 flex flex-col"><h3 class="text-xl font-bold text-white mb-2 group-hover:text-scorpionRed transition">${s.name}</h3><div class="flex justify-between items-center mb-3 text-sm"><span class="bg-[#222] text-gray-300 px-2 py-1 rounded border border-gray-700"><i class="fa-solid fa-tag text-scorpionRed mr-1"></i>${s.price}</span><span class="bg-[#222] text-gray-300 px-2 py-1 rounded border border-gray-700"><i class="fa-solid fa-clock text-scorpionRed mr-1"></i>${s.time}</span></div><p class="text-gray-400 text-sm flex-1 line-clamp-3">${s.description}</p><button class="mt-5 w-full py-2 bg-[#222] group-hover:bg-scorpionRed text-white rounded font-bold transition uppercase text-sm">Agendar Trabajo</button></div>
+                        <div class="p-6 flex-1 flex flex-col"><h3 class="text-xl font-bold text-white mb-2 group-hover:text-scorpionRed transition">${s.name}</h3><div class="flex justify-between items-center mb-3 text-sm"><span class="bg-[#222] text-gray-300 px-2 py-1 rounded border border-gray-700"><i class="fa-solid fa-tag text-scorpionRed mr-1"></i>${s.price}</span><span class="bg-[#222] text-gray-300 px-2 py-1 rounded border border-gray-700"><i class="fa-solid fa-clock text-scorpionRed mr-1"></i>${s.time}</span></div><p class="text-gray-400 text-sm flex-1 line-clamp-3">${s.description}</p><button class="mt-5 w-full py-2 bg-[#222] group-hover:bg-scorpionRed text-white rounded font-bold transition uppercase text-sm">${translations[currentLang].btn_book}</button></div>
                     </div>`;
             });
         }
@@ -384,13 +508,10 @@
             e.preventDefault(); const btn = document.getElementById('btn-booking-submit'); btn.innerText = "Enviando..."; btn.disabled = true;
             try {
                 await addDoc(collection(db, "solicitudes_citas"), { clientName: document.getElementById('form-name').value, phone: document.getElementById('form-phone').value, notes: document.getElementById('form-notes').value, service: document.getElementById('form-service-name').value, status: 'pending', createdAt: new Date().toISOString() });
-                alert("¡Solicitud enviada! Nos comunicaremos pronto."); document.getElementById('booking-modal').classList.remove('active'); e.target.reset(); 
-            } catch(err) {} btn.innerText = "Confirmar Solicitud"; btn.disabled = false;
+                alert(translations[currentLang].alert_success); document.getElementById('booking-modal').classList.remove('active'); e.target.reset(); 
+            } catch(err) {} btn.innerText = translations[currentLang].btn_confirm; btn.disabled = false;
         });
 
-        // ==========================================
-        // 5. LOGIN
-        // ==========================================
         document.getElementById('login-form').addEventListener('submit', async (e) => {
             e.preventDefault(); const u = document.getElementById('login-user').value; const p = document.getElementById('login-pass').value; const btn = document.getElementById('btn-login-submit'); btn.innerText = "Autenticando..."; btn.disabled = true;
             try {
@@ -401,15 +522,11 @@
 
         document.getElementById('btn-logout').addEventListener('click', () => { localStorage.removeItem('scorpionAdminSession'); window.location.reload(); });
 
-        // ==========================================
-        // 6. PANEL ADMIN (Logo, Cursor, Portafolio)
-        // ==========================================
         let adminBooted = false;
 
         function bootAdminPanel() {
             if(adminBooted) return;
             
-            // PORTAFOLIO 
             const renderAdminServices = () => {
                 const list = document.getElementById('admin-services-list'); list.innerHTML = '';
                 globalAdminData.services.forEach((s, idx) => {
@@ -429,7 +546,7 @@
                 };
 
                 if(fileInput.files.length > 0) {
-                    compressImage(fileInput.files[0], 800, saveToFirebase); // Comprime la foto del trabajo a max 800px
+                    compressImage(fileInput.files[0], 800, saveToFirebase); 
                 } else { saveToFirebase(""); }
             });
 
@@ -437,17 +554,16 @@
                 if(confirm("¿Eliminar este trabajo?")) { globalAdminData.services.splice(idx, 1); await updateDoc(doc(db, "configuracion", ADMIN_DOC_ID), { services: globalAdminData.services }); renderAdminServices(); renderPublicPortfolio(); }
             }
 
-            // AJUSTES: Cargar y Comprimir Logos
             let newLogoBase64 = null; let newCursorBase64 = null;
             
             document.getElementById('input-site-logo').addEventListener('change', function(e) { 
                 const f = e.target.files[0]; if(!f) return; 
-                compressImage(f, 300, function(res) { newLogoBase64 = res; document.getElementById('preview-site-logo').src = newLogoBase64; }); // Logo max 300px
+                compressImage(f, 300, function(res) { newLogoBase64 = res; document.getElementById('preview-site-logo').src = newLogoBase64; }); 
             });
             
             document.getElementById('input-cursor-logo').addEventListener('change', function(e) { 
                 const f = e.target.files[0]; if(!f) return; 
-                compressImage(f, 100, function(res) { newCursorBase64 = res; document.getElementById('preview-cursor-logo').src = newCursorBase64; }); // Cursor max 100px (muy ligero)
+                compressImage(f, 100, function(res) { newCursorBase64 = res; document.getElementById('preview-cursor-logo').src = newCursorBase64; }); 
             });
 
             document.getElementById('btn-save-logo').addEventListener('click', async () => {
@@ -462,7 +578,6 @@
 
             document.getElementById('btn-save-settings').addEventListener('click', async () => { const pass = document.getElementById('prof-pass').value.trim(); if(pass !== '') { await updateDoc(doc(db, "configuracion", ADMIN_DOC_ID), { pass: pass }); alert("Contraseña actualizada."); document.getElementById('prof-pass').value = ''; } });
 
-            // Solicitudes y Calendario
             let currentRequests = []; let allAppointments = []; let selectedRequestId = null;
             onSnapshot(collection(db, "solicitudes_citas"), (snapshot) => { currentRequests = []; allAppointments = []; snapshot.forEach(doc => { const data = doc.data(); data.id = doc.id; if(data.status === 'pending') currentRequests.push(data); if(data.status === 'scheduled') allAppointments.push(data); }); renderRequests(); renderCalendar(); });
 
