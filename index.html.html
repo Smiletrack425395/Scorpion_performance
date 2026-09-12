@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Scorpion Performance - Servicios</title>
     
-    <link rel="icon" href="aaa.jpg" type="image/jpeg">
+    <link rel="icon" href="aaa.jpg?v=3" type="image/jpeg">
 
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -86,7 +86,6 @@
         <section class="max-w-5xl mx-auto py-16 px-6 text-center border-b border-gray-800">
             <h2 class="text-3xl font-bold mb-8 border-l-4 border-scorpionRed pl-4 w-fit mx-auto" data-i18n="about_title">¿Quiénes Somos?</h2>
             <div class="bg-[#1a1a1a] p-8 rounded-xl shadow-lg border border-gray-800 relative overflow-hidden">
-                <!-- Elemento visual decorativo -->
                 <div class="absolute top-0 right-0 w-32 h-32 bg-scorpionRed opacity-10 rounded-full blur-3xl transform translate-x-1/2 -translate-y-1/2"></div>
                 <p class="text-lg text-gray-300 leading-relaxed text-justify md:text-center relative z-10" data-i18n="about_desc">
                     En <strong>Scorpion Performance Contractors LLC</strong> materializamos visiones a través de la remodelación, instalación de pisos, mantenimiento residencial y acabados profesionales. Guiados por nuestro lema <em>Quality, Honesty & Excellence</em>, combinamos la dedicación de un oficio perfeccionado con técnicas de vanguardia. Creemos firmemente en el trabajo duro, en la confianza que se construye proyecto a proyecto con cada cliente, y en innovar constantemente nuestros procesos para ofrecer resultados impecables y duraderos en cada hogar y negocio que intervenimos.
@@ -94,13 +93,22 @@
             </div>
         </section>
 
-        <!-- Portafolio de Trabajos -->
+        <!-- Portafolio de Trabajos / Servicios -->
         <main class="max-w-7xl mx-auto py-16 px-4">
             <h2 class="text-3xl font-bold text-center mb-10 border-l-4 border-scorpionRed pl-4 w-fit mx-auto" data-i18n="services_title">Nuestros Trabajos y Servicios</h2>
             <div id="services-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                 <div class="text-center text-gray-500 col-span-full" data-i18n="loading_portfolio"><i class="fa-solid fa-spinner fa-spin text-3xl"></i> Cargando portafolio...</div>
             </div>
         </main>
+
+        <!-- Galería Estilo Apple (Solo Imágenes) -->
+        <section class="max-w-7xl mx-auto py-16 px-4 border-t border-gray-800">
+            <h2 class="text-4xl font-extrabold text-center mb-12 tracking-wide text-white" data-i18n="gallery_title">Galería de Proyectos</h2>
+            <!-- CSS Grid estilo Masonry -->
+            <div id="gallery-grid" class="columns-1 sm:columns-2 lg:columns-3 gap-6 space-y-6">
+                <!-- Se llena con Javascript -->
+            </div>
+        </section>
     </div>
 
     <!-- ========================================== -->
@@ -114,7 +122,8 @@
                 <p class="text-xs text-gray-400 mt-1">Bienvenido, Ricardo</p>
             </div>
             <nav class="flex-1 py-4 flex flex-col overflow-y-auto">
-                <button onclick="window.switchTab('tab-portfolio', this)" class="tab-btn active text-left px-6 py-4 text-gray-300 hover:bg-[#222] transition"><i class="fa-solid fa-images mr-3 w-5"></i>Mi Portafolio (Fotos)</button>
+                <button onclick="window.switchTab('tab-portfolio', this)" class="tab-btn active text-left px-6 py-4 text-gray-300 hover:bg-[#222] transition"><i class="fa-solid fa-list-check mr-3 w-5"></i>Servicios y Citas</button>
+                <button onclick="window.switchTab('tab-gallery', this)" class="tab-btn text-left px-6 py-4 text-gray-300 hover:bg-[#222] transition"><i class="fa-solid fa-camera-retro mr-3 w-5"></i>Galería Visual (Fotos)</button>
                 <button onclick="window.switchTab('tab-requests', this)" class="tab-btn text-left px-6 py-4 text-gray-300 hover:bg-[#222] transition"><i class="fa-solid fa-bell mr-3 w-5"></i>Solicitudes Entrantes</button>
                 <button onclick="window.switchTab('tab-calendar', this)" class="tab-btn text-left px-6 py-4 text-gray-300 hover:bg-[#222] transition"><i class="fa-solid fa-calendar-days mr-3 w-5"></i>Citas (Agenda)</button>
                 <button onclick="window.switchTab('tab-settings', this)" class="tab-btn text-left px-6 py-4 text-gray-300 hover:bg-[#222] transition"><i class="fa-solid fa-gear mr-3 w-5"></i>Ajustes de Cuenta</button>
@@ -127,56 +136,58 @@
         <!-- Contenido Panel -->
         <main class="flex-1 overflow-y-auto p-8 relative h-screen bg-[#0a0a0a]">
              
+            <!-- Pestaña: PORTAFOLIO DE SERVICIOS (Con texto y precio) -->
             <section id="tab-portfolio" class="tab-content max-w-6xl mx-auto block">
-                <h2 class="text-3xl font-bold mb-6 border-b border-gray-800 pb-4">Administrar Trabajos</h2>
-                
+                <h2 class="text-3xl font-bold mb-6 border-b border-gray-800 pb-4">Administrar Servicios</h2>
                 <div class="bg-[#1a1a1a] p-6 rounded-xl border border-gray-800 mb-8 shadow-lg">
                     <h3 class="text-xl font-bold mb-4 text-scorpionRed"><i class="fa-solid fa-plus mr-2"></i>Agregar Nuevo Trabajo/Servicio</h3>
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                         <div>
                             <label class="block text-sm text-gray-400 mb-1">Nombre del Trabajo</label>
                             <input type="text" id="new-srv-name" placeholder="Ej: Remodelación de Baño" class="w-full p-3 bg-[#222] border border-gray-700 rounded text-white outline-none focus:border-scorpionRed mb-4">
-                            
                             <div class="flex gap-4 mb-4">
-                                <div class="flex-1">
-                                    <label class="block text-sm text-gray-400 mb-1">Costo Estimado</label>
-                                    <input type="text" id="new-srv-price" placeholder="Ej: $2,500" class="w-full p-3 bg-[#222] border border-gray-700 rounded text-white outline-none focus:border-scorpionRed">
-                                </div>
-                                <div class="flex-1">
-                                    <label class="block text-sm text-gray-400 mb-1">Tiempo de Proceso</label>
-                                    <input type="text" id="new-srv-time" placeholder="Ej: 3 a 5 Días" class="w-full p-3 bg-[#222] border border-gray-700 rounded text-white outline-none focus:border-scorpionRed">
-                                </div>
+                                <div class="flex-1"><label class="block text-sm text-gray-400 mb-1">Costo</label><input type="text" id="new-srv-price" placeholder="Ej: $2,500" class="w-full p-3 bg-[#222] border border-gray-700 rounded text-white outline-none focus:border-scorpionRed"></div>
+                                <div class="flex-1"><label class="block text-sm text-gray-400 mb-1">Tiempo</label><input type="text" id="new-srv-time" placeholder="Ej: 3 a 5 Días" class="w-full p-3 bg-[#222] border border-gray-700 rounded text-white outline-none focus:border-scorpionRed"></div>
                             </div>
                         </div>
                         <div>
                             <label class="block text-sm text-gray-400 mb-1">Descripción Completa</label>
-                            <textarea id="new-srv-desc" rows="3" placeholder="Detalles de lo que incluye el trabajo..." class="w-full p-3 bg-[#222] border border-gray-700 rounded text-white outline-none focus:border-scorpionRed mb-4 resize-none"></textarea>
-                            
-                            <label class="block text-sm text-gray-400 mb-1">Foto del Trabajo</label>
-                            <input type="file" id="new-srv-photo" accept="image/*" class="w-full text-sm text-gray-400 file:mr-4 file:py-2 file:px-4 file:rounded file:border-0 file:text-sm file:font-semibold file:bg-scorpionRed file:text-white hover:file:bg-scorpionRedHover">
+                            <textarea id="new-srv-desc" rows="3" class="w-full p-3 bg-[#222] border border-gray-700 rounded text-white outline-none focus:border-scorpionRed mb-4 resize-none"></textarea>
+                            <label class="block text-sm text-gray-400 mb-1">Foto Principal (Opcional)</label>
+                            <input type="file" id="new-srv-photo" accept="image/*" class="w-full text-sm text-gray-400 file:mr-4 file:py-2 file:px-4 file:rounded file:border-0 file:bg-scorpionRed file:text-white hover:file:bg-scorpionRedHover">
                         </div>
                     </div>
-                    <button id="btn-add-service" class="mt-4 w-full py-3 bg-scorpionRed hover:bg-scorpionRedHover text-white font-bold rounded uppercase transition">Guardar y Publicar Trabajo</button>
+                    <button id="btn-add-service" class="mt-4 w-full py-3 bg-scorpionRed hover:bg-scorpionRedHover text-white font-bold rounded uppercase transition">Guardar y Publicar Servicio</button>
                 </div>
-
-                <h3 class="text-xl font-bold mb-4 text-white">Trabajos Publicados</h3>
+                <h3 class="text-xl font-bold mb-4 text-white">Servicios Publicados</h3>
                 <div id="admin-services-list" class="grid grid-cols-1 md:grid-cols-2 gap-4"></div>
             </section>
 
+            <!-- Pestaña: NUEVA GALERÍA ESTILO APPLE -->
+            <section id="tab-gallery" class="tab-content max-w-6xl mx-auto hidden">
+                <h2 class="text-3xl font-bold mb-6 border-b border-gray-800 pb-4">Galería Visual</h2>
+                <div class="bg-[#1a1a1a] p-6 rounded-xl border border-gray-800 mb-8 shadow-lg max-w-2xl mx-auto text-center">
+                    <h3 class="text-xl font-bold mb-2 text-scorpionRed"><i class="fa-solid fa-cloud-arrow-up mr-2"></i>Subir Imagen a la Galería</h3>
+                    <p class="text-sm text-gray-400 mb-6">Sube fotos de tus mejores proyectos. Se acomodarán solas con un diseño elegante y profesional en la página principal.</p>
+                    <input type="file" id="input-gal-photo" accept="image/*" class="w-full text-sm text-gray-400 file:mr-4 file:py-2 file:px-4 file:rounded file:border-0 file:font-bold file:bg-gray-700 file:text-white hover:file:bg-gray-600 mb-4 cursor-pointer">
+                    <button id="btn-add-gal" class="w-full py-3 bg-scorpionRed hover:bg-scorpionRedHover text-white font-bold rounded uppercase transition">Subir Imagen</button>
+                </div>
+                <!-- Grilla de Admin para Galería -->
+                <div id="admin-gallery-list" class="columns-2 md:columns-3 lg:columns-4 gap-4 space-y-4"></div>
+            </section>
+
+            <!-- Pestaña: SOLICITUDES -->
             <section id="tab-requests" class="tab-content max-w-5xl mx-auto hidden">
                 <h2 class="text-3xl font-bold mb-6 border-b border-gray-800 pb-4">Solicitudes de Citas</h2>
                 <div class="bg-[#1a1a1a] rounded-xl border border-gray-800 overflow-hidden shadow-lg">
                     <table class="w-full text-left">
-                        <thead class="bg-scorpionRed text-white">
-                            <tr><th class="p-4">Cliente</th><th class="p-4">Trabajo Solicitado</th><th class="p-4">Contacto</th><th class="p-4 text-center">Acción</th></tr>
-                        </thead>
-                        <tbody id="requests-tbody" class="divide-y divide-gray-800">
-                            <tr><td colspan="4" class="p-4 text-center text-gray-500">Cargando solicitudes...</td></tr>
-                        </tbody>
+                        <thead class="bg-scorpionRed text-white"><tr><th class="p-4">Cliente</th><th class="p-4">Trabajo Solicitado</th><th class="p-4">Contacto</th><th class="p-4 text-center">Acción</th></tr></thead>
+                        <tbody id="requests-tbody" class="divide-y divide-gray-800"><tr><td colspan="4" class="p-4 text-center text-gray-500">Cargando solicitudes...</td></tr></tbody>
                     </table>
                 </div>
             </section>
 
+            <!-- Pestaña: CALENDARIO -->
             <section id="tab-calendar" class="tab-content max-w-6xl mx-auto hidden">
                 <div class="flex justify-between items-center mb-6 border-b border-gray-800 pb-4">
                     <h2 class="text-3xl font-bold">Calendario de Citas</h2>
@@ -192,63 +203,47 @@
                 <div id="calendar-grid"></div>
             </section>
 
+            <!-- Pestaña: AJUSTES -->
             <section id="tab-settings" class="tab-content max-w-2xl mx-auto hidden">
                 <h2 class="text-3xl font-bold mb-6 border-b border-gray-800 pb-4">Ajustes Generales</h2>
-                
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
                     <div class="bg-[#1a1a1a] p-6 rounded-xl border border-gray-800 shadow-lg">
                         <h3 class="text-lg font-bold mb-2 text-scorpionRed">Logo de la Empresa</h3>
-                        <p class="text-xs text-gray-400 mb-4">Sube el logo que aparecerá en la barra superior de la página.</p>
-                        <div class="flex items-center gap-4 mb-4">
-                            <img id="preview-site-logo" src="" class="w-16 h-16 bg-black rounded border border-gray-700 object-contain p-1 flex-shrink-0">
-                            <input type="file" id="input-site-logo" accept="image/*" class="w-full text-xs text-gray-400 file:mr-2 file:py-1 file:px-2 file:rounded file:border-0 file:bg-gray-700 file:text-white">
-                        </div>
+                        <p class="text-xs text-gray-400 mb-4">Aparecerá en la barra superior.</p>
+                        <div class="flex items-center gap-4 mb-4"><img id="preview-site-logo" src="" class="w-16 h-16 bg-black rounded border border-gray-700 object-contain p-1 flex-shrink-0"><input type="file" id="input-site-logo" accept="image/*" class="w-full text-xs text-gray-400 file:mr-2 file:py-1 file:px-2 file:rounded file:border-0 file:bg-gray-700 file:text-white"></div>
                         <button id="btn-save-logo" class="w-full py-2 bg-gray-700 hover:bg-scorpionRed font-bold rounded text-sm transition">Actualizar Logo</button>
                     </div>
-
                     <div class="bg-[#1a1a1a] p-6 rounded-xl border border-gray-800 shadow-lg">
                         <h3 class="text-lg font-bold mb-2 text-scorpionRed">Imagen del Cursor</h3>
-                        <p class="text-xs text-gray-400 mb-4">Imagen que seguirá al ratón en la vista pública.</p>
-                        <div class="flex items-center gap-4 mb-4">
-                            <img id="preview-cursor-logo" src="" class="w-16 h-16 bg-black rounded border border-gray-700 object-contain p-1 flex-shrink-0">
-                            <input type="file" id="input-cursor-logo" accept="image/*" class="w-full text-xs text-gray-400 file:mr-2 file:py-1 file:px-2 file:rounded file:border-0 file:bg-gray-700 file:text-white">
-                        </div>
+                        <p class="text-xs text-gray-400 mb-4">Seguirá al ratón en la vista pública.</p>
+                        <div class="flex items-center gap-4 mb-4"><img id="preview-cursor-logo" src="" class="w-16 h-16 bg-black rounded border border-gray-700 object-contain p-1 flex-shrink-0"><input type="file" id="input-cursor-logo" accept="image/*" class="w-full text-xs text-gray-400 file:mr-2 file:py-1 file:px-2 file:rounded file:border-0 file:bg-gray-700 file:text-white"></div>
                         <button id="btn-save-cursor" class="w-full py-2 bg-gray-700 hover:bg-scorpionRed font-bold rounded text-sm transition">Actualizar Cursor</button>
                     </div>
                 </div>
-
                 <div class="bg-[#1a1a1a] p-6 rounded-xl border border-gray-800 shadow-lg">
                     <h3 class="text-xl font-bold mb-4 text-scorpionRed">Seguridad</h3>
-                    <label class="block text-sm text-gray-400 mb-1">Nueva Contraseña de Administrador</label>
+                    <label class="block text-sm text-gray-400 mb-1">Nueva Contraseña</label>
                     <input type="password" id="prof-pass" placeholder="Dejar en blanco si no quieres cambiarla" class="w-full mt-1 mb-4 p-3 bg-[#222] border border-gray-700 rounded text-white outline-none focus:border-scorpionRed">
                     <button id="btn-save-settings" class="w-full py-2 bg-scorpionRed hover:bg-scorpionRedHover font-bold rounded transition">Actualizar Contraseña</button>
                 </div>
             </section>
-
         </main>
     </div>
 
-    <!-- ========================================== -->
-    <!-- MODALES DE INTERACCIÓN -->
-    <!-- ========================================== -->
-
-    <!-- Modal: Login Admin -->
+    <!-- Modales -->
     <div id="login-modal" class="modal fixed inset-0 z-[100] justify-center items-center p-4">
         <div class="bg-[#1a1a1a] p-8 rounded-xl border-t-4 border-scorpionRed max-w-sm w-full shadow-2xl relative text-center">
             <button onclick="document.getElementById('login-modal').classList.remove('active')" class="absolute top-4 right-4 text-gray-400 hover:text-white"><i class="fa-solid fa-times text-2xl"></i></button>
             <h2 class="text-2xl font-bold mb-6 italic">SCORPION <span class="text-scorpionRed">ADMIN</span></h2>
             <form id="login-form" class="space-y-4 text-left">
-                <label class="block text-sm text-gray-400 mb-1">Usuario</label>
-                <input type="text" id="login-user" required class="w-full p-3 bg-[#222] border border-gray-700 rounded focus:border-scorpionRed outline-none text-white text-center">
-                <label class="block text-sm text-gray-400 mb-1">Contraseña</label>
-                <input type="password" id="login-pass" required class="w-full p-3 bg-[#222] border border-gray-700 rounded focus:border-scorpionRed outline-none text-white text-center">
+                <label class="block text-sm text-gray-400 mb-1">Usuario</label><input type="text" id="login-user" required class="w-full p-3 bg-[#222] border border-gray-700 rounded focus:border-scorpionRed outline-none text-white text-center">
+                <label class="block text-sm text-gray-400 mb-1">Contraseña</label><input type="password" id="login-pass" required class="w-full p-3 bg-[#222] border border-gray-700 rounded focus:border-scorpionRed outline-none text-white text-center">
                 <button type="submit" id="btn-login-submit" class="w-full py-3 bg-scorpionRed hover:bg-scorpionRedHover font-bold rounded uppercase transition mt-4">Acceder al Panel</button>
                 <p id="login-error" class="text-red-500 text-sm hidden font-bold mt-2 text-center">Credenciales incorrectas.</p>
             </form>
         </div>
     </div>
 
-    <!-- Modal: Solicitar Cita -->
     <div id="booking-modal" class="modal fixed inset-0 z-50 justify-center items-center p-4">
         <div class="bg-[#1a1a1a] p-8 rounded-xl border-t-4 border-scorpionRed max-w-md w-full shadow-2xl relative">
             <button onclick="document.getElementById('booking-modal').classList.remove('active')" class="absolute top-4 right-4 text-gray-400 hover:text-white"><i class="fa-solid fa-times text-2xl"></i></button>
@@ -256,24 +251,14 @@
             <p id="booking-service-title" class="text-scorpionRed font-bold mb-6"></p>
             <form id="booking-form" class="space-y-4">
                 <input type="hidden" id="form-service-name">
-                <div>
-                    <label class="block text-sm text-gray-400" data-i18n="form_name">Nombre Completo</label>
-                    <input type="text" id="form-name" required class="w-full mt-1 p-3 bg-[#222] border border-gray-700 rounded focus:border-scorpionRed outline-none text-white transition">
-                </div>
-                <div>
-                    <label class="block text-sm text-gray-400" data-i18n="form_phone">WhatsApp / Teléfono</label>
-                    <input type="tel" id="form-phone" required class="w-full mt-1 p-3 bg-[#222] border border-gray-700 rounded focus:border-scorpionRed outline-none text-white transition">
-                </div>
-                <div>
-                    <label class="block text-sm text-gray-400" data-i18n="form_notes">Detalles de tu proyecto</label>
-                    <textarea id="form-notes" rows="3" class="w-full mt-1 p-3 bg-[#222] border border-gray-700 rounded focus:border-scorpionRed outline-none text-white transition resize-none"></textarea>
-                </div>
+                <div><label class="block text-sm text-gray-400" data-i18n="form_name">Nombre Completo</label><input type="text" id="form-name" required class="w-full mt-1 p-3 bg-[#222] border border-gray-700 rounded focus:border-scorpionRed outline-none text-white transition"></div>
+                <div><label class="block text-sm text-gray-400" data-i18n="form_phone">WhatsApp / Teléfono</label><input type="tel" id="form-phone" required class="w-full mt-1 p-3 bg-[#222] border border-gray-700 rounded focus:border-scorpionRed outline-none text-white transition"></div>
+                <div><label class="block text-sm text-gray-400" data-i18n="form_notes">Detalles de tu proyecto</label><textarea id="form-notes" rows="3" class="w-full mt-1 p-3 bg-[#222] border border-gray-700 rounded focus:border-scorpionRed outline-none text-white transition resize-none"></textarea></div>
                 <button type="submit" id="btn-booking-submit" class="w-full py-3 bg-scorpionRed hover:bg-scorpionRedHover text-white font-bold rounded uppercase transition mt-2" data-i18n="btn_confirm">Confirmar Solicitud</button>
             </form>
         </div>
     </div>
 
-    <!-- Modal: Asignar Fecha (Admin) -->
     <div id="date-modal" class="modal fixed inset-0 z-[101] justify-center items-center p-4">
         <div class="bg-[#1a1a1a] p-6 rounded-xl border-t-4 border-scorpionRed max-w-sm w-full relative">
             <h3 class="text-xl font-bold mb-4 text-center">Asignar Fecha de Cita</h3>
@@ -286,10 +271,10 @@
         </div>
     </div>
 
-    <!-- FIREBASE & LÓGICA JAVASCRIPT -->
+    <!-- FIREBASE -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-app.js";
-        import { getFirestore, collection, getDoc, doc, setDoc, updateDoc, addDoc, query, onSnapshot, getDocs } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-firestore.js";
+        import { getFirestore, collection, getDoc, doc, setDoc, updateDoc, addDoc, deleteDoc, onSnapshot } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-firestore.js";
 
         const firebaseConfig = {
           apiKey: "AIzaSyByA7okEymQbHvY9DnPtEiPeDYHtcfH22s",
@@ -307,110 +292,29 @@
         // DICCIONARIO MULTILINGÜE
         // ==========================================
         const translations = {
-            es: {
-                nav_admin: "Admin",
-                hero_title: "Expertos en Construcción",
-                hero_desc: "Remodelación, pisos, pintura y mantenimiento. Explora nuestros trabajos y solicita una cita hoy mismo.",
-                about_title: "¿Quiénes Somos?",
-                about_desc: "En <strong>Scorpion Performance Contractors LLC</strong> materializamos visiones a través de la remodelación, instalación de pisos, mantenimiento residencial y acabados profesionales. Guiados por nuestro lema <em>Quality, Honesty & Excellence</em>, combinamos la dedicación de un oficio perfeccionado con técnicas de vanguardia. Creemos firmemente en el trabajo duro, en la confianza que se construye proyecto a proyecto con cada cliente, y en innovar constantemente nuestros procesos para ofrecer resultados impecables y duraderos en cada hogar y negocio que intervenimos.",
-                services_title: "Nuestros Trabajos y Servicios",
-                loading_portfolio: '<i class="fa-solid fa-spinner fa-spin text-3xl"></i> Cargando portafolio...',
-                empty_portfolio: "Aún no hay trabajos publicados.",
-                btn_book: "Agendar Trabajo",
-                modal_title: "Agendar Cita",
-                form_name: "Nombre Completo",
-                form_phone: "WhatsApp / Teléfono",
-                form_notes: "Detalles de tu proyecto",
-                btn_confirm: "Confirmar Solicitud",
-                alert_success: "¡Solicitud enviada! Nos comunicaremos pronto."
-            },
-            en: {
-                nav_admin: "Admin",
-                hero_title: "Construction Experts",
-                hero_desc: "Remodeling, flooring, painting, and maintenance. Explore our work and request an appointment today.",
-                about_title: "About Us",
-                about_desc: "At <strong>Scorpion Performance Contractors LLC</strong>, we bring visions to life through remodeling, flooring installation, residential maintenance, and professional finishes. Guided by our motto <em>Quality, Honesty & Excellence</em>, we combine the dedication of perfected craftsmanship with cutting-edge techniques. We firmly believe in hard work, building trust project by project with every client, and constantly innovating our processes to deliver flawless and lasting results in every home and business we service.",
-                services_title: "Our Work and Services",
-                loading_portfolio: '<i class="fa-solid fa-spinner fa-spin text-3xl"></i> Loading portfolio...',
-                empty_portfolio: "No jobs published yet.",
-                btn_book: "Book Job",
-                modal_title: "Book Appointment",
-                form_name: "Full Name",
-                form_phone: "WhatsApp / Phone",
-                form_notes: "Project Details",
-                btn_confirm: "Confirm Request",
-                alert_success: "Request sent! We will contact you soon."
-            },
-            hi: {
-                nav_admin: "एडमिन",
-                hero_title: "निर्माण विशेषज्ञ",
-                hero_desc: "रीमॉडलिंग, फ़्लोरिंग, पेंटिंग और रखरखाव। हमारे काम का अन्वेषण करें और आज ही अपॉइंटमेंट का अनुरोध करें।",
-                about_title: "हमारे बारे में",
-                about_desc: "<strong>Scorpion Performance Contractors LLC</strong> में, हम रीमॉडलिंग, फ्लोरिंग इंस्टॉलेशन, आवासीय रखरखाव और पेशेवर फिनिश के माध्यम से दृष्टिकोणों को जीवन में लाते हैं। <em>गुणवत्ता, ईमानदारी और उत्कृष्टता</em> के हमारे आदर्श वाक्य द्वारा निर्देशित, हम अत्याधुनिक तकनीकों के साथ पूर्ण शिल्प कौशल के समर्पण को जोड़ते हैं। हम कड़ी मेहनत में दृढ़ता से विश्वास करते हैं, हर ग्राहक के साथ परियोजना दर परियोजना विश्वास का निर्माण करते हैं, और हर घर और व्यवसाय में निर्दोष और स्थायी परिणाम देने के लिए लगातार अपनी प्रक्रियाओं में नवाचार करते हैं।",
-                services_title: "हमारे काम और सेवाएं",
-                loading_portfolio: '<i class="fa-solid fa-spinner fa-spin text-3xl"></i> पोर्टफोलियो लोड हो रहा है...',
-                empty_portfolio: "अभी तक कोई काम प्रकाशित नहीं हुआ है।",
-                btn_book: "काम बुक करें",
-                modal_title: "अपॉइंटमेंट बुक करें",
-                form_name: "पूरा नाम",
-                form_phone: "व्हाट्सएप / फोन",
-                form_notes: "परियोजना विवरण",
-                btn_confirm: "अनुरोध की पुष्टि करें",
-                alert_success: "अनुरोध भेजा गया! हम जल्द ही संपर्क करेंगे।"
-            },
-            zh: {
-                nav_admin: "管理",
-                hero_title: "建筑专家",
-                hero_desc: "改造、地板、油漆和维护。探索我们的工作并立即预约。",
-                about_title: "关于我们",
-                about_desc: "在 <strong>Scorpion Performance Contractors LLC</strong>，我们通过改造、地板安装、住宅维护和专业装饰将愿景变为现实。在我们的座右铭 <em>质量、诚实和卓越</em> 的指导下，我们将完美的工艺精神与尖端技术相结合。我们坚信努力工作，在每个项目中与每位客户建立信任，并不断创新我们的流程，以便在我们服务的每个家庭和企业中提供完美无瑕且持久的成果。",
-                services_title: "我们的工作和服务",
-                loading_portfolio: '<i class="fa-solid fa-spinner fa-spin text-3xl"></i> 正在加载作品集...',
-                empty_portfolio: "尚未发布任何工作。",
-                btn_book: "预订工作",
-                modal_title: "预约",
-                form_name: "全名",
-                form_phone: "WhatsApp / 电话",
-                form_notes: "项目详情",
-                btn_confirm: "确认请求",
-                alert_success: "请求已发送！我们将尽快联系。"
-            }
+            es: { nav_admin: "Admin", hero_title: "Expertos en Construcción", hero_desc: "Remodelación, pisos, pintura y mantenimiento. Explora nuestros trabajos y solicita una cita hoy mismo.", about_title: "¿Quiénes Somos?", about_desc: "En <strong>Scorpion Performance Contractors LLC</strong> materializamos visiones a través de la remodelación, instalación de pisos, mantenimiento residencial y acabados profesionales. Guiados por nuestro lema <em>Quality, Honesty & Excellence</em>, combinamos la dedicación de un oficio perfeccionado con técnicas de vanguardia. Creemos firmemente en el trabajo duro, en la confianza que se construye proyecto a proyecto con cada cliente, y en innovar constantemente nuestros procesos para ofrecer resultados impecables y duraderos en cada hogar y negocio que intervenimos.", services_title: "Nuestros Trabajos y Servicios", loading_portfolio: '<i class="fa-solid fa-spinner fa-spin text-3xl"></i> Cargando portafolio...', empty_portfolio: "Aún no hay trabajos publicados.", btn_book: "Agendar Trabajo", gallery_title: "Galería de Proyectos", gallery_empty: "La galería está vacía.", modal_title: "Agendar Cita", form_name: "Nombre Completo", form_phone: "WhatsApp / Teléfono", form_notes: "Detalles de tu proyecto", btn_confirm: "Confirmar Solicitud", alert_success: "¡Solicitud enviada! Nos comunicaremos pronto." },
+            en: { nav_admin: "Admin", hero_title: "Construction Experts", hero_desc: "Remodeling, flooring, painting, and maintenance. Explore our work and request an appointment today.", about_title: "About Us", about_desc: "At <strong>Scorpion Performance Contractors LLC</strong>, we bring visions to life through remodeling, flooring installation, residential maintenance, and professional finishes. Guided by our motto <em>Quality, Honesty & Excellence</em>, we combine the dedication of perfected craftsmanship with cutting-edge techniques. We firmly believe in hard work, building trust project by project with every client, and constantly innovating our processes to deliver flawless and lasting results in every home and business we service.", services_title: "Our Work and Services", loading_portfolio: '<i class="fa-solid fa-spinner fa-spin text-3xl"></i> Loading portfolio...', empty_portfolio: "No jobs published yet.", btn_book: "Book Job", gallery_title: "Project Gallery", gallery_empty: "Gallery is empty.", modal_title: "Book Appointment", form_name: "Full Name", form_phone: "WhatsApp / Phone", form_notes: "Project Details", btn_confirm: "Confirm Request", alert_success: "Request sent! We will contact you soon." },
+            hi: { nav_admin: "एडमिन", hero_title: "निर्माण विशेषज्ञ", hero_desc: "रीमॉडलिंग, फ़्लोरिंग, पेंटिंग और रखरखाव। हमारे काम का अन्वेषण करें और आज ही अपॉइंटमेंट का अनुरोध करें।", about_title: "हमारे बारे में", about_desc: "<strong>Scorpion Performance Contractors LLC</strong> में, हम रीमॉडलिंग, फ्लोरिंग इंस्टॉलेशन, आवासीय रखरखाव और पेशेवर फिनिश के माध्यम से दृष्टिकोणों को जीवन में लाते हैं। <em>गुणवत्ता, ईमानदारी और उत्कृष्टता</em> के हमारे आदर्श वाक्य द्वारा निर्देशित, हम अत्याधुनिक तकनीकों के साथ पूर्ण शिल्प कौशल के समर्पण को जोड़ते हैं। हम कड़ी मेहनत में दृढ़ता से विश्वास करते हैं, हर ग्राहक के साथ परियोजना दर परियोजना विश्वास का निर्माण करते हैं, और हर घर और व्यवसाय में निर्दोष और स्थायी परिणाम देने के लिए लगातार अपनी प्रक्रियाओं में नवाचार करते हैं।", services_title: "हमारे काम और सेवाएं", loading_portfolio: '<i class="fa-solid fa-spinner fa-spin text-3xl"></i> पोर्टफोलियो लोड हो रहा है...', empty_portfolio: "अभी तक कोई काम प्रकाशित नहीं हुआ है।", btn_book: "काम बुक करें", gallery_title: "प्रोजेक्ट गैलरी", gallery_empty: "गैलरी खाली है।", modal_title: "अपॉइंटमेंट बुक करें", form_name: "पूरा नाम", form_phone: "व्हाट्सएप / फोन", form_notes: "परियोजना विवरण", btn_confirm: "अनुरोध की पुष्टि करें", alert_success: "अनुरोध भेजा गया! हम जल्द ही संपर्क करेंगे।" },
+            zh: { nav_admin: "管理", hero_title: "建筑专家", hero_desc: "改造、地板、油漆和维护。探索我们的工作并立即预约。", about_title: "关于我们", about_desc: "在 <strong>Scorpion Performance Contractors LLC</strong>，我们通过改造、地板安装、住宅维护和专业装饰将愿景变为现实。在我们的座右铭 <em>质量、诚实和卓越</em> 的指导下，我们将完美的工艺精神与尖端技术相结合。我们坚信努力工作，在每个项目中与每位客户建立信任，并不断创新我们的流程，以便在我们服务的每个家庭和企业中提供完美无瑕且持久的成果。", services_title: "我们的工作和服务", loading_portfolio: '<i class="fa-solid fa-spinner fa-spin text-3xl"></i> 正在加载...', empty_portfolio: "尚未发布任何工作。", btn_book: "预订工作", gallery_title: "项目图库", gallery_empty: "画廊是空的。", modal_title: "预约", form_name: "全名", form_phone: "WhatsApp / 电话", form_notes: "项目详情", btn_confirm: "确认请求", alert_success: "请求已发送！我们将尽快联系。" }
         };
 
-        // Variable global para idioma actual
         let currentLang = localStorage.getItem('scorpionLang') || 'es';
         document.getElementById('lang-selector').value = currentLang;
 
         function updateLanguageUI(lang) {
-            currentLang = lang;
-            localStorage.setItem('scorpionLang', lang);
-            
-            // Actualizar textos estáticos
+            currentLang = lang; localStorage.setItem('scorpionLang', lang);
             document.querySelectorAll('[data-i18n]').forEach(el => {
-                const key = el.getAttribute('data-i18n');
-                if (translations[lang] && translations[lang][key]) {
-                    el.innerHTML = translations[lang][key];
-                }
+                const key = el.getAttribute('data-i18n'); if (translations[lang] && translations[lang][key]) el.innerHTML = translations[lang][key];
             });
-
-            // Re-renderizar el portafolio para aplicar idioma en botones generados dinámicamente
             if (globalAdminData.services) renderPublicPortfolio();
+            renderPublicGallery();
         }
 
-        // Listener del selector
-        document.getElementById('lang-selector').addEventListener('change', (e) => {
-            updateLanguageUI(e.target.value);
-        });
+        document.getElementById('lang-selector').addEventListener('change', (e) => updateLanguageUI(e.target.value));
 
-        // ==========================================
-        // FUNCIONES DE VISTA Y COMPRESIÓN
-        // ==========================================
         window.changeView = function(view) {
-            if (view === 'public') {
-                document.getElementById('public-web-section').style.display = 'block'; document.getElementById('admin-dashboard-section').style.display = 'none'; document.body.style.overflow = 'auto'; 
-            } else if (view === 'admin') {
-                document.getElementById('public-web-section').style.display = 'none'; document.getElementById('admin-dashboard-section').style.display = 'flex'; document.body.style.overflow = 'hidden'; 
-            }
+            if (view === 'public') { document.getElementById('public-web-section').style.display = 'block'; document.getElementById('admin-dashboard-section').style.display = 'none'; document.body.style.overflow = 'auto'; 
+            } else if (view === 'admin') { document.getElementById('public-web-section').style.display = 'none'; document.getElementById('admin-dashboard-section').style.display = 'flex'; document.body.style.overflow = 'hidden'; }
         };
 
         window.switchTab = function(tabId, btn) {
@@ -427,66 +331,55 @@
                     let width = img.width; let height = img.height;
                     if (width > height) { if (width > maxSize) { height *= maxSize / width; width = maxSize; } } 
                     else { if (height > maxSize) { width *= maxSize / height; height = maxSize; } }
-                    canvas.width = width; canvas.height = height;
-                    const ctx = canvas.getContext('2d');
-                    ctx.drawImage(img, 0, 0, width, height);
+                    canvas.width = width; canvas.height = height; const ctx = canvas.getContext('2d'); ctx.drawImage(img, 0, 0, width, height);
                     callback(canvas.toDataURL('image/png', 0.9)); 
-                };
-                img.src = event.target.result;
-            };
-            reader.readAsDataURL(file);
+                }; img.src = event.target.result;
+            }; reader.readAsDataURL(file);
         }
 
         const defaultLogoUrl = "data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 250 250'%3E%3Cpath fill='%23cc0000' d='M125,12.5C62.8,12.5,12.5,62.8,12.5,125s50.3,112.5,112.5,112.5S237.5,187.2,237.5,125S187.2,12.5,125,12.5zm0,200 C69.7,212.5,25,167.8,25,112.5S69.7,12.5,125,12.5s100,44.7,100,100S180.3,212.5,125,212.5z'/%3E%3Cpath fill='%23cc0000' d='M125,37.5C80.3,37.5,43.8,74.1,43.8,118.8c0,44.7,36.5,81.3,81.2,81.3c44.7,0,81.3-36.5,81.3-81.3 C206.2,74.1,169.7,37.5,125,37.5z M125,168.8c-27.6,0-50-22.4-50-50c0-27.6,22.4-50,50-50c27.6,0,50,22.4,50,50 C175,146.4,152.6,168.8,125,168.8z'/%3E%3Cpath fill='%23cc0000' d='M150,112.5c0-13.8-11.2-25-25-25s-25,11.2-25,25s11.2,25,25,25S150,126.3,150,112.5z'/%3E%3Cpath fill='%23cc0000' d='M175,87.5c0-13.8-11.2-25-25-25s-25,11.2-25,25s11.2,25,25,25S175,101.3,175,87.5z'/%3E%3Cpath fill='%23cc0000' d='M100,87.5c0-13.8-11.2-25-25-25s-25,11.2-25,25s11.2,25,25,25S100,101.3,100,87.5z'/%3E%3C/svg%3E";
         let globalAdminData = { services: [], siteLogo: "", cursorLogo: "" };
+        let globalGallery = [];
 
         let lastTime = 0;
         document.addEventListener('mousemove', e => {
             if (document.getElementById('public-web-section').style.display !== 'none' && Date.now() - lastTime > 60) {
                 const scorp = document.createElement('div'); scorp.className = 'mini-cursor'; 
-                const cursorImgUrl = globalAdminData.cursorLogo || defaultLogoUrl;
-                scorp.innerHTML = `<img src="${cursorImgUrl}" class="w-full h-full object-contain">`;
+                scorp.innerHTML = `<img src="${globalAdminData.cursorLogo || defaultLogoUrl}" class="w-full h-full object-contain">`;
                 scorp.style.left = (e.pageX - 15) + 'px'; scorp.style.top = (e.pageY - 15) + 'px';
                 document.body.appendChild(scorp); setTimeout(() => scorp.remove(), 1000); lastTime = Date.now();
             }
         });
 
-        // ==========================================
-        // INICIALIZAR APP
-        // ==========================================
         async function initApp() {
             try {
                 const docRef = doc(db, "configuracion", ADMIN_DOC_ID);
                 const docSnap = await getDoc(docRef);
-
                 if (!docSnap.exists()) {
-                    await setDoc(docRef, {
-                        user: "Ricardo", pass: "Fernanda", siteLogo: defaultLogoUrl, cursorLogo: defaultLogoUrl,
-                        services: [{ id: "1", name: "Ejemplo de Trabajo", price: "$3,500", time: "5 Días", description: "Descripción del servicio.", photo: "https://via.placeholder.com/600x400/222222/cc0000" }]
-                    });
+                    await setDoc(docRef, { user: "Ricardo", pass: "Fernanda", siteLogo: defaultLogoUrl, cursorLogo: defaultLogoUrl, services: [{ id: "1", name: "Ejemplo", price: "$3,500", time: "5 Días", description: "Descripción.", photo: "https://via.placeholder.com/600x400/222222/cc0000" }]});
                     globalAdminData = (await getDoc(docRef)).data();
                 } else {
-                    globalAdminData = docSnap.data();
-                    if(!globalAdminData.services) globalAdminData.services = [];
+                    globalAdminData = docSnap.data(); if(!globalAdminData.services) globalAdminData.services = [];
                 }
-
                 const currentLogo = globalAdminData.siteLogo || defaultLogoUrl;
-                document.getElementById('public-site-logo').src = currentLogo; 
-                document.getElementById('admin-site-logo').src = currentLogo; 
-                document.getElementById('preview-site-logo').src = currentLogo;
-                document.getElementById('preview-cursor-logo').src = globalAdminData.cursorLogo || defaultLogoUrl;
-
-                // Aplicar idioma cargado
+                document.getElementById('public-site-logo').src = currentLogo; document.getElementById('admin-site-logo').src = currentLogo; document.getElementById('preview-site-logo').src = currentLogo; document.getElementById('preview-cursor-logo').src = globalAdminData.cursorLogo || defaultLogoUrl;
+                
                 updateLanguageUI(currentLang);
+
+                // Escuchar Galería de Imágenes independientemente
+                onSnapshot(collection(db, "galeria_scorpion"), (snapshot) => {
+                    globalGallery = [];
+                    snapshot.forEach(doc => globalGallery.push({ id: doc.id, ...doc.data() }));
+                    globalGallery.sort((a, b) => b.timestamp - a.timestamp); // Más recientes primero
+                    renderPublicGallery();
+                    if(adminBooted) renderAdminGallery();
+                });
 
                 if (localStorage.getItem('scorpionAdminSession') === 'true') { window.changeView('admin'); bootAdminPanel(); } 
                 else { window.changeView('public'); }
             } catch (error) { document.getElementById('services-grid').innerHTML = '<div class="col-span-full text-center text-red-500 font-bold">Error de conexión a Firebase.</div>'; }
         }
 
-        // ==========================================
-        // PORTAFOLIO PÚBLICO
-        // ==========================================
         function renderPublicPortfolio() {
             const grid = document.getElementById('services-grid'); grid.innerHTML = '';
             if(globalAdminData.services.length === 0) { grid.innerHTML = `<div class="col-span-full text-center text-gray-500">${translations[currentLang].empty_portfolio}</div>`; return; }
@@ -499,88 +392,103 @@
             });
         }
 
+        // GALERÍA PÚBLICA (Estilo Apple Masonry)
+        function renderPublicGallery() {
+            const grid = document.getElementById('gallery-grid'); grid.innerHTML = '';
+            if(globalGallery.length === 0) { grid.innerHTML = `<div class="col-span-full text-center text-gray-500">${translations[currentLang].gallery_empty}</div>`; return; }
+            globalGallery.forEach(img => {
+                grid.innerHTML += `
+                    <div class="break-inside-avoid relative group rounded-3xl overflow-hidden shadow-2xl mb-6 bg-[#111]">
+                        <img src="${img.photo}" class="w-full h-auto object-cover transform transition-transform duration-700 group-hover:scale-110">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                    </div>`;
+            });
+        }
+
         window.openBookingModal = function(serviceId) {
             const s = globalAdminData.services.find(x => x.id === serviceId);
-            document.getElementById('booking-service-title').innerText = `Trabajo: ${s.name}`; document.getElementById('form-service-name').value = s.name; document.getElementById('booking-modal').classList.add('active');
+            document.getElementById('booking-service-title').innerText = `${s.name}`; document.getElementById('form-service-name').value = s.name; document.getElementById('booking-modal').classList.add('active');
         };
 
         document.getElementById('booking-form').addEventListener('submit', async (e) => {
             e.preventDefault(); const btn = document.getElementById('btn-booking-submit'); btn.innerText = "Enviando..."; btn.disabled = true;
-            try {
-                await addDoc(collection(db, "solicitudes_citas"), { clientName: document.getElementById('form-name').value, phone: document.getElementById('form-phone').value, notes: document.getElementById('form-notes').value, service: document.getElementById('form-service-name').value, status: 'pending', createdAt: new Date().toISOString() });
+            try { await addDoc(collection(db, "solicitudes_citas"), { clientName: document.getElementById('form-name').value, phone: document.getElementById('form-phone').value, notes: document.getElementById('form-notes').value, service: document.getElementById('form-service-name').value, status: 'pending', createdAt: new Date().toISOString() });
                 alert(translations[currentLang].alert_success); document.getElementById('booking-modal').classList.remove('active'); e.target.reset(); 
             } catch(err) {} btn.innerText = translations[currentLang].btn_confirm; btn.disabled = false;
         });
 
         document.getElementById('login-form').addEventListener('submit', async (e) => {
             e.preventDefault(); const u = document.getElementById('login-user').value; const p = document.getElementById('login-pass').value; const btn = document.getElementById('btn-login-submit'); btn.innerText = "Autenticando..."; btn.disabled = true;
-            try {
-                const docSnap = await getDoc(doc(db, "configuracion", ADMIN_DOC_ID)); const data = docSnap.data();
+            try { const docSnap = await getDoc(doc(db, "configuracion", ADMIN_DOC_ID)); const data = docSnap.data();
                 if(data && data.user === u && data.pass === p) { localStorage.setItem('scorpionAdminSession', 'true'); document.getElementById('login-modal').classList.remove('active'); e.target.reset(); window.changeView('admin'); bootAdminPanel(); } else { document.getElementById('login-error').classList.remove('hidden'); }
             } catch(e) {} btn.innerText = "Acceder al Panel"; btn.disabled = false;
         });
-
         document.getElementById('btn-logout').addEventListener('click', () => { localStorage.removeItem('scorpionAdminSession'); window.location.reload(); });
 
         let adminBooted = false;
-
         function bootAdminPanel() {
             if(adminBooted) return;
             
             const renderAdminServices = () => {
                 const list = document.getElementById('admin-services-list'); list.innerHTML = '';
-                globalAdminData.services.forEach((s, idx) => {
-                    list.innerHTML += `<div class="bg-[#222] p-4 rounded border border-gray-700 flex gap-4 items-center shadow-md"><div class="w-20 h-20 bg-black rounded overflow-hidden flex-shrink-0"><img src="${s.photo || 'https://via.placeholder.com/150'}" class="w-full h-full object-cover"></div><div class="flex-1"><h4 class="font-bold text-white text-lg">${s.name}</h4><p class="text-xs text-scorpionRed font-bold">${s.price} • ${s.time}</p><p class="text-xs text-gray-400 mt-1 line-clamp-1">${s.description}</p></div><button onclick="window.removeService(${idx})" class="w-10 h-10 bg-gray-800 hover:bg-scorpionRed text-white rounded transition shadow"><i class="fa-solid fa-trash"></i></button></div>`;
-                });
-            };
-            renderAdminServices();
+                globalAdminData.services.forEach((s, idx) => { list.innerHTML += `<div class="bg-[#222] p-4 rounded border border-gray-700 flex gap-4 items-center shadow-md"><div class="w-20 h-20 bg-black rounded overflow-hidden flex-shrink-0"><img src="${s.photo || 'https://via.placeholder.com/150'}" class="w-full h-full object-cover"></div><div class="flex-1"><h4 class="font-bold text-white text-lg">${s.name}</h4><p class="text-xs text-scorpionRed font-bold">${s.price} • ${s.time}</p><p class="text-xs text-gray-400 mt-1 line-clamp-1">${s.description}</p></div><button onclick="window.removeService(${idx})" class="w-10 h-10 bg-gray-800 hover:bg-scorpionRed text-white rounded transition shadow"><i class="fa-solid fa-trash"></i></button></div>`; });
+            }; renderAdminServices();
 
             document.getElementById('btn-add-service').addEventListener('click', async () => {
                 const name = document.getElementById('new-srv-name').value.trim(); const price = document.getElementById('new-srv-price').value.trim(); const time = document.getElementById('new-srv-time').value.trim(); const desc = document.getElementById('new-srv-desc').value.trim(); const fileInput = document.getElementById('new-srv-photo'); const btn = document.getElementById('btn-add-service');
                 if(!name || !price || !desc) return alert("Llena Nombre, Costo y Descripción."); btn.innerText = "Guardando..."; btn.disabled = true;
-
                 const saveToFirebase = async (base64Img) => {
                     globalAdminData.services.push({ id: Date.now().toString(), name: name, price: price, time: time || "Variable", description: desc, photo: base64Img });
-                    try { await updateDoc(doc(db, "configuracion", ADMIN_DOC_ID), { services: globalAdminData.services }); document.getElementById('new-srv-name').value = ''; document.getElementById('new-srv-price').value = ''; document.getElementById('new-srv-time').value = ''; document.getElementById('new-srv-desc').value = ''; fileInput.value = ''; renderAdminServices(); renderPublicPortfolio(); alert("Trabajo publicado."); } catch(e) { alert("Error al guardar: " + e.message); }
-                    btn.innerText = "Guardar y Publicar Trabajo"; btn.disabled = false;
+                    try { await updateDoc(doc(db, "configuracion", ADMIN_DOC_ID), { services: globalAdminData.services }); document.getElementById('new-srv-name').value = ''; document.getElementById('new-srv-price').value = ''; document.getElementById('new-srv-time').value = ''; document.getElementById('new-srv-desc').value = ''; fileInput.value = ''; renderAdminServices(); renderPublicPortfolio(); alert("Trabajo publicado."); } catch(e) { alert("Error al guardar."); }
+                    btn.innerText = "Guardar y Publicar Servicio"; btn.disabled = false;
                 };
-
-                if(fileInput.files.length > 0) {
-                    compressImage(fileInput.files[0], 800, saveToFirebase); 
-                } else { saveToFirebase(""); }
+                if(fileInput.files.length > 0) { compressImage(fileInput.files[0], 800, saveToFirebase); } else { saveToFirebase(""); }
             });
 
-            window.removeService = async function(idx) {
-                if(confirm("¿Eliminar este trabajo?")) { globalAdminData.services.splice(idx, 1); await updateDoc(doc(db, "configuracion", ADMIN_DOC_ID), { services: globalAdminData.services }); renderAdminServices(); renderPublicPortfolio(); }
+            window.removeService = async function(idx) { if(confirm("¿Eliminar este trabajo?")) { globalAdminData.services.splice(idx, 1); await updateDoc(doc(db, "configuracion", ADMIN_DOC_ID), { services: globalAdminData.services }); renderAdminServices(); renderPublicPortfolio(); } }
+
+            // LÓGICA DE LA GALERÍA VISUAL (Admin)
+            window.renderAdminGallery = function() {
+                const list = document.getElementById('admin-gallery-list'); list.innerHTML = '';
+                globalGallery.forEach(img => {
+                    list.innerHTML += `
+                        <div class="break-inside-avoid relative rounded-xl overflow-hidden shadow-lg border border-gray-700 mb-4 group">
+                            <img src="${img.photo}" class="w-full h-auto object-cover">
+                            <button onclick="window.removeGalleryImg('${img.id}')" class="absolute top-2 right-2 w-10 h-10 bg-red-900/80 hover:bg-red-600 text-white rounded-full transition opacity-0 group-hover:opacity-100 backdrop-blur-sm shadow-xl"><i class="fa-solid fa-trash"></i></button>
+                        </div>`;
+                });
+            }
+            if(globalGallery.length > 0) renderAdminGallery();
+
+            document.getElementById('btn-add-gal').addEventListener('click', () => {
+                const fileInput = document.getElementById('input-gal-photo');
+                if(fileInput.files.length === 0) return alert("Selecciona una imagen primero.");
+                const btn = document.getElementById('btn-add-gal'); btn.innerText = "Subiendo y Optimizando..."; btn.disabled = true;
+                
+                compressImage(fileInput.files[0], 1200, async (base64Img) => { // 1200px para que se vean increíbles en la galería Apple
+                    try {
+                        await addDoc(collection(db, "galeria_scorpion"), { photo: base64Img, timestamp: Date.now() });
+                        fileInput.value = ''; alert("Imagen agregada a la galería pública.");
+                    } catch(e) { alert("Error al subir: " + e.message); }
+                    btn.innerText = "Subir Imagen"; btn.disabled = false;
+                });
+            });
+
+            window.removeGalleryImg = async function(id) {
+                if(confirm("¿Eliminar permanentemente esta imagen de la galería?")) { await deleteDoc(doc(db, "galeria_scorpion", id)); }
             }
 
+            // AJUSTES
             let newLogoBase64 = null; let newCursorBase64 = null;
-            
-            document.getElementById('input-site-logo').addEventListener('change', function(e) { 
-                const f = e.target.files[0]; if(!f) return; 
-                compressImage(f, 300, function(res) { newLogoBase64 = res; document.getElementById('preview-site-logo').src = newLogoBase64; }); 
-            });
-            
-            document.getElementById('input-cursor-logo').addEventListener('change', function(e) { 
-                const f = e.target.files[0]; if(!f) return; 
-                compressImage(f, 100, function(res) { newCursorBase64 = res; document.getElementById('preview-cursor-logo').src = newCursorBase64; }); 
-            });
-
-            document.getElementById('btn-save-logo').addEventListener('click', async () => {
-                if(!newLogoBase64) return alert("Selecciona un logo primero."); const btn = document.getElementById('btn-save-logo'); btn.innerText = "Guardando..."; btn.disabled = true;
-                try { await updateDoc(doc(db, "configuracion", ADMIN_DOC_ID), { siteLogo: newLogoBase64 }); globalAdminData.siteLogo = newLogoBase64; document.getElementById('public-site-logo').src = newLogoBase64; document.getElementById('admin-site-logo').src = newLogoBase64; alert("Logo actualizado."); } catch(e) { alert("Error: " + e.message); } btn.innerText = "Actualizar Logo"; btn.disabled = false;
-            });
-
-            document.getElementById('btn-save-cursor').addEventListener('click', async () => {
-                if(!newCursorBase64) return alert("Selecciona un cursor primero."); const btn = document.getElementById('btn-save-cursor'); btn.innerText = "Guardando..."; btn.disabled = true;
-                try { await updateDoc(doc(db, "configuracion", ADMIN_DOC_ID), { cursorLogo: newCursorBase64 }); globalAdminData.cursorLogo = newCursorBase64; alert("Cursor actualizado."); } catch(e) { alert("Error: " + e.message); } btn.innerText = "Actualizar Cursor"; btn.disabled = false;
-            });
-
+            document.getElementById('input-site-logo').addEventListener('change', function(e) { const f = e.target.files[0]; if(!f) return; compressImage(f, 300, function(res) { newLogoBase64 = res; document.getElementById('preview-site-logo').src = newLogoBase64; }); });
+            document.getElementById('input-cursor-logo').addEventListener('change', function(e) { const f = e.target.files[0]; if(!f) return; compressImage(f, 100, function(res) { newCursorBase64 = res; document.getElementById('preview-cursor-logo').src = newCursorBase64; }); });
+            document.getElementById('btn-save-logo').addEventListener('click', async () => { if(!newLogoBase64) return alert("Selecciona un logo primero."); const btn = document.getElementById('btn-save-logo'); btn.innerText = "Guardando..."; btn.disabled = true; try { await updateDoc(doc(db, "configuracion", ADMIN_DOC_ID), { siteLogo: newLogoBase64 }); globalAdminData.siteLogo = newLogoBase64; document.getElementById('public-site-logo').src = newLogoBase64; document.getElementById('admin-site-logo').src = newLogoBase64; alert("Logo actualizado."); } catch(e) {} btn.innerText = "Actualizar Logo"; btn.disabled = false; });
+            document.getElementById('btn-save-cursor').addEventListener('click', async () => { if(!newCursorBase64) return alert("Selecciona un cursor primero."); const btn = document.getElementById('btn-save-cursor'); btn.innerText = "Guardando..."; btn.disabled = true; try { await updateDoc(doc(db, "configuracion", ADMIN_DOC_ID), { cursorLogo: newCursorBase64 }); globalAdminData.cursorLogo = newCursorBase64; alert("Cursor actualizado."); } catch(e) {} btn.innerText = "Actualizar Cursor"; btn.disabled = false; });
             document.getElementById('btn-save-settings').addEventListener('click', async () => { const pass = document.getElementById('prof-pass').value.trim(); if(pass !== '') { await updateDoc(doc(db, "configuracion", ADMIN_DOC_ID), { pass: pass }); alert("Contraseña actualizada."); document.getElementById('prof-pass').value = ''; } });
 
+            // Solicitudes y Calendario
             let currentRequests = []; let allAppointments = []; let selectedRequestId = null;
             onSnapshot(collection(db, "solicitudes_citas"), (snapshot) => { currentRequests = []; allAppointments = []; snapshot.forEach(doc => { const data = doc.data(); data.id = doc.id; if(data.status === 'pending') currentRequests.push(data); if(data.status === 'scheduled') allAppointments.push(data); }); renderRequests(); renderCalendar(); });
-
             function renderRequests() { const tbody = document.getElementById('requests-tbody'); tbody.innerHTML = ''; if(currentRequests.length === 0) { tbody.innerHTML = '<tr><td colspan="4" class="p-4 text-center text-gray-500">No hay solicitudes.</td></tr>'; return; } currentRequests.forEach(req => { tbody.innerHTML += `<tr class="hover:bg-[#222]"><td class="p-4 font-bold text-white">${req.clientName}</td><td class="p-4 text-sm text-scorpionRed">${req.service}</td><td class="p-4 text-sm"><i class="fa-brands fa-whatsapp text-green-500 mr-2"></i>${req.phone}</td><td class="p-4 text-center"><button onclick="window.openAssignModal('${req.id}')" class="px-3 py-2 bg-green-600 hover:bg-green-500 rounded text-sm font-bold shadow-lg transition">Agendar</button></td></tr>`; }); }
             window.openAssignModal = function(id) { selectedRequestId = id; document.getElementById('date-modal').classList.add('active'); }
             document.getElementById('btn-confirm-date').addEventListener('click', async () => { const d = document.getElementById('assign-date').value; const t = document.getElementById('assign-time').value; if(!d || !t) return; try { await updateDoc(doc(db, "solicitudes_citas", selectedRequestId), { status: 'scheduled', scheduledDate: d, scheduledTime: t }); document.getElementById('date-modal').classList.remove('active'); alert("Cita agendada."); } catch(e) {} });
